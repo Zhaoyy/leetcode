@@ -7,6 +7,10 @@ public class RomanNumber {
     System.out.println(romanNumber.number2RomanBetter(1980));
   }
 
+  /**
+   * 思路：根据罗马数字规则1-3999中最多只有三个相同数字一起，而且都是三个（I,X,C,M)才会出现这种情况。 从1-9中我们可以发现相减的情况只有IX-9,IV-4两种，其他情况都是相加，
+   * 所以我们可以简化转化过程为每位数字都可以通过9,5,4,1之间相加来表示。
+   */
   private String number2RomanBetter(int num) {
     String[] symbol = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
     int[] value = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
