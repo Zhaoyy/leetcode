@@ -1,8 +1,8 @@
 package leetcode;
 
-public class RomanNumber {
+public class RomanNumberProblems {
   public static void main(String[] args) {
-    RomanNumber romanNumber = new RomanNumber();
+    RomanNumberProblems romanNumber = new RomanNumberProblems();
     System.out.println(romanNumber.roman2Number("MCMLXXX"));
     System.out.println(romanNumber.number2RomanBetter(1980));
   }
