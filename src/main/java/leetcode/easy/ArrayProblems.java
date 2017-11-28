@@ -105,17 +105,17 @@ public class ArrayProblems {
   }
 
   private int binarySearch(int[] nums, int l, int r, int target) {
-    if (r > l) {
+    if (r >= l) {
       int mid = (l + r) / 2;
       if (nums[mid] == target) {
         return mid;
       } else if (nums[mid] < target) {
-        return binarySearch(nums, mid, r, target);
+        return binarySearch(nums, mid + 1, r, target);
       } else {
-        return binarySearch(nums, l, mid, target);
+        return binarySearch(nums, l, mid - 1, target);
       }
     }
 
-    return l;
+    return r == l ? r : r + 1;
   }
 }
