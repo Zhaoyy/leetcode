@@ -65,4 +65,57 @@ public class ArrayProblems {
 
     return i + 1;
   }
+
+  /**
+   * 一个数组和一个数字，对数组进行调整使数组前部分不存在给定的数字，并返回这部分的长度。 O(1) extra memory。
+   */
+  public int removeElement(int[] nums, int val) {
+    int i = 0;
+    int j = nums.length - 1;
+    while (i <= j) {
+      if (nums[i] == val) {
+        if (nums[j] == val) {
+          j--;
+          continue;
+        }
+        nums[i] = nums[j];
+        nums[j] = val;
+        continue;
+      }
+      i++;
+    }
+
+    return i;
+  }
+
+  /**
+   * 在给定的升序数组中找到给定数字的索引，或者是其应该插入的位置。
+   */
+  public int searchInsert(int[] nums, int target) {
+    for (int i = 0; i < nums.length; i++) {
+      if (nums[i] >= target) return i;
+    }
+
+    return nums.length;
+  }
+
+  // 二分查找法
+  public int searchInsertBetter(int[] nums, int target) {
+    return binarySearch(nums, 0, nums.length - 1, target);
+  }
+
+  private int binarySearch(int[] nums, int l, int r, int target) {
+    if (r > l) {
+      int mid = (l + r) / 2;
+      if (nums[mid] == target) {
+        return mid;
+      } else if (nums[mid] < target) {
+        return binarySearch(nums, mid, r, target);
+      } else {
+        return binarySearch(nums, l, mid, target);
+      }
+    }
+
+    return l;
+  }
 }

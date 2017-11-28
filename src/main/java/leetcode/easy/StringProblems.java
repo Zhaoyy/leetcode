@@ -47,4 +47,22 @@ public class StringProblems {
     }
     return false;
   }
+
+  /**
+   * 返回needle在haystack中第一次出现的位置，类似{@link String#indexOf(String)}
+   */
+  public int strStr(String haystack, String needle) {
+
+    if (haystack.isEmpty() && needle.isEmpty()) return 0;
+
+    int result = -1;
+    for (int i = 0; i < haystack.length(); i++) {
+      if (haystack.substring(i).startsWith(needle)) {
+        result = i;
+        break;
+      }
+    }
+
+    return result;
+  }
 }
