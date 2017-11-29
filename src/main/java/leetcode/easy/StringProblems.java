@@ -101,4 +101,75 @@ public class StringProblems {
 
     return sb.toString();
   }
+
+  /**
+   * 返回给定英文语句中最后一个单词的长度，没有则返回0
+   */
+  public int lengthOfLastWord(String s) {
+    if (s == null || s.isEmpty()) return 0;
+    String[] ss = s.split(" ");
+    return ss.length > 0 ? ss[ss.length - 1].length() : 0;
+  }
+
+  public int lengthOfLastWordBetter(String s) {
+    if (s == null) return 0;
+    s = s.trim();
+
+    if (s.isEmpty()) return 0;
+
+    int index = s.lastIndexOf(" ");
+    if (index == -1) return s.length();
+    return s.length() - index - 1;
+  }
+
+  /**
+   * 返回给定两个二进制字符串的和
+   */
+  public String addBinary(String a, String b) {
+    char[] result, as = a.toCharArray(), bs = b.toCharArray();
+    int n, i = 1, flag = '1' * 2;
+    int la = as.length, lb = bs.length;
+    if (la > lb) {
+      n = lb;
+      result = new char[la + 1];
+    } else {
+      result = new char[lb + 1];
+      n = la;
+    }
+
+    int lr = result.length, carry = 0;
+    for (; i <= n; i++) {
+      char ia = as[la - i];
+      char ib = bs[lb - i];
+
+      int sum = ia + ib + carry;
+
+      if (sum >= flag) {
+        result[lr - i] = sum > flag ? '1' : '0';
+        carry = 1;
+      } else {
+        result[lr - i] = (char) (sum - '0');
+        carry = 0;
+      }
+    }
+
+    char[] need = la > n ? as : bs;
+
+    flag = flag / 2;
+    for (; i <= need.length; i++) {
+      int sum = need[need.length - i] + carry;
+
+      if (sum > flag) {
+        carry = 1;
+        result[lr - i] = '0';
+      } else {
+        result[lr - i] = (char) sum;
+        carry = 0;
+      }
+    }
+
+    result[0] = carry > 0 ? '1' : ' ';
+
+    return String.valueOf(result).trim();
+  }
 }
