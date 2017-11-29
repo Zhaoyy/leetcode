@@ -65,4 +65,40 @@ public class StringProblems {
 
     return result;
   }
+
+  /**
+   * count and say problem
+   */
+  public String countAndSay(int n) {
+
+    if (n <= 0) return "-1";
+
+    StringBuilder sb = new StringBuilder("1");
+    String pre;
+    for (int i = 1; i < n; i++) {
+      pre = sb.toString();
+      sb.setLength(0);
+
+      int count = 0;
+      char temp = 0;
+      for (int j = 0; j < pre.length(); j++) {
+        if (count == 0) {
+          temp = pre.charAt(j);
+          count++;
+        } else if (temp == pre.charAt(j)) {
+          count++;
+        } else {
+          sb.append(count).append(temp);
+          count = 1;
+          temp = pre.charAt(j);
+        }
+      }
+
+      if (count > 0) {
+        sb.append(count).append(temp);
+      }
+    }
+
+    return sb.toString();
+  }
 }

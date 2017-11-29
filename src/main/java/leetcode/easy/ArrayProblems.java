@@ -118,4 +118,25 @@ public class ArrayProblems {
 
     return r == l ? r : r + 1;
   }
+
+  /**
+   * 返回给定数组中连续值的最大和
+   */
+  public int maxSubArray(int[] nums) {
+
+    int result = Integer.MIN_VALUE;
+    int sum = 0;
+
+    for (int num : nums) {
+      if (sum < 0) {
+        sum = num;
+      } else {
+        sum += num;
+      }
+
+      if (sum > result) result = sum;
+    }
+
+    return result;
+  }
 }
