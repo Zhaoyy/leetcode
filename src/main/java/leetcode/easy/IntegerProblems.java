@@ -34,4 +34,28 @@ public class IntegerProblems {
     }
     return false;
   }
+
+  /**
+   * 简化实现开方
+   */
+  public int mySqrt(int x) {
+
+    if (x < 2) return x;
+
+    int l = 0, r = x;
+
+    while (l + 1 < r) {
+      int mid = l + (r - l) / 2;
+      if (x / mid == mid) {
+        return mid;
+      } else if (x / mid > mid) {
+        l = mid;
+      } else {
+        r = mid;
+      }
+    }
+
+    if (x / r > r) return r;
+    return l;
+  }
 }
