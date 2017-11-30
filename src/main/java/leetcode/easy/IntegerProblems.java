@@ -58,4 +58,22 @@ public class IntegerProblems {
     if (x / r > r) return r;
     return l;
   }
+
+  /**
+   * 每次只能蹬一阶或者二阶台阶，求登上n阶台阶有几种方法。 分治法思路（斐波那契数列）
+   */
+  public int climbStairs(int n) {
+    if (n <= 0) return 0;
+    if (n == 1) return 1;
+    if (n == 2) return 2;
+    int pre1 = 2, pre2 = 1;
+    int count = 0;
+    for (int i = 2; i < n; i++) {
+      count = pre1 + pre2;
+      pre2 = pre1;
+      pre1 = count;
+    }
+
+    return count;
+  }
 }

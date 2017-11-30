@@ -48,4 +48,34 @@ public class ListNodeProblems {
 
     return head;
   }
+
+  /**
+   * 移除有序链表中重复的节点
+   */
+  public ListNode deleteDuplicates(ListNode head) {
+
+    if (head == null) return head;
+
+    ListNode pre = head;
+
+    while (pre.next != null) {
+      ListNode next = pre.next;
+      if (next.val == pre.val) {
+        pre.next = next.next;
+      } else {
+        pre = next;
+      }
+    }
+
+    return head;
+  }
+
+  public static class ListNode {
+    int val;
+    ListNode next;
+
+    public ListNode(int x) {
+      val = x;
+    }
+  }
 }
