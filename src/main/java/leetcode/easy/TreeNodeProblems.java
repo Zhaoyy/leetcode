@@ -82,9 +82,42 @@ public class TreeNodeProblems {
   /**
    * 为给定的升序数列构建二分查找树
    */
-  //public TreeNode sortedArrayToBST(int[] nums) {
-  //
-  //}
+  public TreeNode sortedArrayToBST(int[] nums) {
+    if (nums.length == 0) {
+      return null;
+    }
+    return helper(nums, 0, nums.length - 1);
+  }
+
+  private TreeNode helper(int[] num, int low, int high) {
+    if (low > high) { // Done
+      return null;
+    }
+    int mid = (low + high) / 2;
+    TreeNode node = new TreeNode(num[mid]);
+    node.left = helper(num, low, mid - 1);
+    node.right = helper(num, mid + 1, high);
+    return node;
+  }
+
+  /**
+   * 判断是否是平衡二叉树
+   */
+  public boolean isBalanced(TreeNode root) {
+    return root == null || getHeight(root) >= 0;
+  }
+
+  private int getHeight(TreeNode node) {
+    if (node == null) return 0;
+    int left = getHeight(node.left);
+    int right = getHeight(node.right);
+
+    if (left < 0 || right < 0 || Math.abs(left - right) > 1) {
+      return -1;
+    }
+
+    return Math.max(left, right) + 1;
+  }
 
   public static class TreeNode {
     int val;
