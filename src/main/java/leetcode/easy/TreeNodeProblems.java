@@ -104,19 +104,60 @@ public class TreeNodeProblems {
    * 判断是否是平衡二叉树
    */
   public boolean isBalanced(TreeNode root) {
-    return root == null || getHeight(root) >= 0;
+    return root == null || getMaxHeight(root) >= 0;
   }
 
-  private int getHeight(TreeNode node) {
+  private int getMaxHeight(TreeNode node) {
     if (node == null) return 0;
-    int left = getHeight(node.left);
-    int right = getHeight(node.right);
+    int left = getMaxHeight(node.left);
+    int right = getMaxHeight(node.right);
 
     if (left < 0 || right < 0 || Math.abs(left - right) > 1) {
       return -1;
     }
 
     return Math.max(left, right) + 1;
+  }
+
+  /**
+   * 返回树的最小深度。
+   */
+  public int minDepth(TreeNode root) {
+    return getMinHeight(root);
+  }
+
+  private int getMinHeight(TreeNode node) {
+    if (node == null) {
+      return 0;
+    } else if (node.left != null && node.right != null) {
+      int left = getMinHeight(node.left);
+      int right = getMinHeight(node.right);
+      return Math.min(left, right) + 1;
+    } else if (node.left == null && node.right != null) {
+      return getMinHeight(node.right) + 1;
+    } else if (node.left != null) {
+      return getMinHeight(node.left) + 1;
+    } else {
+      return 1;
+    }
+  }
+
+  public boolean hasPathSum(TreeNode root, int sum) {
+    return root != null && foundPathSum(root, 0, sum);
+  }
+
+  private boolean foundPathSum(TreeNode root, int pre, int sum) {
+    int val = root == null ? 0 : root.val;
+
+    if (root == null) {
+      return pre == sum;
+    } else if (root.left == null) {
+      return foundPathSum(root.right, val + pre, sum);
+    } else if (root.right == null) {
+      return foundPathSum(root.left, val + pre, sum);
+    } else {
+      return foundPathSum(root.left, val + pre, sum) || foundPathSum(root.right, val + pre, sum);
+    }
   }
 
   public static class TreeNode {
