@@ -172,4 +172,69 @@ public class ArrayProblems {
       nums1[m + n - 1] = m > 0 && (nums1[m - 1] > nums2[n - 1]) ? nums1[--m] : nums2[--n];
     }
   }
+
+  /**
+   * 求前后数字的最大差值。
+   */
+  public int maxProfit(int[] prices) {
+    if (prices.length < 2) return 0;
+    int result = 0, min;
+    min = prices[0];
+    for (int i = 1; i < prices.length; i++) {
+      int t = prices[i];
+      if (t < min) {
+        min = t;
+      }
+
+      int r = t - min;
+      if (r > result) result = r;
+    }
+
+    return result;
+  }
+
+  public int maxProfitII(int[] prices) {
+    if (prices.length < 2) return 0;
+    int result = 0;
+
+    for (int i = 1; i < prices.length; i++) {
+      if (prices[i] > prices[i - 1]) result += prices[i] - prices[i - 1];
+    }
+
+    return result;
+  }
+
+  /**
+   * 给定数组中只有一个数字只出现一次，返回这个数字
+   */
+  public int singleNumber(int[] nums) {
+    boolean found;
+    int n = nums.length - 1;
+    for (int i = 0; i <= n; i++) {
+      int a = nums[i];
+      found = false;
+      for (int j = i + 1; j <= n; j++) {
+        if (a == nums[j]) {
+          nums[j] = nums[n];
+          nums[n--] = a;
+          found = true;
+          break;
+        }
+      }
+
+      if (found) continue;
+      return a;
+    }
+    return 0;
+  }
+
+  // 使用异或
+  public int singleNumberBetter(int[] nums) {
+    if (nums == null || nums.length == 0) return 0;
+    int result = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+      result ^= nums[i];
+    }
+    return result;
+  }
 }

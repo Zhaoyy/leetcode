@@ -172,4 +172,48 @@ public class StringProblems {
 
     return String.valueOf(result).trim();
   }
+
+  /**
+   * 字符串中的数字和字母回文 (lc < 65 || lc > 90) && (lc < 97 || lc > 122) && (lc < 48 || lc > 57)
+   */
+  public boolean isPalindrome(String s) {
+    int r = s.length() - 1, l = 0;
+    while (l < r) {
+      char lc = s.charAt(l);
+      if (!isAlphanumeric(lc)) {
+        l++;
+        continue;
+      }
+      char rc = s.charAt(r);
+      if (!isAlphanumeric(rc)) {
+        r--;
+        continue;
+      }
+
+      if (ignorCaseEqual(lc, rc)) {
+        l++;
+        r--;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private boolean isAlphanumeric(char c) {
+    return (c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (c >= 48 && c <= 57);
+  }
+
+  private boolean ignorCaseEqual(char a, char b) {
+    if ((a >= 48 && a <= 57 && b >= 48 && b <= 57)
+        || (a >= 65 && a <= 90 && b >= 65 && b <= 90)
+        || (a >= 97 && a <= 122 && b >= 97 && b <= 122)) {
+      return a == b;
+    } else if ((a >= 65 && a <= 90 && b >= 97 && b <= 122)) {
+      return a - 65 == b - 97;
+    } else if ((b >= 65 && b <= 90 && a >= 97 && a <= 122)) {
+      return b - 65 == a - 97;
+    }
+    return false;
+  }
 }
