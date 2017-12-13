@@ -70,6 +70,53 @@ public class ListNodeProblems {
     return head;
   }
 
+  /**
+   * 判断链表是否是循环的（首尾相连） 用两个指针，一个每次前进一步，一个每次前进2步，如果首尾相连则会两者相遇。
+   */
+  public boolean hasCycle(ListNode head) {
+    if (head == null) return false;
+    ListNode a = head;
+    ListNode b = head;
+    while (a.next != null && b.next != null && b.next.next != null) {
+      a = a.next;
+      b = b.next.next;
+      if (a == b) return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * 找到两个链表中尾部相同的部分，返回这部分的起始节点，如果没有则返回null。
+   */
+  public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    int lenA = len(headA), lenB = len(headB);
+    while (lenA > lenB) {
+      headA = headA.next;
+      lenA--;
+    }
+    while (lenA < lenB) {
+      headB = headB.next;
+      lenB--;
+    }
+    while (headA != headB) {
+      headA = headA.next;
+      headB = headB.next;
+    }
+
+    return headA;
+  }
+
+  private int len(ListNode node) {
+    int len = 0;
+    while (node != null) {
+      len++;
+      node = node.next;
+    }
+
+    return len;
+  }
+
   public static class ListNode {
     int val;
     ListNode next;

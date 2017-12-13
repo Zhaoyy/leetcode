@@ -1,6 +1,12 @@
 package leetcode.easy;
 
 public class IntegerProblems {
+  public static void main(String[] args) {
+    IntegerProblems problems = new IntegerProblems();
+    for (int i = 1; i < 100 * 10; i++) {
+      System.out.println(String.format("%1$5d == %2$s", i, problems.convertToTitle(i)));
+    }
+  }
 
   /**
    * 数字翻转（包括负数）
@@ -75,5 +81,23 @@ public class IntegerProblems {
     }
 
     return count;
+  }
+
+  /**
+   * 1-A, 2-B, 3-C...26-Z, 27-AA
+   */
+  public String convertToTitle(int n) {
+    StringBuilder sb = new StringBuilder();
+    while (n > 0) {
+      int t = n % 26;
+      if (t == 0) {
+        sb.append("Z");
+        n = n / 26 - 1;
+      } else {
+        sb.append((char) ('A' - 1 + (n % 26)));
+        n = n / 26;
+      }
+    }
+    return sb.reverse().toString();
   }
 }

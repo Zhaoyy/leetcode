@@ -21,6 +21,22 @@ public class ArrayProblems {
     return null;
   }
 
+  // 数组为升序数组
+  public int[] twoSum(int[] numbers, int target) {
+    int l = 0, r = numbers.length - 1;
+    while (l < r) {
+      int t = numbers[l] + numbers[r];
+      if (t == target) {
+        return new int[] {l + 1, r + 1};
+      } else if (t > target) {
+        r--;
+      } else if (t < target) {
+        l++;
+      }
+    }
+    return null;
+  }
+
   /**
    * 字符数组最长公共前缀
    */
