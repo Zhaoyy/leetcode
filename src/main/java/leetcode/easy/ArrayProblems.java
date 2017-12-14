@@ -253,4 +253,22 @@ public class ArrayProblems {
     }
     return result;
   }
+
+  /**
+   * 找到数组中出现次数超过len/2的元素（必定存在）
+   */
+  public int majorityElement(int[] nums) {
+    int majority = nums[0], count = 1;
+    for (int i = 1; i < nums.length; i++) {
+      if (count == 0) {
+        majority = nums[i];
+        count++;
+      } else if (majority == nums[i]) {
+        count++;
+      } else {
+        count--;
+      }
+    }
+    return majority;
+  }
 }

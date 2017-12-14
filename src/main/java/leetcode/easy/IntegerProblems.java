@@ -1,10 +1,16 @@
 package leetcode.easy;
 
+import java.math.BigInteger;
+
 public class IntegerProblems {
   public static void main(String[] args) {
     IntegerProblems problems = new IntegerProblems();
-    for (int i = 1; i < 100 * 10; i++) {
-      System.out.println(String.format("%1$5d == %2$s", i, problems.convertToTitle(i)));
+    BigInteger result = BigInteger.valueOf(1);
+    for (int i = 1; i < 60; i++) {
+      String s = problems.convertToTitle(i);
+      result = result.multiply(BigInteger.valueOf(i));
+      System.out.println(String.format("%1$5d %3$5d == %2$s n!=%4$d", i, problems.convertToTitle(i),
+          problems.titleToNumber(s), result));
     }
   }
 
@@ -99,5 +105,29 @@ public class IntegerProblems {
       }
     }
     return sb.reverse().toString();
+  }
+
+  /**
+   * 上面问题的逆向
+   */
+  public int titleToNumber(String s) {
+    int flag = 'A' - 1, result = 0;
+    for (int i = 0; i < s.length(); i++) {
+      result = result * 26 + s.charAt(i) - flag;
+    }
+
+    return result;
+  }
+
+  /**
+   * 求n的阶乘后面有几个0（只有碰到5的倍数会产生指数个0）
+   */
+  public int trailingZeroes(int n) {
+    int extra = 0;
+    while (n > 0) {
+      extra += n / 5;
+      n = n / 5;
+    }
+    return extra;
   }
 }
