@@ -271,4 +271,29 @@ public class ArrayProblems {
     }
     return majority;
   }
+
+  /**
+   * 数列元素向右平移k位
+   */
+  public void rotate(int[] nums, int k) {
+    k %= nums.length;
+    int l = 0, r = nums.length - 1;
+    reverseArray(nums, l, r);
+    reverseArray(nums, l, k - 1);
+    reverseArray(nums, k, r);
+  }
+
+  private void reverseArray(int[] nums, int l, int r) {
+    while (l < r) {
+      swap(nums, l, r);
+      l++;
+      r--;
+    }
+  }
+
+  private void swap(int[] nums, int a, int b) {
+    int t = nums[a];
+    nums[a] = nums[b];
+    nums[b] = t;
+  }
 }
