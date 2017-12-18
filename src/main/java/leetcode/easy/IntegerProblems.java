@@ -7,10 +7,7 @@ public class IntegerProblems {
     IntegerProblems problems = new IntegerProblems();
     BigInteger result = BigInteger.valueOf(1);
     for (int i = 1; i < 60; i++) {
-      String s = problems.convertToTitle(i);
-      result = result.multiply(BigInteger.valueOf(i));
-      System.out.println(String.format("%1$5d %3$5d == %2$s n!=%4$d", i, problems.convertToTitle(i),
-          problems.titleToNumber(s), result));
+      System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
     }
   }
 
@@ -161,15 +158,17 @@ public class IntegerProblems {
   }
 
   /**
-   * 是否是快乐数字（各位数字的平方之和最终为1，如果进入一种循环则）
+   * 是否是快乐数字（各位数字的平方之和最终为1，否则进入一种循环）
    */
   public boolean isHappy(int n) {
-    while (n > 1) {
-      int t = sumSquareDigit(n);
-      if (t == 1) return true;
-      if (t == n) return false;
-    }
-    return false;
+    int f, s;
+    f = s = n;
+    do {
+      s = sumSquareDigit(s);
+      f = sumSquareDigit(f);
+      f = sumSquareDigit(f);
+    } while (f != s);
+    return f == 1;
   }
 
   private int sumSquareDigit(int n) {
@@ -180,5 +179,33 @@ public class IntegerProblems {
       n = n / 10;
     }
     return result;
+  }
+
+  /**
+   * 求小于给定数字的质数个数
+   */
+  public int countPrimes(int n) {
+
+    boolean[] notPrime = new boolean[n];
+    int count = 0;
+    for (int i = 2; i < n; i++) {
+      if (!notPrime[i]) {
+        count++;
+        for (int j = 2; i * j < n; j++) {
+          notPrime[i * j] = true;
+        }
+      }
+    }
+
+    return count;
+  }
+
+  public boolean isPrime(int n) {
+    if (n < 2) return false;
+    if (n == 2 || n == 3) return true;
+    for (int i = 2; i < (n < 8 ? n : Math.sqrt(n) + 1); i++) {
+      if (n % i == 0) return false;
+    }
+    return true;
   }
 }

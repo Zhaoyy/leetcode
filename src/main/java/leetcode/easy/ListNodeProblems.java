@@ -117,6 +117,30 @@ public class ListNodeProblems {
     return len;
   }
 
+  /**
+   * 除去链表中值为给定val的节点。
+   */
+  public ListNode removeElements(ListNode head, int val) {
+    ListNode result = null, pre = null;
+    while (head != null) {
+      if (head.val != val) {
+        result = pre = head;
+        break;
+      }
+      head = head.next;
+    }
+
+    while (pre != null && pre.next != null) {
+      if (pre.next.val == val) {
+        pre.next = pre.next.next;
+      } else {
+        pre = pre.next;
+      }
+    }
+
+    return result;
+  }
+
   public static class ListNode {
     int val;
     ListNode next;
