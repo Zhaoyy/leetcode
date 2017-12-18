@@ -130,4 +130,55 @@ public class IntegerProblems {
     }
     return extra;
   }
+
+  /**
+   * 整数二进制反转（参数看做无符号整数）
+   */
+  public int reverseBits(int n) {
+    int result = 0;
+    // 32bit
+    for (int i = 0; i < 32; i++) {
+      result += n & 0x1;
+      n >>>= 1;
+      if (i < 31) {
+        result <<= 1;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * 返回无符号整数中二进制1的个数
+   */
+  public int hammingWeight(int n) {
+    int result = 0;
+    for (int i = 0; i < 32; i++) {
+      result += n & 0x1;
+      n >>>= 1;
+    }
+    return result;
+  }
+
+  /**
+   * 是否是快乐数字（各位数字的平方之和最终为1，如果进入一种循环则）
+   */
+  public boolean isHappy(int n) {
+    while (n > 1) {
+      int t = sumSquareDigit(n);
+      if (t == 1) return true;
+      if (t == n) return false;
+    }
+    return false;
+  }
+
+  private int sumSquareDigit(int n) {
+    int result = 0;
+    while (n > 0) {
+      int t = n % 10;
+      result += t * t;
+      n = n / 10;
+    }
+    return result;
+  }
 }

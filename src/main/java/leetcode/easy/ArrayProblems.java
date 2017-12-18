@@ -296,4 +296,17 @@ public class ArrayProblems {
     nums[a] = nums[b];
     nums[b] = t;
   }
+
+  /**
+   * 正整数数列，不能取相邻数值，求最大和
+   */
+  public int rob(int[] nums) {
+    int preY = 0, preN = 0, temp;
+    for (int n : nums) {
+      temp = preN;
+      preN = Math.max(preN, preY + n);
+      preY = temp;
+    }
+    return preN;
+  }
 }
