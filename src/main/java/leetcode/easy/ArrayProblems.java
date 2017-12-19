@@ -1,6 +1,9 @@
 package leetcode.easy;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class ArrayProblems {
 
@@ -308,5 +311,61 @@ public class ArrayProblems {
       preY = temp;
     }
     return preN;
+  }
+
+  /**
+   * 数组是否存在重复的数字
+   */
+  public boolean containsDuplicate(int[] nums) {
+
+    Set<Integer> set = new HashSet<>();
+
+    for (int n : nums) {
+      if (set.contains(n)) return true;
+      set.add(n);
+    }
+
+    return false;
+  }
+
+  public boolean containsDuplicateBetter(int[] nums) {
+    // empty array or only one element
+    if (nums == null || nums.length < 2) return false;
+    // found max&min in array
+    int max = nums[0], min = nums[0];
+
+    for (int i = 1; i < nums.length; i++) {
+      if (max < nums[i]) max = nums[i];
+      if (min > nums[i]) min = nums[i];
+    }
+
+    // if the array's length is one more than the difference between the max & min, return true.
+    if (max - min + 1 < nums.length) return true;
+
+    boolean[] set = new boolean[max - min + 1];
+    for (int n : nums) {
+      if (set[n - min]) return true;
+      set[n - min] = true;
+    }
+    return false;
+  }
+
+  /**
+   * 数组中是否存在相同的元素，且距离不超过k
+   */
+  public boolean containsNearbyDuplicate(int[] nums, int k) {
+    // empty array or only one element
+    if (nums == null || nums.length < 2) return false;
+    Map<Integer, Integer> set = new HashMap<>(nums.length);
+
+    for (int i = 0; i < nums.length; i++) {
+      int n = nums[i];
+      if (set.containsKey(n) && i - set.get(n) <= k) {
+        return true;
+      }
+      set.put(n, i);
+    }
+
+    return false;
   }
 }

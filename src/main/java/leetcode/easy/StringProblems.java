@@ -1,5 +1,8 @@
 package leetcode.easy;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Stack;
 
 public class StringProblems {
@@ -215,5 +218,24 @@ public class StringProblems {
       return b - 65 == a - 97;
     }
     return false;
+  }
+
+  /**
+   * 判断两个单词是否结构相同
+   */
+  public boolean isIsomorphic(String s, String t) {
+    if (s == null || t == null || s.length() != t.length()) return false;
+    Map<Integer, Integer> mapS = new HashMap<>();
+    Map<Integer, Integer> mapT = new HashMap<>();
+    for (int i = 0; i < s.length(); i++) {
+      int cS = s.charAt(i);
+      int cT = t.charAt(i);
+      if (!Objects.equals(mapS.get(cS), mapT.get(cT))) return false;
+
+      mapS.put(cS, i);
+      mapT.put(cT, i);
+    }
+
+    return true;
   }
 }

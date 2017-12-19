@@ -1,19 +1,22 @@
 package leetcode.easy;
 
-public class ListNodeProblems {
-  public int val;
-  public ListNodeProblems next;
+import java.util.Stack;
 
-  public ListNodeProblems(int val) {
-    this.val = val;
+public class ListNodeProblems {
+
+  public static void main(String[] args) {
+    ListNode root = new ListNode(1);
+    root.next = new ListNode(2);
+    ListNodeProblems problems = new ListNodeProblems();
+    problems.reverseList(root);
   }
 
-  public ListNodeProblems mergeTwoLists(ListNodeProblems l1, ListNodeProblems l2) {
-    ListNodeProblems head = null;
-    ListNodeProblems current = null;
+  public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode head = null;
+    ListNode current = null;
 
     while (l1 != null && l2 != null) {
-      ListNodeProblems temp;
+      ListNode temp;
       if (l1.val < l2.val) {
         temp = l1;
         l1 = l1.next;
@@ -139,6 +142,24 @@ public class ListNodeProblems {
     }
 
     return result;
+  }
+
+  public ListNode reverseList(ListNode head) {
+    Stack<ListNode> stack = new Stack<>();
+    while (head != null) {
+      stack.push(head);
+      head = head.next;
+    }
+    ListNode result = new ListNode(0);
+    head = result;
+    while (!stack.empty()) {
+      ListNode node = stack.pop();
+      node.next = null;
+      head.next = node;
+      head = node;
+    }
+
+    return result.next;
   }
 
   public static class ListNode {
