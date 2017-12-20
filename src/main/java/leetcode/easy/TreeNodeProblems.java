@@ -160,6 +160,43 @@ public class TreeNodeProblems {
     }
   }
 
+  public TreeNode invertTree(TreeNode root) {
+    invertChild(root);
+    return root;
+  }
+
+  private void invertChild(TreeNode node) {
+    if (node != null) {
+      TreeNode t = node.left;
+      node.left = node.right;
+      node.right = t;
+      invertChild(node.left);
+      invertChild(node.right);
+    }
+  }
+
+  /**
+   * 二分查找树中找到给定的两个节点的最小共同祖先
+   */
+  public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if (p.val > q.val) {
+      return foundLowestCommonAncestor(root, q, p);
+    } else {
+      return foundLowestCommonAncestor(root, p, q);
+    }
+  }
+
+  private TreeNode foundLowestCommonAncestor(TreeNode node, TreeNode min, TreeNode max) {
+    if (node.val == min.val
+        || node.val == max.val || (node.val > min.val && node.val < max.val)) {
+      return node;
+    } else if (node.val < min.val) {
+      return foundLowestCommonAncestor(node.right, min, max);
+    } else {
+      return foundLowestCommonAncestor(node.left, min, max);
+    }
+  }
+
   public static class TreeNode {
     int val;
     TreeNode left;

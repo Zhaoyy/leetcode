@@ -208,4 +208,32 @@ public class IntegerProblems {
     }
     return true;
   }
+
+  /**
+   * 判断一个数字是否等于由两个数字得到平方和
+   */
+  public boolean isPowerSumOfTwo(int n) {
+    int m = n > 2 ? n / 2 : n;
+    for (int i = 0; i < m; i++) {
+      int t = n - i * i;
+      int r = (int) Math.sqrt(t);
+
+      if (t == r * r) return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * 判断一个数字是否是2的n次幂
+   */
+  public boolean isPowerOfTwo(int n) {
+    if (n <= 0) return false;
+    while (n > 0) {
+      if (n == 1 || n == 2) return true;
+      if (n % 2 > 0) return false;
+      n = n / 2;
+    }
+    return true;
+  }
 }

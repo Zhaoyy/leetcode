@@ -162,6 +162,31 @@ public class ListNodeProblems {
     return result.next;
   }
 
+  /**
+   * 判断一个链表是否回文
+   */
+  public boolean isPalindrome(ListNode head) {
+    ListNode fast, slow;
+    fast = slow = head;
+    // fast每次前进两次，slow每次前进一次，这样fast到达尾部，slow会到达中部
+    while (fast != null && fast.next != null) {
+      fast = fast.next.next;
+      slow = slow.next;
+    }
+    // 奇数个元素的情况下, 前移slow
+    if (fast != null) slow = slow.next;
+    fast = head;
+
+    slow = reverseList(slow);
+
+    while (fast != null && slow != null) {
+      if (fast.val != slow.val) return false;
+      fast = fast.next;
+      slow = slow.next;
+    }
+    return true;
+  }
+
   public static class ListNode {
     int val;
     ListNode next;
