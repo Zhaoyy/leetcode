@@ -238,4 +238,26 @@ public class StringProblems {
 
     return true;
   }
+
+  /**
+   * 判断两个单词是否是相同字母词（由相同字母构成）
+   */
+  public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) return false;
+    int[] map = new int[26];
+
+    for (int i = 0; i < s.length(); i++) {
+      char cS = s.charAt(i);
+      char cT = t.charAt(i);
+      //if (cS == cT) return false;
+      map[cS - 'a']++;
+      map[cT - 'a']--;
+    }
+
+    for (int n : map) {
+      if (n != 0) return false;
+    }
+
+    return true;
+  }
 }

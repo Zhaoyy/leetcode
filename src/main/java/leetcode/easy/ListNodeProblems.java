@@ -187,6 +187,16 @@ public class ListNodeProblems {
     return true;
   }
 
+  /**
+   * 删除链表中给定的节点（给定的节点不会是最后一个节点）。
+   *
+   * 因为单向链表中我们无法获得上一个节点，多以我们可以通过复制下个节点的数据到当前节点，达到删除的效果。
+   */
+  public void deleteNode(ListNode node) {
+    node.val = node.next.val;
+    node.next = node.next.next;
+  }
+
   public static class ListNode {
     int val;
     ListNode next;

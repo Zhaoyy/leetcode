@@ -197,6 +197,35 @@ public class TreeNodeProblems {
     }
   }
 
+  /**
+   * 返回二叉树所有从根节点到叶子节点的路径集合
+   */
+  public List<String> binaryTreePaths(TreeNode root) {
+    if (root == null) return null;
+    List<String> result = new ArrayList<>();
+    treePah(root, new StringBuilder(root.val), result);
+    return result;
+  }
+
+  private void treePah(TreeNode node, StringBuilder sb, List<String> result) {
+    if (node.left == null && node.right == null) {
+      if (sb.length() > 0) result.add(sb.toString());
+    } else {
+
+      if (node.left != null) {
+        StringBuilder _sb = new StringBuilder(sb.toString());
+        _sb.append("->").append(node.left.val);
+
+        treePah(node.left, _sb, result);
+      }
+
+      if (node.right != null) {
+        sb.append("->").append(node.right.val);
+        treePah(node.right, sb, result);
+      }
+    }
+  }
+
   public static class TreeNode {
     int val;
     TreeNode left;
