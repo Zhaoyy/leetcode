@@ -1,14 +1,13 @@
 package leetcode.easy;
 
-import java.math.BigInteger;
-
 public class IntegerProblems {
   public static void main(String[] args) {
     IntegerProblems problems = new IntegerProblems();
-    BigInteger result = BigInteger.valueOf(1);
-    for (int i = 1; i < 60; i++) {
-      System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
-    }
+    //BigInteger result = BigInteger.valueOf(1);
+    //for (int i = 1; i < 60; i++) {
+    //  System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
+    //}
+    System.out.println(problems.firstBadVersion(6));
   }
 
   /**
@@ -235,5 +234,71 @@ public class IntegerProblems {
       n = n / 2;
     }
     return true;
+  }
+
+  /**
+   * 把数字各位相加，如果结果大于9则继续处理，找到找到不大于9的结果。
+   */
+  public int addDigits(int num) {
+    int result;
+    do {
+      result = sumDigits(num);
+      num = result;
+    } while (result > 9);
+    return result;
+  }
+
+  public int addDigitsBetter(int num) {
+    return (num - 1) % 9 + 1;
+  }
+
+  private int sumDigits(int num) {
+    int result = 0;
+    while (num > 0) {
+      result += num % 10;
+      num /= 10;
+    }
+
+    return result;
+  }
+
+  /**
+   * 判断一个数字的质因数是否只有2,3,5（数字1也满足条件）。
+   */
+  public boolean isUgly(int num) {
+    if (num < 1) return false;
+    if (num == 1) return true;
+    do {
+      if (num % 2 == 0) {
+        num = num / 2;
+      } else if (num % 3 == 0) {
+        num = num / 3;
+      } else if (num % 5 == 0) {
+        num = num / 5;
+      } else {
+        return false;
+      }
+    } while (num > 5);
+    return true;
+  }
+
+  /**
+   * 找出第一次失败的版本，一旦失败后面的版本都会失败。
+   */
+  public int firstBadVersion(int n) {
+    int l = 1, r = n;
+    while (l < r) {
+      int m = l / 2 + r / 2 + (r % 2 == 0 ? 1 : 0);
+      if (isBadVersion(m)) {
+        r = m - 1;
+      } else {
+        l = m + 1;
+      }
+    }
+    return isBadVersion(r) ? r : r + 1;
+  }
+
+  private boolean isBadVersion(int n) {
+    return n > 5;
   }
 }

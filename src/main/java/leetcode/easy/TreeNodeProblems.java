@@ -203,7 +203,7 @@ public class TreeNodeProblems {
   public List<String> binaryTreePaths(TreeNode root) {
     if (root == null) return null;
     List<String> result = new ArrayList<>();
-    treePah(root, new StringBuilder(root.val), result);
+    treePah(root, new StringBuilder(root.val + ""), result);
     return result;
   }
 

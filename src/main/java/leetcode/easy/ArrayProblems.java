@@ -368,4 +368,34 @@ public class ArrayProblems {
 
     return false;
   }
+
+  /**
+   * 无序数组int[n]中存在不重复的0-n数字，求数组遗漏的数字
+   */
+  public int missingNumber(int[] nums) {
+    int n = nums.length;
+    if (n <= 0) return 0;
+    n = (n + 1) * n / 2;
+
+    for (int t : nums) {
+      n -= t;
+    }
+    return n;
+  }
+
+  /**
+   * 把数组中的0移动到数组末尾
+   */
+  public void moveZeroes(int[] nums) {
+    int r = nums.length - 1;
+    for (int i = r; i >= 0; i--) {
+      if (nums[i] == 0) {
+        if (i != r) {
+          System.arraycopy(nums, i + 1, nums, i, r - i);
+          nums[r] = 0;
+        }
+        r--;
+      }
+    }
+  }
 }
