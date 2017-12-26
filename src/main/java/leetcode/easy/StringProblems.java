@@ -7,6 +7,11 @@ import java.util.Stack;
 
 public class StringProblems {
 
+  public static void main(String[] args) {
+    StringProblems problems = new StringProblems();
+    System.out.println(problems.wordPattern("abba", "dog cat cat dog"));
+  }
+
   /**
    * 判断由'(', ')', '{', '}', '[' and ']'组成的字符串是否匹配。 "()" and "()[]{}" are all valid but "(]" and
    * "([)]" are not
@@ -258,6 +263,46 @@ public class StringProblems {
       if (n != 0) return false;
     }
 
+    return true;
+  }
+
+  /**
+   * 判断str是否符合pattern的样式
+   */
+  public boolean wordPattern(String pattern, String str) {
+
+    int patternCount = 0;
+    int[] patternMap = new int[26];
+    for (int i = 0; i < pattern.length(); i++) {
+      int index = pattern.charAt(i) - 'a';
+      if (patternMap[index] == 0) patternCount++;
+      patternMap[index] += i + 1;
+    }
+
+    String[] words = str.split(" ");
+    Map<String, Integer> map = new HashMap<>();
+
+    for (int i = 0; i < words.length; i++) {
+      if (map.containsKey(words[i])) {
+        map.put(words[i], map.get(words[i]) + i + 1);
+      } else {
+        map.put(words[i], i + 1);
+      }
+    }
+
+    if (map.entrySet().size() != patternCount) return false;
+
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+      boolean found = false;
+      for (int n : patternMap) {
+        if (n == entry.getValue()) {
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) return false;
+    }
     return true;
   }
 }

@@ -301,4 +301,22 @@ public class IntegerProblems {
   private boolean isBadVersion(int n) {
     return n > 5;
   }
+
+  /**
+   * https://leetcode.com/problems/nim-game/description/
+   *
+   * 推测可发现如果n为4的倍数，则不能保证成功。
+   */
+  public boolean canWinNim(int n) {
+    return n % 4 != 0;
+  }
+
+  /**
+   * 判断一个数字是否是3的幂
+   *
+   * 1162261467是int中最大的3的幂
+   */
+  public boolean isPowerOfThree(int n) {
+    return (n > 0 && 1162261467 % n == 0);
+  }
 }
