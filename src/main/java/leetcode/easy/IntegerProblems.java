@@ -319,4 +319,33 @@ public class IntegerProblems {
   public boolean isPowerOfThree(int n) {
     return (n > 0 && 1162261467 % n == 0);
   }
+
+  /**
+   * 1073741824
+   */
+  public boolean isPowerOfFour(int num) {
+    if (num <= 0) return false;
+    if (num == 1) return true;
+
+    if ((num & 3) > 0) return false;
+
+    int pre = 0;
+    while (num > 0) {
+
+      int t = num & 1;
+      num = num >>> 1;
+      if (t > 0 && num > 0) return false;
+      if (t > 0) {
+        return pre % 2 == 0;
+      } else {
+        pre++;
+      }
+    }
+
+    return true;
+  }
+
+  public boolean isPowerOfFourBetter(int num) {
+    return num > 0 && (num & (num - 1)) == 0 && (num - 1) % 3 == 0;
+  }
 }

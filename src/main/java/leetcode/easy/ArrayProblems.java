@@ -1,7 +1,10 @@
 package leetcode.easy;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -397,5 +400,69 @@ public class ArrayProblems {
         r--;
       }
     }
+  }
+
+  /**
+   * 找出两个数组中相同的元素（不重复）
+   */
+  public int[] intersection(int[] nums1, int[] nums2) {
+    HashMap<Integer, Integer> map = new HashMap<>();
+
+    for (int n : nums1) {
+      map.put(n, 1);
+    }
+
+    List<Integer> result = new ArrayList<>();
+    for (int n : nums2) {
+      if (map.containsKey(n) && map.get(n) == 1) {
+        result.add(n);
+        map.put(n, 2);
+      }
+    }
+
+    int[] r = new int[result.size()];
+    for (int i = 0; i < result.size(); i++) {
+      r[i] = result.get(i);
+    }
+    return r;
+  }
+
+  public int[] intersectionJava8(int[] nums1, int[] nums2) {
+    return Arrays.stream(nums1).distinct()
+        .filter(value -> Arrays.stream(nums2).distinct().anyMatch(value1 -> value == value1))
+        .toArray();
+  }
+
+  /**
+   * 找出两个数组中相同的元素（包括重复）
+   */
+  public int[] intersect(int[] nums1, int[] nums2) {
+    Arrays.sort(nums1);
+    Arrays.sort(nums2);
+
+    if (nums1.length < nums2.length) {
+      int[] temp = nums1;
+      nums1 = nums2;
+      nums2 = temp;
+    }
+
+    List<Integer> list = new ArrayList<>();
+    int i = 0;
+    for (int n : nums1) {
+      for (int j = i; j < nums2.length; j++) {
+        if (n == nums2[j]) {
+          list.add(n);
+          i = j + 1;
+          break;
+        }
+        if (n < nums2[j]) break;
+      }
+    }
+
+    int[] r = new int[list.size()];
+    for (int j = 0; j < list.size(); j++) {
+      r[j] = list.get(j);
+    }
+    return r;
   }
 }

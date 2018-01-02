@@ -305,4 +305,55 @@ public class StringProblems {
     }
     return true;
   }
+
+  public String reverseString(String s) {
+    if (s == null) return null;
+
+    char[] ss = s.toCharArray();
+    int l = 0, r = ss.length - 1;
+
+    while (l < r) {
+      char t = ss[l];
+      ss[l] = ss[r];
+      ss[r] = t;
+      l++;
+      r--;
+    }
+
+    return String.valueOf(ss);
+  }
+
+  public String reverseVowels(String s) {
+    if (s == null) return null;
+
+    char[] ss = s.toCharArray();
+    int l = 0, r = ss.length - 1;
+
+    while (l < r) {
+      char cl = ss[l];
+      if (!isVowel(cl)) {
+        l++;
+        continue;
+      }
+
+      char cr = ss[r];
+      if (!isVowel(cr)) {
+        r--;
+        continue;
+      }
+
+      ss[l] = cr;
+      ss[r] = cl;
+
+      l++;
+      r--;
+    }
+
+    return String.valueOf(ss);
+  }
+
+  private boolean isVowel(char c) {
+    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E'
+        || c == 'I' || c == 'O' || c == 'U';
+  }
 }
