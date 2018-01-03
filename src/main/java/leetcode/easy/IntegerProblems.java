@@ -7,7 +7,7 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
     //}
-    System.out.println(problems.firstBadVersion(6));
+    System.out.println(problems.guessNumber(2126753390));
   }
 
   /**
@@ -347,5 +347,58 @@ public class IntegerProblems {
 
   public boolean isPowerOfFourBetter(int num) {
     return num > 0 && (num & (num - 1)) == 0 && (num - 1) % 3 == 0;
+  }
+
+  /**
+   * 牛顿迭代法求一个数的开方
+   */
+  public boolean isPerfectSquare(int num) {
+    float val = num;
+    float last;
+    do {
+      last = val;
+      val = (val + num / val) / 2;
+    } while (Math.abs(val - last) > 1);
+
+    int r = (int) val;
+    return r * r == num;
+  }
+
+  /**
+   * 位运算求和
+   */
+  public int getSum(int a, int b) {
+    if (b == 0) return a;
+
+    int c = a ^ b;
+    int d = (a & b) << 1;
+    return getSum(c, d);
+  }
+
+  public int guessNumber(int n) {
+    int l = 1, r = n;
+    int mid = getMid(l, r);
+    while (guess(mid) != 0 && r - l > 1) {
+      if (guess(mid) > 0) {
+        l = mid;
+      } else if (guess(mid) < 0) {
+        r = mid;
+      }
+      mid = getMid(l, r);
+    }
+
+    return guess(mid) == 0 ? mid : guess(l) == 0 ? l : r;
+  }
+
+  private int getMid(int l, int r) {
+    int s = l + r;
+    int t = s / 2;
+    return s % 2 == 0 ? t : t + 1;
+  }
+
+  private int guess(int n) {
+    int t = 1702766719;
+    if (n == t) return 0;
+    return n < t ? 1 : -1;
   }
 }
