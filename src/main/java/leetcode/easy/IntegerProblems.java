@@ -393,7 +393,7 @@ public class IntegerProblems {
   private int getMid(int l, int r) {
     int s = l + r;
     int t = s / 2;
-    return s % 2 == 0 ? t : t + 1;
+    return l / 2 + r / 2 + 1;
   }
 
   private int guess(int n) {
@@ -401,4 +401,11 @@ public class IntegerProblems {
     if (n == t) return 0;
     return n < t ? 1 : -1;
   }
+
+  /**
+   * 返回数列1,2,3,4,5,6,7,8,9,10.....中索引所在的数字（10被看做两个数字，同理100为三个数字）
+   */
+  //public int findNthDigit(int n) {
+  //
+  //}
 }

@@ -1,5 +1,6 @@
 package leetcode.easy;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,7 +10,7 @@ public class StringProblems {
 
   public static void main(String[] args) {
     StringProblems problems = new StringProblems();
-    System.out.println(problems.wordPattern("abba", "dog cat cat dog"));
+    System.out.println(problems.canConstruct("fihjjjjei", "hjibagacbhadfaefdjaeaebgi"));
   }
 
   /**
@@ -355,5 +356,100 @@ public class StringProblems {
   private boolean isVowel(char c) {
     return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E'
         || c == 'I' || c == 'O' || c == 'U';
+  }
+
+  /**
+   * 判断magazine中的的字母能否组成ransomNote单词（每个字母只能使用一次）
+   */
+  public boolean canConstruct(String ransomNote, String magazine) {
+    if (magazine.length() < ransomNote.length()) return false;
+    char[] ransom = ransomNote.toCharArray();
+    char[] mag = magazine.toCharArray();
+    Arrays.sort(ransom);
+    Arrays.sort(mag);
+    int j = 0;
+    for (int i = 0; i < ransom.length; i++) {
+      char r = ransom[i];
+      for (; j < mag.length; j++) {
+        if (mag[j] == r) {
+          j++;
+          break;
+        }
+      }
+
+      if ((ransom.length - i > mag.length - j + 1) || mag[j - 1] != r) return false;
+    }
+
+    return true;
+  }
+
+  public boolean canConstructBetter(String ransomNote, String magazine) {
+    int[] map = new int[26];
+
+    for (char c : magazine.toCharArray()) map[c - 'a']++;
+    for (char c : ransomNote.toCharArray()) {
+      if (--map[c - 'a'] < 0) return false;
+    }
+    return true;
+  }
+
+  /**
+   * 返回字符串中第一个不重复的字母索引（没有返回-1）
+   */
+  public int firstUniqChar(String s) {
+    int[] map = new int[26];
+
+    for (int i = 0; i < s.length(); i++) {
+      char c = s.charAt(i);
+      int index = c - 'a';
+      if (map[index] > 0) {
+        map[index] = Integer.MAX_VALUE;
+      } else {
+        map[index] = i + 1;
+      }
+    }
+
+    Arrays.sort(map);
+
+    for (int index : map) {
+      if (index > 0) return index - 1;
+    }
+    return -1;
+  }
+
+  public int firstUniqCharBetter(String s) {
+    int result = s.length();
+    for (char c = 'a'; c <= 'z'; c++) {
+      if (s.indexOf(c) > -1 && s.indexOf(c) == s.lastIndexOf(c)) {
+        result = Math.min(s.indexOf(c), result);
+      }
+    }
+
+    return result == s.length() ? -1 : result;
+  }
+
+  /**
+   * t是由s中的字母混排之后又随即添加了一个字母组成，返回这个字母
+   */
+  public char findTheDifference(String s, String t) {
+    int[] map = new int[26];
+    for (char c : s.toCharArray()) map[c - 'a']++;
+    for (char c : t.toCharArray()) map[c - 'a']--;
+    for (int i = 0; i < map.length; i++) {
+      if (map[i] < 0) return (char) ('a' + i);
+    }
+    return ' ';
+  }
+
+  /**
+   * 异或
+   */
+  public char findTheDifferenceBetter(String s, String t) {
+    int result = 0;
+    for (int i = 0; i < s.length(); i++) {
+      result = result ^ s.charAt(i) ^ t.charAt(i);
+    }
+
+    return (char) (result ^ t.charAt(s.length()));
   }
 }
