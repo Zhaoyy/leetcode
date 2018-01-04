@@ -7,7 +7,30 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
     //}
-    System.out.println(problems.guessNumber(2126753390));
+    System.out.println(problems.findNthDigit(2147483647));
+  }
+
+  /**
+   * 返回数列1,2,3,4,5,6,7,8,9,10.....中索引所在的数字（10被看做两个数字，同理100为三个数字）
+   */
+  public int findNthDigit(int n) {
+
+    if (n > 0 && n < 10) return n;
+    int i = 1, rate = 9, startIndex = 0;
+
+    do {
+      startIndex += rate * i;
+      rate = rate * 10;
+      i++;
+    } while (rate < 900000000 && n - startIndex > rate * i);
+
+    startIndex++;
+
+    int r = n - startIndex;
+    int t = r % i;
+    r = (int) (r / i + Math.pow(10, i - 1));
+
+    return String.valueOf(r).charAt(t) - '0';
   }
 
   /**
@@ -401,11 +424,4 @@ public class IntegerProblems {
     if (n == t) return 0;
     return n < t ? 1 : -1;
   }
-
-  /**
-   * 返回数列1,2,3,4,5,6,7,8,9,10.....中索引所在的数字（10被看做两个数字，同理100为三个数字）
-   */
-  //public int findNthDigit(int n) {
-  //
-  //}
 }
