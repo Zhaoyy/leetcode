@@ -1,5 +1,8 @@
 package leetcode.easy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IntegerProblems {
   public static void main(String[] args) {
     IntegerProblems problems = new IntegerProblems();
@@ -8,6 +11,50 @@ public class IntegerProblems {
     //  System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
     //}
     System.out.println(problems.findNthDigit(2147483647));
+  }
+
+  /**
+   * 有4个LED灯（分别表示1,2,4,8）用来表示12个小时，有6个LED灯（1,2,4,8,16,32）来表示60分钟。 求有num个灯亮时，能够表示哪几种时间。
+   * 使用DTS-深度优先查找算法。
+   */
+  public List<String> readBinaryWatch(int num) {
+    List<String> result = new ArrayList<>();
+    boolean[] chosen = new boolean[10];
+    int[] cache = new int[] {8, 4, 2, 1, 32, 16, 8, 4, 2, 1};
+    dts(result, chosen, cache, 0, num);
+
+    return result;
+  }
+
+  private void dts(List<String> res, boolean[] chosen, int[] cache, int start, int k) {
+    if (k > 8) return;
+
+    if (k == 0) {
+      int h = 0, m = 0;
+      for (int i = 0; i < 10; i++) {
+        if (chosen[i]) {
+          if (i < 4) {
+            h += cache[i];
+          } else {
+            m += cache[i];
+          }
+        }
+      }
+
+      if (h < 12 && m < 60) {
+        if (m < 10) {
+          res.add(h + ":0" + m);
+        } else {
+          res.add(h + ":" + m);
+        }
+      }
+    } else {
+      for (int i = start; i < 11 - k; i++) {
+        chosen[i] = true;
+        dts(res, chosen, cache, i + 1, k - 1);
+        chosen[i] = false;
+      }
+    }
   }
 
   /**

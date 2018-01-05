@@ -9,7 +9,31 @@ public class TreeNodeProblems {
   public static void main(String[] args) {
     TreeNodeProblems problems = new TreeNodeProblems();
     TreeNode root = new TreeNode(1);
-    System.out.println(problems.isSymmetric(root));
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.right.right = new TreeNode(4);
+    System.out.println(problems.sumOfLeftLeaves(root));
+  }
+
+  /**
+   * 统计二叉树所有左叶子节点的和
+   */
+  public int sumOfLeftLeaves(TreeNode root) {
+    return foundLeftLeave(root);
+  }
+
+  private int foundLeftLeave(TreeNode node) {
+    if (node == null) return 0;
+    if (node.left == null && node.right == null) {
+      return node.val;
+    } else {
+      int l = foundLeftLeave(node.left);
+      if (node.right != null && node.right.left == null && node.right.right == null) {
+        return l;
+      } else {
+        return l + foundLeftLeave(node.right);
+      }
+    }
   }
 
   public boolean isSameTree(TreeNode p, TreeNode q) {
