@@ -13,6 +13,26 @@ public class IntegerProblems {
     System.out.println(problems.toHex(-1));
   }
 
+  /**
+   * 3的倍数输出Fizz，5的倍数输出Buzz，同时满足输出FizzBuzz
+   */
+  public List<String> fizzBuzz(int n) {
+    String fizz = "Fizz", buzz = "Buzz";
+    List<String> result = new ArrayList<>();
+    for (int i = 1; i <= n; i++) {
+      if (i % 3 == 0 && i % 5 == 0) {
+        result.add(fizz + buzz);
+      } else if (i % 3 == 0) {
+        result.add(fizz);
+      } else if (i % 5 == 0) {
+        result.add(buzz);
+      } else {
+        result.add(String.valueOf(i));
+      }
+    }
+    return result;
+  }
+
   public String toHex(int num) {
 
     String result = "";

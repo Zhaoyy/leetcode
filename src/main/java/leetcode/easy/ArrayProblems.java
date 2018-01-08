@@ -11,6 +11,27 @@ import java.util.Set;
 public class ArrayProblems {
 
   /**
+   * 返回数组中第三大的数，如果不足三个则返回最大值
+   */
+  public int thirdMax(int[] nums) {
+    Integer a = nums[0], b = null, c = null;
+    for (int n : nums) {
+      if (n > a) {
+        c = b;
+        b = a;
+        a = n;
+      } else if ((b == null || n > b) && n != a) {
+        c = b;
+        b = n;
+      } else if ((c == null || n > c) && b != null && n != b && n != a) {
+        c = n;
+      }
+    }
+
+    return c != null ? c : a;
+  }
+
+  /**
    * 从数组中找到两者元素相加和为给定的数字。
    */
   public int[] towSum(int[] nums, int target) {

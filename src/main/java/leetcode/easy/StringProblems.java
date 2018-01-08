@@ -10,7 +10,56 @@ public class StringProblems {
 
   public static void main(String[] args) {
     StringProblems problems = new StringProblems();
-    System.out.println(problems.canConstruct("fihjjjjei", "hjibagacbhadfaefdjaeaebgi"));
+    System.out.println(
+        problems.countSegments("Of all the gin joints in all the towns in all the world,   "));
+  }
+
+  /**
+   * 求给定字符串由空格间隔的部分数量
+   */
+  public int countSegments(String s) {
+    if (s == null || s.length() == 0) return 0;
+    int result = 0, last = s.charAt(0);
+    for (char c : s.toCharArray()) {
+      if (c == ' ' && last != ' ') result++;
+      last = c;
+    }
+
+    if (last != ' ') result++;
+
+    return result;
+  }
+
+  /**
+   * 求两个数字字符串的和
+   */
+  public String addStrings(String num1, String num2) {
+    if (num1.length() < num2.length()) {
+      String t = num1;
+      num1 = num2;
+      num2 = t;
+    }
+    String result = "";
+    boolean carry = false;
+    int diff = num1.length() - num2.length();
+    for (int i = num2.length() - 1; i >= 0; i--) {
+      int a = num2.charAt(i) - '0';
+      int b = num1.charAt(i + diff) - '0';
+      int sum = a + b;
+      if (carry) sum++;
+      carry = sum >= 10;
+      result = (sum % 10) + result;
+    }
+
+    for (int i = num1.length() - num2.length() - 1; i >= 0; i--) {
+      int sum = num1.charAt(i) - '0';
+      if (carry) sum++;
+      carry = sum >= 10;
+      result = (sum % 10) + result;
+    }
+
+    if (carry) result = '1' + result;
+    return result;
   }
 
   /**
