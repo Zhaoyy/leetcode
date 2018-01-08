@@ -10,7 +10,22 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
     //}
-    System.out.println(problems.findNthDigit(2147483647));
+    System.out.println(problems.toHex(-1));
+  }
+
+  public String toHex(int num) {
+
+    String result = "";
+    while (num != 0) {
+      result = getHexChar(num & 0xf) + result;
+      num = num >>> 4;
+    }
+
+    return result;
+  }
+
+  private char getHexChar(int digit) {
+    return (char) (digit < 10 ? '0' + digit : 'a' + digit - 10);
   }
 
   /**

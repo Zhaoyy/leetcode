@@ -14,6 +14,32 @@ public class StringProblems {
   }
 
   /**
+   * 求给定字符串中字母能够组成回文字符串的最大长度（包含大小写字母）。
+   */
+  public int longestPalindrome(String s) {
+    int[] upper = new int[26];
+    int[] lower = new int[26];
+
+    for (char c : s.toCharArray()) {
+      if (c <= 'Z') {
+        upper[c - 'A']++;
+      } else if (c <= 'z') lower[c - 'a']++;
+    }
+
+    int result = 0, extra = 0;
+    for (int n : upper) {
+      if (n > 0) result += n / 2;
+      if (n % 2 > 0) extra = 1;
+    }
+
+    for (int n : lower) {
+      if (n > 0) result += n / 2;
+      if (n % 2 > 0 && extra == 0) extra = 1;
+    }
+    return result * 2 + extra;
+  }
+
+  /**
    * 判断由'(', ')', '{', '}', '[' and ']'组成的字符串是否匹配。 "()" and "()[]{}" are all valid but "(]" and
    * "([)]" are not
    */
