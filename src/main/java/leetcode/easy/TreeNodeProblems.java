@@ -2,17 +2,46 @@ package leetcode.easy;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TreeNodeProblems {
 
   public static void main(String[] args) {
     TreeNodeProblems problems = new TreeNodeProblems();
     TreeNode root = new TreeNode(1);
-    root.left = new TreeNode(2);
-    root.right = new TreeNode(3);
-    root.right.right = new TreeNode(4);
-    System.out.println(problems.sumOfLeftLeaves(root));
+    root.left = new TreeNode(-2);
+    root.left.left = new TreeNode(1);
+    root.left.right = new TreeNode(3);
+    root.left.left.left = new TreeNode(-1);
+    root.right = new TreeNode(-3);
+    root.right.left = new TreeNode(-2);
+    System.out.println(problems.pathSum(root, 0));
+  }
+
+  /**
+   * 返回二叉树中所有路径中值的和等于给定数字的值
+   */
+  public int pathSum(TreeNode root, int sum) {
+    if (root == null) return 0;
+    Map<Integer, Integer> map = new HashMap<>();
+    map.put(0, 1);
+    return findSum(root, 0, sum, map);
+  }
+
+  private int findSum(TreeNode node, int sum, int target, Map<Integer, Integer> map) {
+    if (node == null) return 0;
+
+    sum += node.val;
+    int numPath2Current = map.getOrDefault(sum - target, 0);
+    map.put(sum, map.getOrDefault(sum, 0) + 1);
+
+    int res =
+        numPath2Current + findSum(node.left, sum, target, map) + findSum(node.right, sum, target,
+            map);
+    map.put(sum, map.get(sum) - 1);
+    return res;
   }
 
   /**
