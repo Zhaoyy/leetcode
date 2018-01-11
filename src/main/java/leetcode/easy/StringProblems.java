@@ -1,7 +1,9 @@
 package leetcode.easy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
@@ -11,7 +13,45 @@ public class StringProblems {
   public static void main(String[] args) {
     StringProblems problems = new StringProblems();
     System.out.println(
-        problems.countSegments("Of all the gin joints in all the towns in all the world,   "));
+        problems.findAnagrams("cbaebabacd", "abc"));
+  }
+
+  /**
+   * 返回s中p的相同字母异序词索引
+   */
+  public List<Integer> findAnagrams(String s, String p) {
+    if (s == null || s.length() < p.length()) return new ArrayList<>();
+    List<Integer> result = new ArrayList<>();
+    int n = s.length() - p.length();
+    for (int i = 0; i <= n; i++) {
+      String sub = s.substring(i, i + p.length());
+
+      if (isAnagram(sub, p)) result.add(i);
+    }
+
+    return result;
+  }
+
+  /**
+   * 判断两个单词是否是相同字母词（由相同字母构成）
+   */
+  public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) return false;
+    int[] map = new int[26];
+
+    for (int i = 0; i < s.length(); i++) {
+      char cS = s.charAt(i);
+      char cT = t.charAt(i);
+      //if (cS == cT) return false;
+      map[cS - 'a']++;
+      map[cT - 'a']--;
+    }
+
+    for (int n : map) {
+      if (n != 0) return false;
+    }
+
+    return true;
   }
 
   /**
@@ -315,28 +355,6 @@ public class StringProblems {
 
       mapS.put(cS, i);
       mapT.put(cT, i);
-    }
-
-    return true;
-  }
-
-  /**
-   * 判断两个单词是否是相同字母词（由相同字母构成）
-   */
-  public boolean isAnagram(String s, String t) {
-    if (s.length() != t.length()) return false;
-    int[] map = new int[26];
-
-    for (int i = 0; i < s.length(); i++) {
-      char cS = s.charAt(i);
-      char cT = t.charAt(i);
-      //if (cS == cT) return false;
-      map[cS - 'a']++;
-      map[cT - 'a']--;
-    }
-
-    for (int n : map) {
-      if (n != 0) return false;
     }
 
     return true;

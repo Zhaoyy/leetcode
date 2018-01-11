@@ -11,6 +11,42 @@ import java.util.Set;
 public class ArrayProblems {
 
   /**
+   * https://leetcode.com/problems/string-compression/description/
+   */
+  public int compress(char[] chars) {
+    int[] count = new int[127];
+
+    char last = chars[0];
+    StringBuilder sb = new StringBuilder();
+    for (char c : chars) {
+      if (c != last) {
+        int index = sb.length();
+        sb.append(last);
+        if (count[last] > 1) sb.append(count[last]);
+
+        for (; index < sb.length(); index++) {
+          chars[index] = sb.charAt(index);
+        }
+        count[last] = 0;
+      }
+      count[c]++;
+      last = c;
+    }
+
+    if (count[last] > 0) {
+      int index = sb.length();
+      sb.append(last);
+      if (count[last] > 1) sb.append(count[last]);
+
+      for (; index < sb.length(); index++) {
+        chars[index] = sb.charAt(index);
+      }
+    }
+
+    return sb.length();
+  }
+
+  /**
    * 返回数组中第三大的数，如果不足三个则返回最大值
    */
   public int thirdMax(int[] nums) {

@@ -10,7 +10,43 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
     //}
-    System.out.println(problems.toHex(-1));
+    System.out.println(problems.arrangeCoins(1804289383));
+  }
+
+  /**
+   * 给定n个硬币，进行排列，第n行有n个硬币，求满状态的行数。
+   */
+  public int arrangeCoins(int n) {
+    if (n <= 0) return 0;
+    if (n <= 2) return 1;
+
+    int l = 0, r = n, i;
+
+    while (true) {
+      i = (l + r) / 2;
+
+      if (i > 65535) i = 65535;
+
+      double t = 0.5 * i * i + 0.5 * i;
+      if (t > n) {
+        r = i;
+      } else if (t < n) {
+
+        if (i == 65535) break;
+
+        double m = 0.5 * i * i + 1.5 * i + 1.5;
+        if (m > n) {
+          break;
+        } else if (m == n) {
+          i = i + 1;
+          break;
+        } else {
+          l = i;
+        }
+      } else if (t == n) break;
+    }
+
+    return i;
   }
 
   /**

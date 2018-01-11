@@ -8,10 +8,13 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 public class TestClass {
 
   @Test public void calPowerOfFour() throws Exception {
-    int result = 1;
-    for (int i = 1; i < 100; i++) {
-      result *= 4;
-      System.out.println(result + "");
+    int result = 0;
+    System.out.println(Integer.MAX_VALUE);
+    for (int i = 1; i < Integer.MAX_VALUE; i++) {
+      result += i;
+
+      System.out.println(result + "\t:" + i);
+      if (result < 0) break;
     }
   }
 }
