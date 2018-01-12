@@ -10,6 +10,88 @@ import java.util.Set;
 
 public class ArrayProblems {
 
+  public static void main(String[] args) {
+    ArrayProblems problems = new ArrayProblems();
+    System.out.println(problems.findDisappearedNumbersBetter(new int[] {4, 3, 2, 7, 8, 2, 3, 1}));
+  }
+
+  /**
+   * 数组的每次处理为数组中(n-1)个元素自增，经过m次处理之后元素中所有的数字都为x的最少处理次数为m。
+   *
+   * 这个可以通过数学处理方式： sum为原数组中数字的和, min 为原数组中最小的数字。 x * n = sum + m * (n - 1)
+   * //因为每次(n-1)个元素自增，所以整体和增加每次为(n-1) 而x = min + m so : m  = sum - min * n;
+   */
+  public int minMoves(int[] nums) {
+    // get min & sum
+    int min = nums[0];
+    int sum = 0;
+    for (int n : nums) {
+      if (n < min) min = n;
+      sum += n;
+    }
+
+    return sum - min * nums.length;
+  }
+
+  /**
+   * 找出长度为n的数组中[1..n]中未出现的数字(数组中每个数字最多出现两次)。
+   */
+  public List<Integer> findDisappearedNumbers(int[] nums) {
+    Arrays.sort(nums);
+    List<Integer> result = new ArrayList<>();
+    int sum = 0, cur = 0;
+    for (int i = 1; i <= nums.length; i++) {
+      sum += i;
+      int t = nums[i - 1];
+      cur += t;
+
+      if (sum != cur) {
+        int index = result.indexOf(t);
+        if (index >= 0) result.remove(index);
+        result.add(i);
+        cur = sum;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * 因为1<=nums[n]<=n所有通过nums[nums[n] - 1] += n来使出现数字位置的数字大于n， 所以如果处理后的nums[n] <= n则(n + 1)不在数组中。
+   */
+  public List<Integer> findDisappearedNumbersBetter(int[] nums) {
+    List<Integer> result = new ArrayList<>();
+    int n = nums.length;
+
+    for (int i = 0; i < n; i++) nums[(nums[i] - 1) % n] += n;
+    for (int i = 0; i < n; i++) {
+      if (nums[i] <= n) result.add(i + 1);
+    }
+    return result;
+  }
+
+  /**
+   * https://leetcode.com/problems/number-of-boomerangs/description/
+   */
+  public int numberOfBoomerangs(int[][] points) {
+    int result = 0;
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int[] i : points) {
+      for (int[] j : points) {
+        if (i == j) continue;
+
+        int dist = (i[0] - j[0]) * (i[0] - j[0]) + (i[1] - j[1]) * (i[1] - j[1]);
+
+        int pre = map.getOrDefault(dist, 0);
+        result += 2 * pre;
+
+        map.put(dist, pre + 1);
+      }
+      map.clear();
+    }
+    return result;
+  }
+
   /**
    * https://leetcode.com/problems/string-compression/description/
    */
