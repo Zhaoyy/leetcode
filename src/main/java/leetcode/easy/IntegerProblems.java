@@ -14,6 +14,19 @@ public class IntegerProblems {
   }
 
   /**
+   * 找出给定的两个正整数中二进制相同位不同的总数
+   */
+  public int hammingDistance(int x, int y) {
+    int xor = x ^ y;
+    int d = 0;
+    while (xor > 0) {
+      if ((xor & 1) > 0) d++;
+      xor >>= 1;
+    }
+    return d;
+  }
+
+  /**
    * 给定n个硬币，进行排列，第n行有n个硬币，求满状态的行数。
    */
   public int arrangeCoins(int n) {

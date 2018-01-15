@@ -13,7 +13,47 @@ public class StringProblems {
   public static void main(String[] args) {
     StringProblems problems = new StringProblems();
     System.out.println(
-        problems.findAnagrams("cbaebabacd", "abc"));
+        problems.repeatedSubstringPattern("abcabcabcabcabc"));
+  }
+
+  /**
+   * 判断一个字符串是否是子串的重复
+   */
+  public boolean repeatedSubstringPattern(String s) {
+    if (s == null || s.length() < 2) return false;
+
+    int rate = 2;
+
+    while (!checkRate(s, rate)) {
+      rate++;
+      if (rate > s.length()) return false;
+    }
+
+    return true;
+  }
+
+  private boolean checkRate(String s, int rate) {
+    if (s.length() % rate != 0) return false;
+    int len = s.length() / rate, start = 0;
+    int[] index = new int[rate];
+    for (int i = 0; i < rate; i++) {
+      index[i] = start;
+      start += len;
+    }
+    for (int i = 0; i < len; i++) {
+      boolean flag = true;
+      char c = s.charAt(index[0] + i);
+      for (int n : index) {
+        if (c != s.charAt(n + i)) {
+          flag = false;
+          break;
+        }
+      }
+
+      if (!flag) return false;
+    }
+
+    return true;
   }
 
   /**

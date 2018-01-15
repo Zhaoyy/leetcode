@@ -16,6 +16,40 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/poor-pigs/description/
+   *
+   * https://leetcode.com/problems/poor-pigs/discuss/94266
+   */
+  public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+    int pigs = 0;
+    while (Math.pow(minutesToTest / minutesToDie + 1, pigs) < buckets) pigs++;
+    return pigs;
+  }
+
+  /**
+   * https://leetcode.com/problems/assign-cookies/description/
+   */
+  public int findContentChildren(int[] g, int[] s) {
+    Arrays.sort(g);
+    Arrays.sort(s);
+
+    int result = 0, i = 0, j = 0;
+
+    for (; i < g.length; i++) {
+      int size = g[i];
+      while (j < s.length && s[j] < size) {
+        j++;
+      }
+
+      if (s[j] >= size) result++;
+      if (j >= s.length) break;
+      j++;
+    }
+
+    return result;
+  }
+
+  /**
    * 数组的每次处理为数组中(n-1)个元素自增，经过m次处理之后元素中所有的数字都为x的最少处理次数为m。
    *
    * 这个可以通过数学处理方式： sum为原数组中数字的和, min 为原数组中最小的数字。 x * n = sum + m * (n - 1)
