@@ -16,6 +16,37 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/island-perimeter/description/
+   */
+  public int islandPerimeter(int[][] grid) {
+    int result = 0;
+    for (int i = 0; i < grid.length; i++) {
+      int[] subGrid = grid[i];
+
+      for (int j = 0; j < subGrid.length; j++) {
+        if (subGrid[j] == 1) {
+          result += getIslandPerimeter(grid, i, j);
+        }
+      }
+    }
+    return result;
+  }
+
+  private int getIslandPerimeter(int[][] grid, int i, int j) {
+    int iLen = grid.length, jLen = grid[i].length, result = 4;
+
+    if (j > 0 && grid[i][j - 1] == 1) result--; // left
+
+    if (i > 0 && grid[i - 1][j] == 1) result--; // top
+
+    if (j + 1 < jLen && grid[i][j + 1] == 1) result--; // right
+
+    if (i + 1 < iLen && grid[i + 1][j] == 1) result--; // bottom
+
+    return result;
+  }
+
+  /**
    * https://leetcode.com/problems/poor-pigs/description/
    *
    * https://leetcode.com/problems/poor-pigs/discuss/94266
