@@ -14,6 +14,42 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/largest-palindrome-product/discuss/96306
+   */
+  public int largestPalindrome(int n) {
+    long max = (long) (Math.pow(10, n) - 1);
+    long min = max / 10;
+
+    for (long num = max; num > min; num--) {
+      long left = num, right = 0;
+      for (long i = num; i != 0; right = right * 10 + i % 10, i /= 10, left *= 10) ;
+      long p = left + right;
+
+      for (long i = max; i > min; i--) {
+        long j = p / i;
+        if (j > i || j <= min) break;
+        if (p % i == 0) return (int) (p % 1337);
+      }
+    }
+
+    return 9;
+  }
+
+  /**
+   * 求给定的正整数的补码
+   */
+  public int findComplement(int num) {
+    boolean flag = false;
+    for (int i = 31; i >= 0; i--) {
+      if ((num & (1 << i)) > 0) flag = true;
+
+      if (flag) num ^= 1 << i;
+    }
+
+    return num;
+  }
+
+  /**
    * 找出给定的两个正整数中二进制相同位不同的总数
    */
   public int hammingDistance(int x, int y) {
