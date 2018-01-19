@@ -14,6 +14,20 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/construct-the-rectangle/description/
+   */
+  public int[] constructRectangle(int area) {
+    int m = (int) Math.sqrt(area), offset = 0;
+    while (area % (m - offset) > 0) {
+      offset++;
+    }
+
+    m = m - offset;
+    offset = area / m;
+    return new int[] {Math.max(m, offset), Math.min(m, offset)};
+  }
+
+  /**
    * https://leetcode.com/problems/largest-palindrome-product/discuss/96306
    */
   public int largestPalindrome(int n) {

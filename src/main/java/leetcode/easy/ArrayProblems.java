@@ -16,6 +16,24 @@ public class ArrayProblems {
   }
 
   /**
+   * 统计0/1数组中连续数字1的最长值。
+   */
+  public int findMaxConsecutiveOnes(int[] nums) {
+    int result = 0, t = 0;
+
+    for (int n : nums) {
+      if (n == 1) {
+        t++;
+        result = Math.max(result, t);
+      } else {
+        t = 0;
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * https://leetcode.com/problems/heaters/description/
    */
   public int findRadius(int[] houses, int[] heaters) {

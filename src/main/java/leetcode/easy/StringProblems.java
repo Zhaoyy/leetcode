@@ -17,6 +17,30 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/license-key-formatting/description/
+   */
+  public String licenseKeyFormatting(String S, int K) {
+    StringBuilder sb = new StringBuilder();
+    int count = 0;
+
+    for (int i = S.length() - 1; i >= 0; i--) {
+      char c = S.charAt(i);
+      if (c == '-') continue;
+
+      if (c >= 'a' && c <= 'z') c = (char) (c - 'a' + 'A');
+
+      if (sb.length() > 0 && count % K == 0) {
+        sb.append('-');
+      }
+
+      sb.append(c);
+      count++;
+    }
+
+    return sb.reverse().toString();
+  }
+
+  /**
    * 判断一个字符串是否是子串的重复
    */
   public boolean repeatedSubstringPattern(String s) {
