@@ -7,10 +7,45 @@ public class IntegerProblems {
   public static void main(String[] args) {
     IntegerProblems problems = new IntegerProblems();
     //BigInteger result = BigInteger.valueOf(1);
-    //for (int i = 1; i < 60; i++) {
-    //  System.out.println(String.format("%1$5d ==> %2$d", i, problems.countPrimes(i)));
-    //}
-    System.out.println(problems.arrangeCoins(1804289383));
+    for (int i = 1; i < 60; i++) {
+      if (problems.checkPerfectNumber(i)) System.out.println(i);
+    }
+  }
+
+  /**
+   * 判断一个数字是否等于其所有除自身之外的约数的和。
+   */
+  public boolean checkPerfectNumber(int num) {
+
+    if (num < 6) return false;
+
+    int sum = 1;
+    double max = Math.sqrt(num);
+    for (int i = 2; i < max; i++) {
+      if (num % i == 0) {
+        sum += i + num / i;
+      }
+    }
+
+    return sum == num;
+  }
+
+  /**
+   * 返回7进制字符串
+   */
+  public String convertToBase7(int num) {
+    if (num == 0) return "0";
+    StringBuilder sb = new StringBuilder();
+    boolean flag = num < 0;
+    num = Math.abs(num);
+    while (num > 0) {
+      sb.append(num % 7);
+      num = num / 7;
+    }
+
+    if (flag) sb.append('-');
+
+    return sb.reverse().toString();
   }
 
   /**

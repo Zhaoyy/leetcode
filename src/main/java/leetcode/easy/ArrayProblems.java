@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +13,85 @@ public class ArrayProblems {
 
   public static void main(String[] args) {
     ArrayProblems problems = new ArrayProblems();
-    System.out.println(problems.findRadius(new int[] {1, 2, 3, 5}, new int[] {1, 5}));
+    System.out.println(problems.findRelativeRanks(new int[] {1, 2, 3, 5}));
+  }
+
+  /**
+   * https://leetcode.com/problems/relative-ranks/description/
+   */
+  public String[] findRelativeRanks(int[] nums) {
+    String[] top3 = new String[] {"Gold Medal", "Silver Medal", "Bronze Medal"};
+
+    Map<Integer, Integer> map = new HashMap<>(nums.length);
+    for (int i = 0; i < nums.length; i++) {
+      map.put(nums[i], i);
+    }
+
+    Arrays.sort(nums);
+    String[] result = new String[nums.length];
+    for (int i = 0; i < nums.length; i++) {
+      int n = nums[i];
+      int index = map.get(n);
+      int rate = nums.length - i - 1;
+      if (rate < top3.length) {
+        result[index] = top3[rate];
+      } else {
+        result[index] = String.valueOf(rate + 1);
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * https://leetcode.com/problems/keyboard-row/description/
+   */
+  public String[] findWords(String[] words) {
+    String[] strs = {"QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"};
+    Map<Character, Integer> map = new HashMap<>(26);
+    for (int i = 0; i < strs.length; i++) {
+      for (char c : strs[i].toCharArray()) {
+        map.put(c, i);//put <char, rowIndex> pair into the map
+      }
+    }
+
+    List<String> res = new LinkedList<>();
+    for (String w : words) {
+      if (w.equals("")) continue;
+      int index = map.get(w.toUpperCase().charAt(0));
+      for (char c : w.toUpperCase().toCharArray()) {
+        if (map.get(c) != index) {
+          index = -1; //don't need a boolean flag.
+          break;
+        }
+      }
+      if (index != -1) res.add(w);//if index != -1, this is a valid string
+    }
+    return res.toArray(new String[0]);
+  }
+
+  /**
+   * https://leetcode.com/problems/next-greater-element-i/description/
+   */
+  public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+    int[] result = new int[nums1.length];
+
+    for (int j = 0; j < nums1.length; j++) {
+      int n = nums1[j];
+      boolean found = false;
+      int i = 0;
+      for (; i < nums2.length; i++) {
+        if (nums2[i] == n) found = true;
+        if (found && nums2[i] > n) {
+          result[j] = nums2[i];
+          break;
+        }
+      }
+
+      if (i == nums2.length) result[j] = -1;
+    }
+
+    return result;
   }
 
   /**
