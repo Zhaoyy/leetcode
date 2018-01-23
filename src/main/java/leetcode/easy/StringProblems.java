@@ -13,7 +13,31 @@ public class StringProblems {
   public static void main(String[] args) {
     StringProblems problems = new StringProblems();
     System.out.println(
-        problems.repeatedSubstringPattern("abcabcabcabcabc"));
+        problems.detectCapitalUse("AAAa"));
+  }
+
+  /**
+   * https://leetcode.com/problems/longest-uncommon-subsequence-i/description/
+   *
+   * fucking problem.
+   */
+  public int findLUSlength(String a, String b) {
+    return a.equals(b) ? -1 : Math.max(a.length(), b.length());
+  }
+
+  /**
+   * 判断给定的单词是否合法： - 全部字母为大写 - 全部字母为小写 - 只有首字母为大写
+   */
+  public boolean detectCapitalUse(String word) {
+    char firstChar = word.charAt(0);
+    boolean firstUpper = firstChar >= 'A' && firstChar <= 'Z';
+    int upperCount = 0;
+
+    for (char t : word.toCharArray()) {
+      if (t >= 'A' && t <= 'Z') upperCount++;
+    }
+
+    return firstUpper ? (upperCount == 1 || upperCount == word.length()) : upperCount == 0;
   }
 
   /**

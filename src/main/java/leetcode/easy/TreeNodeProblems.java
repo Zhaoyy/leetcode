@@ -20,6 +20,28 @@ public class TreeNodeProblems {
     System.out.println(problems.pathSum(root, 0));
   }
 
+  private int preNodeValue = -1;
+  private int minDiff = Integer.MAX_VALUE;
+
+  /**
+   * 找到二分查找树任意两个节点的最小差。 中序遍历。
+   */
+  public int getMinimumDifference(TreeNode root) {
+    foundDifference(root);
+    return minDiff;
+  }
+
+  private void foundDifference(TreeNode node) {
+
+    if (node.left != null) foundDifference(node.left);
+    if (preNodeValue >= 0) {
+      minDiff = Math.min(minDiff, Math.abs(node.val - preNodeValue));
+    }
+    preNodeValue = node.val;
+
+    if (node.right != null) foundDifference(node.right);
+  }
+
   /**
    * 返回二叉树中所有路径中值的和等于给定数字的值
    */
