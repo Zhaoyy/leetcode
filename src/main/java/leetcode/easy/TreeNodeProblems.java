@@ -8,16 +8,62 @@ import java.util.Map;
 
 public class TreeNodeProblems {
 
+  /**
+   * 获取二叉树任意两个叶子节点的最大距离
+   */
+  int max = 0;
+
   public static void main(String[] args) {
     TreeNodeProblems problems = new TreeNodeProblems();
-    TreeNode root = new TreeNode(1);
-    root.left = new TreeNode(-2);
-    root.left.left = new TreeNode(1);
-    root.left.right = new TreeNode(3);
-    root.left.left.left = new TreeNode(-1);
-    root.right = new TreeNode(-3);
-    root.right.left = new TreeNode(-2);
-    System.out.println(problems.pathSum(root, 0));
+    TreeNode root = new TreeNode(2);
+    root.left = new TreeNode(0);
+    root.left.left = new TreeNode(-4);
+    root.left.right = new TreeNode(1);
+    //root.left.left.left = new TreeNode(-1);
+    root.right = new TreeNode(3);
+    //root.right.left = new TreeNode(-2);
+    System.out.println(problems.convertBST(root));
+  }
+
+  public int diameterOfBinaryTree(TreeNode root) {
+    diameterOfBT(root);
+    return max;
+  }
+
+  private int diameterOfBT(TreeNode root) {
+    if (root == null) return 0;
+
+    int left = diameterOfBT(root.left);
+    int right = diameterOfBT(root.right);
+
+    max = Math.max(max, left + right);
+
+    return Math.max(left, right) + 1;
+  }
+
+  /**
+   * https://leetcode.com/problems/convert-bst-to-greater-tree/description/
+   */
+  public TreeNode convertBST(TreeNode root) {
+    if (root != null) toGreaterTree(root, 0);
+    return root;
+  }
+
+  public int toGreaterTree(TreeNode node, int preSum) {
+    if (node.left == null && node.right == null) {
+      node.val += preSum;
+      return node.val;
+    }
+
+    if (node.right != null) {
+      preSum = toGreaterTree(node.right, preSum);
+    }
+
+    node.val += preSum;
+    preSum = node.val;
+
+    if (node.left != null) preSum = toGreaterTree(node.left, preSum);
+    return preSum;
   }
 
   private int preNodeValue = -1;

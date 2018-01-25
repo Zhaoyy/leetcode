@@ -13,7 +13,76 @@ public class StringProblems {
   public static void main(String[] args) {
     StringProblems problems = new StringProblems();
     System.out.println(
-        problems.detectCapitalUse("AAAa"));
+        problems.reverseStr(
+            "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
+            39));
+  }
+
+  /**
+   * 翻转给定语句中的每个单词（单词之间有一个空格分割）
+   */
+  public String reverseWords(String s) {
+    if (s == null || s.length() == 1) return s;
+
+    String[] ss = s.split(" ");
+    StringBuilder sb = new StringBuilder();
+
+    for (String t : ss) {
+      for (int i = t.length() - 1; i >= 0; i--) {
+        sb.append(t.charAt(i));
+      }
+      sb.append(" ");
+    }
+
+    sb.setLength(sb.length() - 1);
+    return sb.toString();
+  }
+
+  /**
+   * https://leetcode.com/problems/student-attendance-record-i/description/
+   */
+  public boolean checkRecord(String s) {
+    int a = 0, l = 0;
+
+    for (char c : s.toCharArray()) {
+      if (c == 'A') a++;
+      if (c == 'L') {
+        l++;
+      } else {
+        l = 0;
+      }
+
+      if (a > 1) return false;
+      if (l > 2) return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * https://leetcode.com/problems/reverse-string-ii/description/
+   */
+  public String reverseStr(String s, int k) {
+    StringBuilder sb = new StringBuilder(s);
+    for (int i = 0; i <= s.length() / k; i += 2) {
+      reverseSubStr(sb, k * i, k);
+    }
+
+    return sb.toString();
+  }
+
+  private void reverseSubStr(StringBuilder sb, int start, int k) {
+    k = Math.min(k, sb.length() - start);
+    if (start + k <= sb.length()) {
+      int r = start + k - 1;
+      while (start < r) {
+        char c = sb.charAt(start);
+        sb.setCharAt(start, sb.charAt(r));
+        sb.setCharAt(r, c);
+        start++;
+        r--;
+      }
+    }
   }
 
   /**
