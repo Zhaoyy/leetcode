@@ -9,6 +9,26 @@ import java.util.Map;
 public class TreeNodeProblems {
 
   /**
+   * https://leetcode.com/problems/binary-tree-tilt/description/
+   */
+
+  private int tilt = 0;
+
+  public int findTilt(TreeNode root) {
+    tiltSum(root);
+
+    return tilt;
+  }
+
+  private int tiltSum(TreeNode node) {
+    if (node == null) return 0;
+    int l = tiltSum(node.left);
+    int r = tiltSum(node.right);
+    tilt += Math.abs(l - r);
+    return node.val + l + r;
+  }
+
+  /**
    * 获取二叉树任意两个叶子节点的最大距离
    */
   int max = 0;

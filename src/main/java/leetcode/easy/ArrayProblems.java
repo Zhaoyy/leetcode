@@ -21,6 +21,50 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/reshape-the-matrix/description/
+   */
+  public int[][] matrixReshape(int[][] nums, int r, int c) {
+    int srcCount = 0;
+    if (nums != null) {
+      for (int[] row : nums) {
+        srcCount += row.length;
+      }
+    }
+
+    if (srcCount != r * c) return nums;
+
+    int[][] result = new int[r][c];
+
+    int i = 0, j = 0;
+
+    for (int[] row : nums) {
+      for (int e : row) {
+        result[i][j] = e;
+        j++;
+        if (j == c) {
+          i++;
+          j = 0;
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * https://leetcode.com/problems/array-partition-i/description/
+   */
+  public int arrayPairSum(int[] nums) {
+    int result = 0;
+    Arrays.sort(nums);
+    for (int i = 0; i < nums.length - 1; i += 2) {
+      result += Math.min(nums[i], nums[i + 1]);
+    }
+
+    return result;
+  }
+
+  /**
    * 返回给定的数组中任意两个数字差为k的组合个数(数字不分先后，且相同组合算一组)。 冒泡
    */
   public int findPairs(int[] nums, int k) {
