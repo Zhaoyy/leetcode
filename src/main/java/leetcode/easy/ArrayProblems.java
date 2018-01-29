@@ -21,6 +21,44 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/shortest-unsorted-continuous-subarray/description/
+   */
+  public int findUnsortedSubarray(int[] nums) {
+    int[] copy = Arrays.copyOf(nums, nums.length);
+
+    Arrays.sort(nums);
+    int l = 0, r = nums.length - 1;
+    while (l < r) {
+
+      if (copy[l] != nums[l] && copy[r] != nums[r]) break;
+
+      if (copy[l] == nums[l]) {
+        l++;
+      }
+      if (copy[r] == nums[r]) r--;
+    }
+
+    return l < r ? r - l + 1 : 0;
+  }
+
+  /**
+   * https://leetcode.com/problems/distribute-candies/description/
+   */
+  public int distributeCandies(int[] candies) {
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i : candies) {
+      map.put(i, map.getOrDefault(i, 0) + 1);
+    }
+
+    int result = 0;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+      if (entry.getValue() > 0) result++;
+    }
+
+    return Math.min(result, candies.length / 2);
+  }
+
+  /**
    * https://leetcode.com/problems/reshape-the-matrix/description/
    */
   public int[][] matrixReshape(int[][] nums, int r, int c) {

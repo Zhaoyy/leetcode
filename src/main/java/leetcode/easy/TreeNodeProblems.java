@@ -8,6 +8,53 @@ import java.util.Map;
 
 public class TreeNodeProblems {
 
+  public static void main(String[] args) {
+    TreeNodeProblems problems = new TreeNodeProblems();
+    TreeNode root = new TreeNode(3);
+    root.left = new TreeNode(4);
+    root.left.left = new TreeNode(1);
+    root.left.right = new TreeNode(2);
+    root.left.right.left = new TreeNode(0);
+    root.right = new TreeNode(5);
+    //root.right.left = new TreeNode(-2);
+
+    TreeNode t = new TreeNode(4);
+    t.left = new TreeNode(1);
+    t.right = new TreeNode(2);
+    System.out.println(problems.isSubtree(root, t));
+  }
+
+  /**
+   * https://leetcode.com/problems/subtree-of-another-tree/description/
+   */
+  public boolean isSubtree(TreeNode s, TreeNode t) {
+    if (s == null || t == null) return false;
+    StringBuilder sb = new StringBuilder();
+    preOrderTree(s, sb);
+    String ss = sb.toString();
+    sb.setLength(0);
+    preOrderTree(t, sb);
+    String st = sb.toString();
+
+    return ss.contains(st);
+  }
+
+  private void preOrderTree(TreeNode node, StringBuilder sb) {
+    if (node.left == null) {
+      sb.append('n');
+    } else {
+      preOrderTree(node.left, sb);
+    }
+
+    sb.append(node.val);
+
+    if (node.right == null) {
+      sb.append('n');
+    } else {
+      preOrderTree(node.right, sb);
+    }
+  }
+
   /**
    * https://leetcode.com/problems/binary-tree-tilt/description/
    */
@@ -32,18 +79,6 @@ public class TreeNodeProblems {
    * 获取二叉树任意两个叶子节点的最大距离
    */
   int max = 0;
-
-  public static void main(String[] args) {
-    TreeNodeProblems problems = new TreeNodeProblems();
-    TreeNode root = new TreeNode(2);
-    root.left = new TreeNode(0);
-    root.left.left = new TreeNode(-4);
-    root.left.right = new TreeNode(1);
-    //root.left.left.left = new TreeNode(-1);
-    root.right = new TreeNode(3);
-    //root.right.left = new TreeNode(-2);
-    System.out.println(problems.convertBST(root));
-  }
 
   public int diameterOfBinaryTree(TreeNode root) {
     diameterOfBT(root);
