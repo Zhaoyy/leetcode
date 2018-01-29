@@ -22,6 +22,21 @@ class ArrayProblem:
             if target - num in temp_dict:
                 return [temp_dict[target - num], i]
 
+    @classmethod
+    def reverse(cls, num):
+        """
+        :type x: int
+        :rtype: int
+        """
+        if num < 0:
+            flag = True
+            num = -num
+        result = 0
+        while num > 0:
+            result += num
+            num = num / 10
+        return -result if flag else result
+
 if __name__ == '__main__':
     ARRAY_PROBLEM = ArrayProblem()
-    print(ARRAY_PROBLEM.two_sum([2, 7, 11, 15], 9))
+    print(ARRAY_PROBLEM.reverse(-19))
