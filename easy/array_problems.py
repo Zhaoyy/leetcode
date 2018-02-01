@@ -104,6 +104,31 @@ class ArrayProblem:
                 nums[pre] = n
         return pre + 1
 
+    def searchInsert(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        for i, n in enumerate(nums):
+            if n >= target:
+                return i
+        return i + 1
+
+    def searchInsertBetter(self, nums, target):
+        l, r = 0, len(nums) - 1
+        while l < r:
+            mid = (l + r) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                l = mid + 1
+            else:
+                r = mid
+        return l + 1 if nums[l] < target else l
+
 if __name__ == '__main__':
     ARRAY_PROBLEM = ArrayProblem()
-    print(ARRAY_PROBLEM.reverse(-190))
+    print(ARRAY_PROBLEM.searchInsertBetter([1, 3, 5, 6], 2))
