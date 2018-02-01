@@ -56,6 +56,53 @@ class ArrayProblem:
             l1.next = self.mergeTwoLists(l1.next, l2)
         return l1
 
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        i = 0
+        for j in range(1, len(nums)):
+            if nums[i] != nums[j]:
+                i += 1
+                nums[i] = nums[j]
+        return i + 1
+    def removeElement(self, nums, val):
+        """
+        https://leetcode.com/problems/remove-element/description/
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        l, r = 0, len(nums) - 1
+        while l < r:
+            if nums[r] == val:
+                r -= 1
+                continue
+            if nums[l] != val:
+                l += 1
+                continue
+            nums[l], nums[r] = nums[r], nums[l]
+            r -= 1
+            l += 1
+        return l + 1
+
+    def removeDuplicatesBetter(self, nums, val):
+        '''
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        '''
+        pre = -1
+        for _, n in enumerate(nums):
+            if n != val:
+                pre += 1
+                nums[pre] = n
+        return pre + 1
 
 if __name__ == '__main__':
     ARRAY_PROBLEM = ArrayProblem()
