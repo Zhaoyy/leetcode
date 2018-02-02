@@ -82,6 +82,28 @@ class StrProblem:
                 l.append(c)
         return not l
 
+    def strStr(self, haystack, needle):
+        """
+        https://leetcode.com/problems/implement-strstr/description/
+
+        The soltion with build-in function:
+            return haystack.find(needle)
+
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if needle:
+            ln = len(needle)
+            limit = len(haystack) - ln
+            for i, c in enumerate(haystack):
+                if i > limit:
+                    break
+                if c == needle[0] and haystack[i:i + ln] == needle:
+                    return i
+            return -1
+        return 0
+
 if __name__ == '__main__':
     problem = StrProblem()
-    print(problem.longestCommonPrefixBetter(['aab', 'aaa', 'abc']))
+    print(problem.strStr('hello', 'll'))
