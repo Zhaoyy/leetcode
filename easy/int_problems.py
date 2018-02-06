@@ -27,6 +27,34 @@ class IntProblem:
                 return True
         return t == z
 
+    def countAndSay(self, n):
+        """
+        https://leetcode.com/problems/count-and-say/description/
+
+        :type n: int
+        :rtype: str
+        """
+        l = []
+        for i in range(n):
+            if l:
+                last, count, t = -1, 0, ''
+                for s in l[i - 1]:
+                    n = int(s)
+                    if last < 0:
+                        last = n
+                        count = 1
+                    elif last == n:
+                        count += 1
+                    else:
+                        t += str(count) + str(last)
+                        last = n
+                        count = 1
+                t += str(count) + str(last)
+                l.append(t)
+            else:
+                l.append('1')
+        return l[i]
+
 if __name__ == "__main__":
     problem = IntProblem()
-    print(problem.isPalindrome(121))
+    print(problem.countAndSay(5))
