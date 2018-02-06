@@ -103,7 +103,68 @@ class StrProblem:
                     return i
             return -1
         return 0
+    
+    def myAtoi(self, str):
+        """
+        https://leetcode.com/problems/string-to-integer-atoi/description/
+
+        :type str: str
+        :rtype: int
+        """
+        if not str:
+            return 0
+        start, rate = -1, 0
+        max, min = 2 ** 31 -1, -2 ** 31
+        flag = False
+        for i, s in enumerate(str):
+            if s == '-' or s == '+':
+                if start < 0 and rate == 0:
+                    rate = -1 if s == '-' else 1
+                else:
+                    flag = True
+                    break
+            elif '0' <= s <= '9':
+                if start < 0:
+                    start = i
+            else:
+                if start >= 0 or rate !=0 or s != ' ':
+                    flag = True
+                    break
+        if rate == 0:
+            rate = 1
+        result = rate * int(str[start: i if flag else i + 1]) if start >= 0 else 0
+        if result > max:
+            return max
+        elif result < min:
+            return min
+        else:
+            return result
+
+    def myAtoiBetter(self, str):
+        trigged_str = str.strip()
+        multiplier = 1
+        if trigged_str[0] == '-':
+            multiplier = -1
+            trigged_str = trigged_str[1:]
+        elif trigged_str[0] == '+':
+            trigged_str = trigged_str[1:]
+        
+        result = 0
+        for s in trigged_str:
+            if '0' <= ord(s) <= '9':
+                result = result * 10 + ord(s)
+            else:
+                break
+        result = multiplier * result
+        max, min = 2 ** 31 -1, -2 ** 31
+        if result > max:
+            return max
+        elif result < min:
+            return min
+        else:
+            return result
 
 if __name__ == '__main__':
     problem = StrProblem()
     print(problem.strStr('hello', 'll'))
+    print(problem.myAtoi('  - 32 '))
