@@ -163,8 +163,57 @@ class StrProblem:
             return min
         else:
             return result
+    
+    def convert(self, s, numRows):
+        """
+        https://leetcode.com/problems/zigzag-conversion/description/
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if numRows < 2:
+            return s
+
+        result = ''
+        for i in range(numRows):
+            r1 = r2 = numRows * 2 - 2
+            if i == 0 or i == numRows - 1:
+                t = i
+                while t < len(s):
+                    result += s[t]
+                    t += r1
+            else:
+                r1 = r1 - i * 2
+                t = i
+                while True:
+                    if t < len(s):
+                        result += s[t]
+                    else:
+                        break
+                    if t + r1 < len(s):
+                        result += s[t + r1]
+                    else:
+                        break
+                    t += r2
+        return result
+
+    def convert_better(self, s, numRows):
+        if numRows < 2:
+            return s
+        
+        rate = numRows * 2 - 2
+        l = [''] * numRows
+        print(l)
+        for i in range(len(s)):
+            t = i % rate
+            if t < numRows:
+                l[t] += s[i]
+            else:
+                l[rate - t] += s[i]
+        print(l)
+        return ''.join(l)
 
 if __name__ == '__main__':
     problem = StrProblem()
     print(problem.strStr('hello', 'll'))
-    print(problem.myAtoi('  - 32 '))
+    print(problem.convert_better('PAYPALISHIRING', 3))
