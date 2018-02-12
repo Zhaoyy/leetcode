@@ -8,20 +8,45 @@ import java.util.Map;
 
 public class TreeNodeProblems {
 
+  /**
+   * https://leetcode.com/problems/minimum-distance-between-bst-nodes/description/
+   *
+   * 中序遍历
+   */
+  private int diff = Integer.MAX_VALUE;
+  private TreeNode lastNode;
+
   public static void main(String[] args) {
     TreeNodeProblems problems = new TreeNodeProblems();
-    TreeNode root = new TreeNode(3);
-    root.left = new TreeNode(4);
-    root.left.left = new TreeNode(1);
-    root.left.right = new TreeNode(2);
-    root.left.right.left = new TreeNode(0);
-    root.right = new TreeNode(5);
+    TreeNode root = new TreeNode(90);
+    root.left = new TreeNode(69);
+    root.left.left = new TreeNode(49);
+    root.left.right = new TreeNode(89);
+    //root.left.right.left = new TreeNode(0);
+    //root.right = new TreeNode(6);
     //root.right.left = new TreeNode(-2);
 
-    TreeNode t = new TreeNode(4);
-    t.left = new TreeNode(1);
-    t.right = new TreeNode(2);
-    System.out.println(problems.isSubtree(root, t));
+    System.out.println(problems.minDiffInBST(root));
+  }
+
+  public int minDiffInBST(TreeNode root) {
+    minDiffBST(root);
+    return diff;
+  }
+
+  private void minDiffBST(TreeNode node) {
+    if (node == null) return;
+    if (node.left != null) {
+      minDiffBST(node.left);
+    }
+
+    if (lastNode != null) {
+      diff = Math.min(node.val - lastNode.val, diff);
+    }
+    lastNode = node;
+    if (node.right != null) {
+      minDiffBST(node.right);
+    }
   }
 
   /**
