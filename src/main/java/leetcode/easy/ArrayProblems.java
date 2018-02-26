@@ -21,6 +21,56 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/longest-harmonious-subsequence/description/
+   */
+  public int findLHS(int[] nums) {
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int n : nums) {
+      map.put(n, map.getOrDefault(n, 0) + 1);
+    }
+
+    int[] key = Arrays.stream(nums).distinct().sorted().toArray();
+
+    int last = key[0], max = 0;
+
+    for (int n : key) {
+      if (n - last == 1) {
+        max = Math.max(map.get(last) + map.get(n), max);
+      }
+      last = n;
+    }
+    return max;
+  }
+
+  public int findLHSBetter(int[] nums) {
+    if (nums == null || nums.length == 0) {
+      return 0;
+    }
+    Arrays.sort(nums);
+    int current = nums[0];
+    int count = 1;
+    int previous = 0;
+    int result = 0;
+    for (int i = 1; i < nums.length; i++) {
+      if (nums[i] == current) {
+        count++;
+      } else {
+        if (previous > 0) {
+          result = Math.max(result, previous + count);
+        }
+        if (nums[i] == current + 1) {
+          previous = count;
+        } else {
+          previous = 0;
+        }
+        current = nums[i];
+        count = 1;
+      }
+    }
+    return previous > 0 ? Math.max(result, previous + count) : result;
+  }
+
+  /**
    * https://leetcode.com/problems/shortest-unsorted-continuous-subarray/description/
    */
   public int findUnsortedSubarray(int[] nums) {
