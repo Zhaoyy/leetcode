@@ -18,10 +18,59 @@ public class ArrayProblems {
     //        2, 9, 9, 3, 9, 2, 4, 6, 5, 6, 5, 1, 5, 9, 9, 8, 1, 4, 3, 2, 8, 5, 3, 5, 4, 5, 7, 0, 0,
     //        7, 6, 4, 7, 2, 4, 9, 3, 6, 6, 5, 0, 0, 0, 8, 9, 9, 6, 5, 4, 6, 2, 1, 3, 2, 5, 0, 1, 4,
     //        2, 6, 9, 5, 4, 9, 6, 0, 8, 3, 8, 0, 0, 2, 1}, 1))
-    String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
-    String[] list2 =
-        new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-    System.out.println(problems.findRestaurant(list1, list2));
+    //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
+    //String[] list2 =
+    //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
+    //System.out.println(problems.findRestaurant(list1, list2));
+
+    System.out.println(problems.canPlaceFlowersBetter(new int[] {1, 0, 0, 0, 0, 1}, 2));
+  }
+
+  /**
+   * https://leetcode.com/problems/can-place-flowers/description/
+   */
+  public boolean canPlaceFlowers(int[] flowerbed, int n) {
+    int empty = 0, last = -1;
+
+    for (int i = 0; i < flowerbed.length - 1; i++) {
+      int val = flowerbed[i];
+
+      if (last < 0) {
+        if (val == 0 && flowerbed[i + 1] == 0) {
+          val = 1;
+          empty++;
+        }
+      } else {
+        if (last == 0 && val == 0 && flowerbed[i + 1] == 0) {
+          val = 1;
+          empty++;
+        }
+      }
+
+      if (empty >= n) return true;
+
+      last = val;
+    }
+
+    if (last == 0 && flowerbed[flowerbed.length - 1] == 0) empty++;
+
+    return empty >= n;
+  }
+
+  public boolean canPlaceFlowersBetter(int[] flowerbed, int n) {
+    int empty = 0;
+    for (int i = 0; i < flowerbed.length; i++) {
+      if (flowerbed[i] == 1) {
+        i += 1;
+      } else if (i < flowerbed.length - 1 && flowerbed[i + 1] == 1) {
+        i += 2;
+      } else {
+        empty++;
+        i += 1;
+      }
+    }
+
+    return empty >= n;
   }
 
   /**
