@@ -20,13 +20,91 @@ public class TreeNodeProblems {
     TreeNodeProblems problems = new TreeNodeProblems();
     TreeNode root = new TreeNode(90);
     root.left = new TreeNode(69);
-    root.left.left = new TreeNode(49);
+    //root.left.left = new TreeNode(49);
     root.left.right = new TreeNode(89);
     //root.left.right.left = new TreeNode(0);
-    //root.right = new TreeNode(6);
+    root.right = new TreeNode(6);
     //root.right.left = new TreeNode(-2);
 
-    System.out.println(problems.minDiffInBST(root));
+    System.out.println(problems.tree2str(root));
+  }
+
+  /**
+   * https://leetcode.com/problems/merge-two-binary-trees/description/
+   */
+
+  public TreeNode mergeTreesSimple(TreeNode t1, TreeNode t2) {
+    if (t1 == null) return t2;
+    if (t2 == null) return t1;
+
+    TreeNode node = new TreeNode(t1.val + t2.val);
+    node.left = mergeTreesSimple(t1.left, t2.left);
+    node.right = mergeTreesSimple(t1.right, t2.right);
+    return node;
+  }
+
+  public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+    if (t1 == null) {
+      return t2;
+    } else if (t2 == null) {
+      return t1;
+    } else {
+      TreeNode root = new TreeNode(0);
+      mergeTreesFun(root, t1, t2);
+      return root;
+    }
+  }
+
+  private void mergeTreesFun(TreeNode r, TreeNode t1, TreeNode t2) {
+    r.val = t1 == null ? t2.val : t2 == null ? t1.val : t1.val + t2.val;
+    if (t1 == null) {
+      r.left = t2.left;
+      r.right = t2.right;
+      return;
+    }
+
+    if (t2 == null) {
+      r.left = t1.left;
+      r.right = t1.right;
+      return;
+    }
+
+    if (t1.left != null || t2.left != null) {
+      TreeNode left = new TreeNode(0);
+      r.left = left;
+      mergeTreesFun(left, t1.left, t2.left);
+    }
+
+    if (t1.right != null || t2.right != null) {
+      TreeNode right = new TreeNode(0);
+      r.right = right;
+      mergeTreesFun(right, t1.right, t2.right);
+    }
+  }
+
+  /**
+   * https://leetcode.com/problems/construct-string-from-binary-tree/description/
+   */
+  public String tree2str(TreeNode t) {
+    StringBuilder sb = new StringBuilder();
+    tree2Str(t, sb);
+    return sb.toString();
+  }
+
+  private void tree2Str(TreeNode node, StringBuilder sb) {
+    if (node != null) {
+      sb.append(node.val);
+      if (node.left != null || node.right != null) {
+        sb.append("(");
+        tree2Str(node.left, sb);
+        sb.append(")");
+        if (node.right != null) {
+          sb.append("(");
+          tree2Str(node.right, sb);
+          sb.append(")");
+        }
+      }
+    }
   }
 
   public int minDiffInBST(TreeNode root) {
