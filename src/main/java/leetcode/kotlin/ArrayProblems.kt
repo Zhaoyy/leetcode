@@ -1,5 +1,7 @@
 package leetcode.kotlin
 
+import leetcode.easy.TreeNodeProblems.TreeNode
+
 fun main(args: Array<String>) {
   val problems = ArrayProblems()
 //  println(problems.maximumProduct(
@@ -12,10 +14,35 @@ fun main(args: Array<String>) {
 //          250, -786)))
 
 //  println(problems.findMaxAverage(intArrayOf(1, 12, -5, -6, 50, 3), 4))
-  println(problems.findErrorNumsBetter(intArrayOf(1, 2, 2, 4)).joinToString(", "))
+//  println(problems.findErrorNumsBetter(intArrayOf(1, 2, 2, 4)).joinToString(", "))
+
+  val p = IntProblems()
+  val root = TreeNode(334)
+  root.left = TreeNode(277)
+  root.right = TreeNode(507)
+  root.right.right = TreeNode(678)
+  println(p.findTarget(root, 1014))
 }
 
 class ArrayProblems {
+
+  /**
+   * https://leetcode.com/problems/judge-route-circle/description/
+   */
+  fun judgeCircle(moves: String): Boolean {
+    var x = 0
+    var y = 0
+    moves.forEach {
+      when (it) {
+        'L' -> x--
+        'R' -> x++
+        'U' -> y++
+        'D' -> y--
+      }
+    }
+
+    return x == 0 && y == 0
+  }
 
   /**
    * https://leetcode.com/problems/set-mismatch/description/

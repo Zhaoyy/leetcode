@@ -3,6 +3,51 @@ package leetcode.kotlin
 import leetcode.easy.TreeNodeProblems.TreeNode
 
 class IntProblems {
+
+  /**
+   * https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/
+   */
+
+  private val set = hashSetOf<Int>()
+
+  fun findTargetBetter(root: TreeNode?, k: Int): Boolean {
+    if (root == null) return false
+    val diff = k - root.`val`
+    if (set.contains(diff)) return true
+    set.add(root.`val`)
+    return findTargetBetter(root.left, k) || findTargetBetter(root.right, k)
+  }
+
+  private val list = arrayListOf<Int>()
+
+  fun findTarget(root: TreeNode?, k: Int): Boolean {
+    buildList(root)
+
+    if (list.size > 1 && (list[0] + list[1]) <= k && k <= (list[list.lastIndex] + list[list.lastIndex - 1])) {
+      for (v in list) {
+        val diff = k - v
+        if (diff != v && list.contains(diff)) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  private fun buildList(node: TreeNode?) {
+    node?.let {
+      node.left?.let {
+        buildList(node.left)
+      }
+
+      list.add(node.`val`)
+
+      node.right?.let {
+        buildList(node.right)
+      }
+    }
+  }
+
   /**
    * https://leetcode.com/problems/sum-of-square-numbers/description/
    */
