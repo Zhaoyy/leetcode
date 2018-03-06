@@ -27,6 +27,62 @@ fun main(args: Array<String>) {
 class ArrayProblems {
 
   /**
+   * https://leetcode.com/problems/non-decreasing-array/description/
+   */
+  fun checkPossibility(nums: IntArray): Boolean {
+
+    if (nums.isEmpty() || nums.size == 1 || nums.size == 2) {
+      return true
+    }
+
+    var found = false
+    var i = 0
+    while (i < nums.lastIndex) {
+      if (nums[i] > nums[i + 1]) {
+        if (found) return false
+        else {
+          found = true
+          if (i > 0 && nums[i + 1] < nums[i - 1]) {
+            nums[i + 1] = nums[i]
+          }
+        }
+      }
+      i++
+    }
+
+    return true
+  }
+
+  /**
+   * https://leetcode.com/problems/image-smoother/description/
+   */
+  fun imageSmoother(M: Array<IntArray>): Array<IntArray> {
+    val result = Array(M.size, { i -> IntArray(M[i].size) })
+    val t = arrayOf(-1, 0, 1)
+    for (x in M.indices) {
+      for (y in M[x].indices) {
+        var sum = 0
+        var count = 0
+        for (tx in t) {
+          for (ty in t) {
+            val a = x + tx
+            val b = y + ty
+            if (a >= 0 && b >= 0 && a < M.size && b < M[x].size) {
+              sum += M[a][b]
+              count++
+            }
+          }
+        }
+
+        if (count > 0) {
+          result[x][y] = sum / count
+        }
+      }
+    }
+    return result
+  }
+
+  /**
    * https://leetcode.com/problems/judge-route-circle/description/
    */
   fun judgeCircle(moves: String): Boolean {
