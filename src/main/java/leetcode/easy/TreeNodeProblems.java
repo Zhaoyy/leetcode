@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class TreeNodeProblems {
-
   /**
    * https://leetcode.com/problems/minimum-distance-between-bst-nodes/description/
    *
@@ -18,15 +17,29 @@ public class TreeNodeProblems {
 
   public static void main(String[] args) {
     TreeNodeProblems problems = new TreeNodeProblems();
-    TreeNode root = new TreeNode(90);
-    root.left = new TreeNode(69);
+    TreeNode root = new TreeNode(1);
+    root.left = new TreeNode(0);
     //root.left.left = new TreeNode(49);
-    root.left.right = new TreeNode(89);
+    //root.left.right = new TreeNode(89);
     //root.left.right.left = new TreeNode(0);
-    root.right = new TreeNode(6);
+    root.right = new TreeNode(2);
     //root.right.left = new TreeNode(-2);
 
-    System.out.println(problems.tree2str(root));
+    System.out.println(problems.trimBST(root, 1, 2));
+  }
+
+  /**
+   * https://leetcode.com/problems/trim-a-binary-search-tree/description/
+   */
+  public TreeNode trimBST(TreeNode root, int L, int R) {
+    if (root != null) {
+      if (root.val < L) return trimBST(root.right, L, R);
+      if (root.val > R) return trimBST(root.left, L, R);
+      root.left = trimBST(root.left, L, R);
+      root.right = trimBST(root.right, L, R);
+    }
+
+    return root;
   }
 
   /**
