@@ -29,6 +29,30 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/
+   */
+  public int findSecondMinimumValue(TreeNode root) {
+    if (root == null || root.left == null || root.right == null) return -1;
+    int left = root.left.val;
+    int right = root.right.val;
+
+    if (left == root.val) {
+      left = findSecondMinimumValue(root.left);
+    }
+
+    if (right == root.val) {
+      right = findSecondMinimumValue(root.right);
+    }
+
+    if (left != -1 && right != -1) {
+      return Math.min(left, right);
+    }
+
+    if (left != -1) return left;
+    return right;
+  }
+
+  /**
    * https://leetcode.com/problems/trim-a-binary-search-tree/description/
    */
   public TreeNode trimBST(TreeNode root, int L, int R) {

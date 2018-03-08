@@ -5,6 +5,38 @@ import leetcode.easy.TreeNodeProblems.TreeNode
 class IntProblems {
 
   /**
+   * https://leetcode.com/problems/valid-palindrome-ii/description/
+   */
+  fun validPalindrome(s: String): Boolean {
+    if (s.length < 2) return true
+    val p = subValidPalindrome(s, 0, s.lastIndex)
+    return if (p.first < p.second) {
+      val p1 = subValidPalindrome(s, p.first + 1, p.second)
+      if (p1.first < p1.second) {
+        val p2 = subValidPalindrome(s, p.first, p.second - 1)
+        p2.first >= p2.second
+      } else {
+        true
+      }
+    } else {
+      true
+    }
+  }
+
+  private fun subValidPalindrome(s: String, l: Int, r: Int): Pair<Int, Int> {
+    var a = l
+    var b = r
+    while (a < b) {
+      if (s[a] != s[b]) {
+        break
+      }
+      a++
+      b--
+    }
+    return Pair(a, b)
+  }
+
+  /**
    * https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/
    */
 

@@ -1,6 +1,6 @@
 package leetcode.kotlin
 
-import leetcode.easy.TreeNodeProblems.TreeNode
+import kotlin.math.max
 
 fun main(args: Array<String>) {
   val problems = ArrayProblems()
@@ -13,18 +13,40 @@ fun main(args: Array<String>) {
 //          844, -745, 447, -909, -586, 69, -88, 88, 445, -553, -666, 130, -640, -918, -7, -420, -368,
 //          250, -786)))
 
-//  println(problems.findMaxAverage(intArrayOf(1, 12, -5, -6, 50, 3), 4))
+//  println(problems.findLengthOfLCIS(intArrayOf(1, 3, 5, 4, 7)))
 //  println(problems.findErrorNumsBetter(intArrayOf(1, 2, 2, 4)).joinToString(", "))
 
   val p = IntProblems()
-  val root = TreeNode(334)
-  root.left = TreeNode(277)
-  root.right = TreeNode(507)
-  root.right.right = TreeNode(678)
-  println(p.findTarget(root, 1014))
+  println(p.validPalindrome("abc"))
+//  val root = TreeNode(334)
+//  root.left = TreeNode(277)
+//  root.right = TreeNode(507)
+//  root.right.right = TreeNode(678)
+//  println(p.findTarget(root, 1014))
 }
 
 class ArrayProblems {
+
+  /**
+   * https://leetcode.com/problems/longest-continuous-increasing-subsequence/description/
+   */
+  fun findLengthOfLCIS(nums: IntArray): Int {
+    if (nums.size < 2) return nums.size
+    var result = 0
+    var count = 1
+    var last = nums[0]
+    for (i in 1..nums.lastIndex) {
+      if (nums[i] > last) {
+        count++
+      } else {
+        result = max(count, result)
+        count = 1
+      }
+      last = nums[i]
+    }
+
+    return max(count, result)
+  }
 
   /**
    * https://leetcode.com/problems/non-decreasing-array/description/

@@ -12,10 +12,43 @@ public class StringProblems {
 
   public static void main(String[] args) {
     StringProblems problems = new StringProblems();
-    System.out.println(
-        problems.reverseStr(
-            "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
-            39));
+    //System.out.println(
+    //    problems.reverseStr(
+    //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
+    //        39));
+    System.out.println(problems.validPalindrome("beeee"));
+  }
+
+  /**
+   * https://leetcode.com/problems/valid-palindrome-ii/description/
+   */
+  public boolean validPalindrome(String s) {
+    if (s == null) return false;
+    if (s.length() < 2) return true;
+
+    int[] p = subValidPalindrome(s, 0, s.length() - 1);
+    if (p[0] < p[1]) {
+      int[] p1 = subValidPalindrome(s, p[0] + 1, p[1]);
+      if (p1[0] < p1[1]) {
+        int[] p2 = subValidPalindrome(s, p[0], p[1] - 1);
+        return p2[0] >= p[1];
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  private int[] subValidPalindrome(String s, int l, int r) {
+    while (l < r) {
+      if (s.charAt(l) != s.charAt(r)) {
+        break;
+      }
+      l++;
+      r--;
+    }
+    return new int[] {l, r};
   }
 
   /**
