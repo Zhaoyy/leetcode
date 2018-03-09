@@ -1,5 +1,6 @@
 package leetcode.kotlin
 
+import java.lang.StringBuilder
 import kotlin.math.max
 
 fun main(args: Array<String>) {
@@ -15,9 +16,10 @@ fun main(args: Array<String>) {
 
 //  println(problems.findLengthOfLCIS(intArrayOf(1, 3, 5, 4, 7)))
 //  println(problems.findErrorNumsBetter(intArrayOf(1, 2, 2, 4)).joinToString(", "))
+  println(problems.repeatedStringMatch("abcd", "cdabcdab"))
 
   val p = IntProblems()
-  println(p.validPalindrome("abc"))
+//  println(p.validPalindrome("abc"))
 //  val root = TreeNode(334)
 //  root.left = TreeNode(277)
 //  root.right = TreeNode(507)
@@ -26,6 +28,45 @@ fun main(args: Array<String>) {
 }
 
 class ArrayProblems {
+
+  /**
+   * https://leetcode.com/problems/repeated-string-match/description/
+   */
+  fun repeatedStringMatch(A: String, B: String): Int {
+    val sb = StringBuilder(A)
+    for (r in 1..(B.length / A.length + 2)) {
+      if (sb.contains(B)) {
+        return r
+      }
+      sb.append(A)
+    }
+    return -1
+  }
+
+  /**
+   * https://leetcode.com/problems/baseball-game/description/
+   */
+  fun calPoints(ops: Array<String>): Int {
+    val rPoints = ArrayList<Int>()
+
+    for (p in ops) {
+      when (p) {
+        "+" -> {
+          val lastIndex = rPoints.lastIndex
+          rPoints.add(rPoints[lastIndex] + rPoints[lastIndex - 1])
+        }
+        "D" -> {
+          rPoints.add(rPoints[rPoints.lastIndex] * 2)
+        }
+        "C" -> {
+          rPoints.removeAt(rPoints.lastIndex)
+        }
+        else -> rPoints.add(p.toInt())
+      }
+    }
+
+    return rPoints.sum()
+  }
 
   /**
    * https://leetcode.com/problems/longest-continuous-increasing-subsequence/description/

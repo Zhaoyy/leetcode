@@ -20,6 +20,18 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/repeated-string-match/description/
+   */
+  public int repeatedStringMatch(String A, String B) {
+    StringBuilder sb = new StringBuilder(A);
+    for (int r = 1; r <= B.length() / A.length() + 2; r++) {
+      if (sb.toString().contains(B)) return r;
+      sb.append(A);
+    }
+    return -1;
+  }
+
+  /**
    * https://leetcode.com/problems/valid-palindrome-ii/description/
    */
   public boolean validPalindrome(String s) {

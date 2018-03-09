@@ -29,6 +29,25 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/longest-univalue-path/description/
+   */
+  public int longestUnivaluePath(TreeNode root) {
+    int[] res = new int[] {0};
+    if (root != null) longestPathCal(root, res);
+    return res[0];
+  }
+
+  private int longestPathCal(TreeNode node, int[] res) {
+    int l = node.left != null ? longestPathCal(node.left, res) : 0;
+    int r = node.right != null ? longestPathCal(node.right, res) : 0;
+    int resl = node.left != null && node.val == node.left.val ? l + 1 : 0;
+    int resR = node.right != null && node.val == node.right.val ? r + 1 : 0;
+
+    res[0] = Math.max(res[0], resl + resR);
+    return Math.max(resl, resR);
+  }
+
+  /**
    * https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/
    */
   public int findSecondMinimumValue(TreeNode root) {
