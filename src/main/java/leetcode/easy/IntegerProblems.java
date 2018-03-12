@@ -7,9 +7,34 @@ public class IntegerProblems {
   public static void main(String[] args) {
     IntegerProblems problems = new IntegerProblems();
     //BigInteger result = BigInteger.valueOf(1);
-    for (int i = 1; i < 60; i++) {
-      if (problems.checkPerfectNumber(i)) System.out.println(i);
+    //for (int i = 1; i < 60; i++) {
+    //  if (problems.checkPerfectNumber(i)) System.out.println(i);
+    //}
+    System.out.println(problems.hasAlternatingBits(5));
+  }
+
+  /**
+   * https://leetcode.com/problems/binary-number-with-alternating-bits/description/
+   */
+  public boolean hasAlternatingBits(int n) {
+    if (n % 2 != 0) {
+      n >>= 1;
     }
+
+    while (n > 0) {
+      if (n % 2 == 0 && n % 4 != 0) {
+        n >>= 2;
+      } else {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  public boolean hasAlternatingBitsBetter(int n) {
+    int x = (n / 2) ^ n;
+    return (x & (x + 1)) == 0;
   }
 
   /**

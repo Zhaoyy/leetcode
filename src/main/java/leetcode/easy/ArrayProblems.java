@@ -27,6 +27,60 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/max-area-of-island/description/
+   */
+  public int maxAreaOfIsland(int[][] grid) {
+    int area = 0;
+    Set<Integer> record = new HashSet<>();
+
+    for (int i = 0; i < grid.length; i++) {
+      int[] col = grid[i];
+      for (int j = 0; j < col.length; j++) {
+        int tag = getTag(i, j);
+        if (col[j] > 0 && !record.contains(tag)) {
+          record.add(tag);
+          area = Math.max(area, getArea(grid, i, j, record));
+        }
+      }
+    }
+
+    return area;
+  }
+
+  private int getArea(int[][] grid, int x, int y, Set<Integer> set) {
+    int area = 1;
+    // top
+    int tag = getTag(x, y - 1);
+    if (y - 1 >= 0 && !set.contains(tag) && grid[x][y - 1] == 1) {
+      set.add(tag);
+      area += getArea(grid, x, y - 1, set);
+    }
+    // right
+    tag = getTag(x + 1, y);
+    if (x + 1 < grid.length && !set.contains(tag) && grid[x + 1][y] == 1) {
+      set.add(tag);
+      area += getArea(grid, x + 1, y, set);
+    }
+    // bottom
+    tag = getTag(x, y + 1);
+    if (y + 1 < grid[x].length && !set.contains(tag) && grid[x][y + 1] == 1) {
+      set.add(tag);
+      area += getArea(grid, x, y + 1, set);
+    }
+    // left
+    tag = getTag(x - 1, y);
+    if (x - 1 >= 0 && !set.contains(tag) && grid[x - 1][y] == 1) {
+      set.add(tag);
+      area += getArea(grid, x - 1, y, set);
+    }
+    return area;
+  }
+
+  private int getTag(int x, int y) {
+    return x * 100 + y;
+  }
+
+  /**
    * https://leetcode.com/problems/can-place-flowers/description/
    */
   public boolean canPlaceFlowers(int[] flowerbed, int n) {
