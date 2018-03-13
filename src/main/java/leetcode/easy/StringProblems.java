@@ -20,6 +20,34 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/count-binary-substrings/description/
+   */
+  public int countBinarySubstrings(String s) {
+    if (s == null || s.isEmpty()) return 0;
+    int count = 0, one = 0, zero = 0;
+    char last = s.charAt(0);
+    for (char c : s.toCharArray()) {
+      if (c != last) {
+        count += Math.min(one, zero);
+        last = c;
+        if (c == '1') {
+          one = 1;
+        } else {
+          zero = 1;
+        }
+      } else {
+        if (c == '1') {
+          one++;
+        } else {
+          zero++;
+        }
+      }
+    }
+    count += Math.min(one, zero);
+    return count;
+  }
+
+  /**
    * https://leetcode.com/problems/repeated-string-match/description/
    */
   public int repeatedStringMatch(String A, String B) {

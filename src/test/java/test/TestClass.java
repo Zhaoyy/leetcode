@@ -17,4 +17,17 @@ public class TestClass {
       if (result < 0) break;
     }
   }
+
+  @Test public void testFor() throws Exception {
+    out:
+    for (int i = 0; i < 3; i++) {
+      System.out.println("outer");
+      for (int j = 0; j < 2; j++) {
+        System.out.println("inner");
+        if (j % 2 == 0) {
+          continue out;
+        }
+      }
+    }
+  }
 }

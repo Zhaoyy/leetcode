@@ -23,7 +23,51 @@ public class ArrayProblems {
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
     //System.out.println(problems.findRestaurant(list1, list2));
 
-    System.out.println(problems.canPlaceFlowersBetter(new int[] {1, 0, 0, 0, 0, 1}, 2));
+    System.out.println(problems.findShortestSubArray(new int[] {1, 3, 2, 2, 3, 1}));
+  }
+
+  /**
+   * https://leetcode.com/problems/1-bit-and-2-bit-characters/description/
+   */
+  public boolean isOneBitCharacter(int[] bits) {
+    int i = 0;
+    for (; i < bits.length - 1; i++)
+      if (bits[i] != 0) i++;
+    return i != bits.length;
+  }
+
+  /**
+   * https://leetcode.com/problems/degree-of-an-array/description/
+   */
+  public int findShortestSubArray(int[] nums) {
+    Map<Integer, Integer> map = new HashMap<>();
+    Map<Integer, Integer> startMap = new HashMap<>();
+    Map<Integer, Integer> endMap = new HashMap<>();
+    for (int i = 0; i < nums.length; i++) {
+      int n = nums[i];
+      map.put(n, map.getOrDefault(n, 0) + 1);
+      if (startMap.containsKey(n)) {
+        endMap.put(n, i);
+      } else {
+        startMap.put(n, i);
+      }
+    }
+
+    if (endMap.isEmpty()) return 1;
+
+    int times = 1, result = nums.length - 1;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+      if (entry.getValue() > times) {
+        times = entry.getValue();
+        result = endMap.get(entry.getKey()) - startMap.get(entry.getKey());
+      } else if (entry.getValue() == times) {
+        if (endMap.containsKey(entry.getKey())) {
+          result = Math.min(result, endMap.get(entry.getKey()) - startMap.get(entry.getKey()));
+        }
+      }
+    }
+
+    return result + 1;
   }
 
   /**
