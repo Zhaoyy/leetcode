@@ -23,7 +23,86 @@ public class ArrayProblems {
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
     //System.out.println(problems.findRestaurant(list1, list2));
 
-    System.out.println(problems.findShortestSubArray(new int[] {1, 3, 2, 2, 3, 1}));
+    System.out.println(problems.floodFill(new int[][] {{0, 0, 0}, {0, 1, 1}}, 1, 1, 1));
+  }
+
+  /**
+   * https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/
+   */
+  public char nextGreatestLetter(char[] letters, char target) {
+    if (letters[letters.length - 1] <= target) return letters[0];
+    int l = 0, r = letters.length - 1;
+    while (l < r) {
+      int mid = (l + r) / 2;
+      if (letters[mid] <= target) {
+        l = mid + 1;
+      } else {
+        r = mid;
+      }
+    }
+    return letters[l];
+  }
+
+  /**
+   * https://leetcode.com/problems/flood-fill/description/
+   */
+  public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+    int t = image[sr][sc];
+    if (t == newColor) return image;
+    image[sr][sc] = newColor;
+    // left
+    if (sr - 1 >= 0 && image[sr - 1][sc] == t) {
+      floodFill(image, sr - 1, sc, newColor);
+    }
+    // top
+    if (sc - 1 >= 0 && image[sr][sc - 1] == t) {
+      floodFill(image, sr, sc - 1, newColor);
+    }
+    // right
+    if (sr + 1 < image.length && image[sr + 1][sc] == t) {
+      floodFill(image, sr + 1, sc, newColor);
+    }
+    // bottom
+    if (sc + 1 < image[sr].length && image[sr][sc + 1] == t) {
+      floodFill(image, sr, sc + 1, newColor);
+    }
+    return image;
+  }
+
+  /**
+   * https://leetcode.com/problems/self-dividing-numbers/description/
+   */
+  public List<Integer> selfDividingNumbers(int left, int right) {
+    List<Integer> r = new ArrayList<>();
+    for (int i = left; i <= right; i++) {
+      if (checkSelfDividing(i)) r.add(i);
+    }
+
+    return r;
+  }
+
+  private boolean checkSelfDividing(int n) {
+    if (n > 0 && n < 10) return true;
+    int t = n;
+
+    do {
+      int e = t % 10;
+      if (e == 0 || n % e != 0) return false;
+      t /= 10;
+    } while (t > 0);
+    return true;
+  }
+
+  /**
+   * https://leetcode.com/problems/find-pivot-index/description/
+   */
+  public int pivotIndex(int[] nums) {
+    int sum = 0, left = 0;
+    for (int n : nums) sum += n;
+    for (int i = 0; i < nums.length; left += nums[i++]) {
+      if (left * 2 == sum - nums[i]) return i;
+    }
+    return -1;
   }
 
   /**
