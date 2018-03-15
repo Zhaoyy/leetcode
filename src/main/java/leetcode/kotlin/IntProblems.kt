@@ -5,6 +5,59 @@ import leetcode.easy.TreeNodeProblems.TreeNode
 class IntProblems {
 
   /**
+   * https://leetcode.com/problems/rotated-digits/description/
+   */
+  fun rotatedDigits(N: Int): Int {
+    var count = 0
+    var i = 1
+    while (i <= N) {
+      if (isValid(i)) count++
+      i += 1 + extraStep(i)
+    }
+
+    return count
+  }
+
+  private fun extraStep(i: Int): Int {
+    var inc = 1
+    var t = i
+    while (t >= 10) {
+      inc *= 10
+      t /= 10
+    }
+
+    return if (t == 3 || t == 4 || t == 7) {
+      inc - 1
+    } else {
+      0
+    }
+  }
+
+  private fun isValid(n: Int): Boolean {
+    /*
+         Valid if N contains ATLEAST ONE 2, 5, 6, 9
+         AND NO 3, 4 or 7s
+         */
+    var r = false
+    var t = n
+    while (t > 0) {
+      when (t % 10) {
+        2 -> r = true
+        5 -> r = true
+        6 -> r = true
+        9 -> r = true
+        3 -> return false
+        4 -> return false
+        7 -> return false
+
+      }
+      t /= 10
+    }
+
+    return r
+  }
+
+  /**
    * https://leetcode.com/problems/valid-palindrome-ii/description/
    */
   fun validPalindrome(s: String): Boolean {

@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
 
 //  println(problems.findLengthOfLCIS(intArrayOf(1, 3, 5, 4, 7)))
 //  println(problems.findErrorNumsBetter(intArrayOf(1, 2, 2, 4)).joinToString(", "))
-  println(problems.repeatedStringMatch("abcd", "cdabcdab"))
+  println(problems.letterCasePermutationDTS("a1b2"))
 
   val p = IntProblems()
 //  println(p.validPalindrome("abc"))
@@ -28,6 +28,78 @@ fun main(args: Array<String>) {
 }
 
 class ArrayProblems {
+
+  /**
+   * https://leetcode.com/problems/rotate-string/description/
+   */
+  fun rotateString(A: String, B: String): Boolean {
+    if (A.length != B.length) return false
+    val sb = StringBuilder()
+    for (i in B.indices) {
+      if (B[i] == A[0]) {
+        sb.setLength(0)
+        sb.append(B.substring(i, B.length)).append(B.substring(0, i))
+        if (sb.toString() == A) return true
+      }
+    }
+    return false
+  }
+
+  /**
+   * https://leetcode.com/problems/letter-case-permutation/description/
+   */
+
+  fun letterCasePermutationDTS(S: String): List<String> {
+    val result = ArrayList<String>()
+    dfsHelper(S, result, 0)
+    return result
+  }
+
+  private fun dfsHelper(s: String, list: MutableList<String>, pos: Int) {
+    if (s.length == pos) {
+      list.add(s)
+      return
+    }
+    if (s[pos] > '9') {
+      val chars = s.toCharArray()
+      chars[pos] = chars[pos].toLowerCase()
+      dfsHelper(String(chars), list, pos + 1)
+      chars[pos] = chars[pos].toUpperCase()
+      dfsHelper(String(chars), list, pos + 1)
+    } else {
+      dfsHelper(s, list, pos + 1)
+    }
+  }
+
+  fun letterCasePermutation(S: String): List<String> {
+    val result = ArrayList<String>()
+    result.add(S)
+    val buffer = StringBuilder()
+    for (i in S.indices) {
+
+      if (S[i] > '9') {
+        val p = letterPermutation(S[i])
+        val n = result.lastIndex
+        for (j in 0..n) {
+          buffer.setLength(0)
+          buffer.append(result[j])
+          buffer.setCharAt(i, p)
+          result.add(buffer.toString())
+        }
+      }
+
+    }
+
+    return result
+  }
+
+  private fun letterPermutation(c: Char): Char {
+    return if (c in 'a'..'z') {
+      'A' + (c - 'a')
+    } else {
+      'a' + (c - 'A')
+    }
+  }
 
   /**
    * https://leetcode.com/problems/repeated-string-match/description/
