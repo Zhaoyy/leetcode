@@ -5,6 +5,34 @@ import leetcode.easy.TreeNodeProblems.TreeNode
 class IntProblems {
 
   /**
+   * https://leetcode.com/problems/longest-palindromic-substring/description/
+   */
+  private var maxStart = 0
+  private var maxLen = 1
+  fun longestPalindrome(s: String): String {
+    for (i in 0..s.lastIndex) {
+      extend(s, i, i)
+      extend(s, i, i + 1)
+    }
+
+    return s.substring(maxStart, maxStart + maxLen)
+  }
+
+  private fun extend(s: String, l: Int, r: Int) {
+    var start = l
+    var end = r
+    while (start >= 0 && end < s.length && s[start] == s[end]) {
+      start--
+      end++
+    }
+    val len = end - start - 1
+    if (len > maxLen) {
+      maxStart = start + 1
+      maxLen = len
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/rotated-digits/description/
    */
   fun rotatedDigits(N: Int): Int {

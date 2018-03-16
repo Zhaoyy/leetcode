@@ -16,9 +16,10 @@ fun main(args: Array<String>) {
 
 //  println(problems.findLengthOfLCIS(intArrayOf(1, 3, 5, 4, 7)))
 //  println(problems.findErrorNumsBetter(intArrayOf(1, 2, 2, 4)).joinToString(", "))
-  println(problems.letterCasePermutationDTS("a1b2"))
+//  println(problems.letterCasePermutationDTS("a1b2"))
 
   val p = IntProblems()
+  println(p.longestPalindrome("babad"))
 //  println(p.validPalindrome("abc"))
 //  val root = TreeNode(334)
 //  root.left = TreeNode(277)
