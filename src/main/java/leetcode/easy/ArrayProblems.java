@@ -23,7 +23,34 @@ public class ArrayProblems {
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
     //System.out.println(problems.findRestaurant(list1, list2));
 
-    System.out.println(problems.floodFill(new int[][] {{0, 0, 0}, {0, 1, 1}}, 1, 1, 1));
+    System.out.println(problems.threeSum(new int[] {0, 0, 0, 0}));
+  }
+
+  public List<List<Integer>> threeSum(int[] nums) {
+    Arrays.sort(nums);
+    List<List<Integer>> result = new ArrayList<>();
+    for (int i = 0; i < nums.length - 2; i++) {
+      if (i == 0 || nums[i] != nums[i - 1]) {
+        int l = i + 1, r = nums.length - 1, diff = -nums[i];
+        while (l < r) {
+          int sum = nums[l] + nums[r];
+          if (sum == diff) {
+            result.add(Arrays.asList(nums[i], nums[l], nums[r]));
+            while (l < r && nums[l] == nums[l + 1]) l++;
+            while (l < r && nums[r] == nums[r - 1]) r--;
+            l++;
+            r--;
+          } else if (sum < diff) {
+            while (l < r && nums[l] == nums[l + 1]) l++;
+            l++;
+          } else {
+            while (l < r && nums[r] == nums[r - 1]) r--;
+            r--;
+          }
+        }
+      }
+    }
+    return result;
   }
 
   /**

@@ -1,6 +1,7 @@
 package leetcode.kotlin
 
 import java.lang.StringBuilder
+import kotlin.math.abs
 import kotlin.math.max
 
 fun main(args: Array<String>) {
@@ -14,12 +15,12 @@ fun main(args: Array<String>) {
 //          844, -745, 447, -909, -586, 69, -88, 88, 445, -553, -666, 130, -640, -918, -7, -420, -368,
 //          250, -786)))
 
-//  println(problems.findLengthOfLCIS(intArrayOf(1, 3, 5, 4, 7)))
+  println(problems.threeSumClosest(intArrayOf(0, 0, 0), 1))
 //  println(problems.findErrorNumsBetter(intArrayOf(1, 2, 2, 4)).joinToString(", "))
 //  println(problems.letterCasePermutationDTS("a1b2"))
 
   val p = IntProblems()
-  println(p.longestPalindrome("babad"))
+//  println(p.longestPalindrome("babad"))
 //  println(p.validPalindrome("abc"))
 //  val root = TreeNode(334)
 //  root.left = TreeNode(277)
@@ -29,6 +30,84 @@ fun main(args: Array<String>) {
 }
 
 class ArrayProblems {
+
+  /**
+   * https://leetcode.com/problems/3sum-closest/description/
+   */
+  fun threeSumClosest(nums: IntArray, target: Int): Int {
+    if (nums.size == 3) return getThreeSum(nums, 0)
+    nums.sort()
+    var l = 0
+    var r = nums.size - 3
+    var sumL = 0
+    var sumR = 0
+    while (l < r) {
+      sumL = getThreeSum(nums, l)
+      sumR = getThreeSum(nums, r)
+      val mid = (l + r) / 2
+      val sumM = getThreeSum(nums, mid)
+
+      when {
+        sumL >= target -> return sumL
+        sumR <= target -> return sumR
+        sumM == target -> return sumM
+        sumM < target -> l = mid + 1
+        else -> r = mid - 1
+      }
+    }
+
+    return closed(sumL, sumR, target)
+  }
+
+  private fun getThreeSum(nums: IntArray, start: Int): Int {
+    return nums[start] + nums[start + 1] + nums[start + 2]
+  }
+
+  private fun closed(a: Int, b: Int, target: Int): Int {
+    return if (abs(a - target) < abs(b - target)) {
+      a
+    } else {
+      b
+    }
+  }
+
+  /**
+   * https://leetcode.com/problems/3sum/description/
+   */
+  fun threeSum(nums: IntArray): List<List<Int>> {
+    nums.sort()
+    val result = ArrayList<List<Int>>()
+
+    for (i in 0..nums.size - 3) {
+      if (i == 0 || nums[i] != nums[i - 1]) {
+        var l = i + 1
+        var r = nums.lastIndex
+        val diff = -nums[i]
+        while (l < r) {
+          val sum = nums[l] + nums[r]
+          when {
+            sum == diff -> {
+              result.add(arrayListOf(nums[i], nums[l], nums[r]))
+              while (l < r && nums[l] == nums[l + 1]) l++
+              while (l < r && nums[r] == nums[r - 1]) r--
+              l++
+              r--
+            }
+            sum > diff -> {
+              while (r - 1 > 0 && nums[r] == nums[r - 1]) r--
+              r--
+            }
+            sum < diff -> {
+              while (l + 1 < nums.lastIndex && nums[l] == nums[l + 1]) l++
+              l++
+            }
+          }
+        }
+      }
+    }
+
+    return result
+  }
 
   /**
    * https://leetcode.com/problems/rotate-string/description/

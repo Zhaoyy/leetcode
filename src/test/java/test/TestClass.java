@@ -30,4 +30,18 @@ public class TestClass {
       }
     }
   }
+
+  @Test public void testAA() throws Exception {
+    Integer a = 2;
+    int b = 1;
+    aa(a % 2 == 0 ? a : b, 1);
+  }
+
+  private void aa(Integer a, int b) {
+    System.out.println(a + b);
+  }
+
+  private void aa(int a, int b) {
+    System.out.println(a * b);
+  }
 }
