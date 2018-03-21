@@ -32,8 +32,79 @@ fun main(args: Array<String>) {
 class ArrayProblems {
 
   /**
+   * https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
+   */
+  private val keyBoard = arrayOf(
+      emptyArray(),
+      emptyArray(),
+      arrayOf('a', 'b', 'c'),
+      arrayOf('d', 'e', 'f'),
+      arrayOf('g', 'h', 'i'),
+      arrayOf('j', 'k', 'l'),
+      arrayOf('m', 'n', 'o'),
+      arrayOf('p', 'q', 'r', 's'),
+      arrayOf('t', 'u', 'v'),
+      arrayOf('w', 'x', 'y', 'z')
+  )
+
+  fun letterCombinations(digits: String): List<String> {
+    val ans = ArrayList<String>()
+    dfsLetterCombinations(digits, StringBuilder(), ans, 0)
+    return ans
+  }
+
+  private fun dfsLetterCombinations(
+    digits: String,
+    temp: StringBuilder,
+    list: MutableList<String>,
+    step: Int
+  ) {
+    if (step == digits.length) {
+      if (temp.isNotEmpty()) list.add(temp.toString())
+      return
+    }
+
+    val num = digits[step] - '0'
+    val chars = keyBoard[num]
+    val len = temp.length
+    if (chars.isNotEmpty()) {
+      for (c in chars) {
+        temp.setLength(len)
+        dfsLetterCombinations(digits, temp.append(c), list, step + 1)
+      }
+    } else {
+      dfsLetterCombinations(digits, temp, list, step + 1)
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/3sum-closest/description/
    */
+  fun threeeSumClosestB(nums: IntArray, target: Int): Int {
+    if (nums.size <= 3) return nums.sum()
+    nums.sort()
+    var ans = nums.take(3).sum()
+    val n = nums.lastIndex
+    for (i in 0..nums.lastIndex - 2) {
+      var l = i + 1
+      var r = n
+      while (l < r) {
+        val sum = nums[i] + nums[l] + nums[r]
+        if (Math.abs(target - ans) > Math.abs(target - sum)) {
+          ans = sum
+          if (ans == target) return ans
+        }
+        if (sum > target) {
+          r--
+        } else {
+          l++
+        }
+      }
+    }
+
+    return ans
+  }
+
   fun threeSumClosest(nums: IntArray, target: Int): Int {
     if (nums.size == 3) return getThreeSum(nums, 0)
     nums.sort()
