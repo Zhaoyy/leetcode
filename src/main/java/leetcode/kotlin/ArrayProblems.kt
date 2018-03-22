@@ -15,7 +15,7 @@ fun main(args: Array<String>) {
 //          844, -745, 447, -909, -586, 69, -88, 88, 445, -553, -666, 130, -640, -918, -7, -420, -368,
 //          250, -786)))
 
-  println(problems.threeSumClosest(intArrayOf(0, 0, 0), 1))
+  println(problems.fourSum(intArrayOf(-3, -2, -1, 0, 0, 1, 2, 3), 0))
 //  println(problems.findErrorNumsBetter(intArrayOf(1, 2, 2, 4)).joinToString(", "))
 //  println(problems.letterCasePermutationDTS("a1b2"))
 
@@ -30,6 +30,47 @@ fun main(args: Array<String>) {
 }
 
 class ArrayProblems {
+
+  /**
+   * https://leetcode.com/problems/4sum/description/
+   */
+  fun fourSum(nums: IntArray, target: Int): List<List<Int>> {
+    val ans = ArrayList<List<Int>>()
+    nums.sort()
+    for (i in 0..nums.size - 4) {
+      // can do better
+      if (i > 0 && nums[i] == nums[i - 1]) continue
+      for (j in i + 1..nums.size - 3) {
+        // can do better
+        if (j > i + 1 && nums[j] == nums[j - 1]) continue
+        val diff = target - nums[i] - nums[j]
+        var l = j + 1
+        var r = nums.lastIndex
+        while (l < r) {
+          val temp = nums[l] + nums[r]
+          when {
+            temp == diff -> {
+              ans.add(listOf(nums[i], nums[j], nums[l], nums[r]))
+              while (l < r && nums[l] == nums[l + 1]) l++
+              while (l < r && nums[r] == nums[r - 1]) r--
+              l++
+              r--
+            }
+            temp < diff -> {
+              while (l < r && nums[l] == nums[l + 1]) l++
+              l++
+            }
+            else -> {
+              while (l < r && nums[r] == nums[r - 1]) r--
+              r--
+            }
+          }
+        }
+      }
+    }
+
+    return ans
+  }
 
   /**
    * https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
