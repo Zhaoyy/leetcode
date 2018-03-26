@@ -1,5 +1,7 @@
 package leetcode.easy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class ListNodeProblems {
@@ -9,6 +11,30 @@ public class ListNodeProblems {
     root.next = new ListNode(2);
     ListNodeProblems problems = new ListNodeProblems();
     problems.reverseList(root);
+  }
+
+  /**
+   * https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+   */
+  public ListNode removeNthFromEnd(ListNode head, int n) {
+    if (head == null || n == 0) return head;
+    List<ListNode> temp = new ArrayList<>();
+    ListNode node = head;
+    while (node != null) {
+      temp.add(node);
+      node = node.next;
+    }
+
+    int delIndex = temp.size() - n;
+
+    if (delIndex == 0) {
+      return head.next;
+    } else if (delIndex == temp.size() - 1) {
+      temp.get(delIndex - 1).next = null;
+    } else {
+      temp.get(delIndex - 1).next = temp.get(delIndex + 1);
+    }
+    return head;
   }
 
   public ListNode mergeTwoLists(ListNode l1, ListNode l2) {

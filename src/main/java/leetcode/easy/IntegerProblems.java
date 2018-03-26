@@ -10,7 +10,33 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  if (problems.checkPerfectNumber(i)) System.out.println(i);
     //}
-    System.out.println(problems.hasAlternatingBits(5));
+    System.out.println(problems.generateParenthesis(3));
+  }
+
+  /**
+   * https://leetcode.com/problems/generate-parentheses/description/
+   */
+  public List<String> generateParenthesis(int n) {
+    List<String> ans = new ArrayList<>();
+    dfsParenthesis("", 0, 0, n, ans);
+    return ans;
+  }
+
+  private void dfsParenthesis(String temp, int lCount, int rCount, int n,
+      List<String> ans) {
+    if (lCount == n && rCount == n) {
+      ans.add(temp);
+      return;
+    }
+
+    if (lCount == n) {
+      dfsParenthesis(temp + ")", lCount, rCount + 1, n, ans);
+    } else if (lCount == rCount) {
+      dfsParenthesis(temp + "(", lCount + 1, rCount, n, ans);
+    } else {
+      dfsParenthesis(temp + "(", lCount + 1, rCount, n, ans);
+      dfsParenthesis(temp + ")", lCount, rCount + 1, n, ans);
+    }
   }
 
   /**
