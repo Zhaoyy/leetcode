@@ -9,8 +9,30 @@ public class ListNodeProblems {
   public static void main(String[] args) {
     ListNode root = new ListNode(1);
     root.next = new ListNode(2);
+    root.next.next = new ListNode(3);
+    //root.next.next.next = new ListNode(4);
     ListNodeProblems problems = new ListNodeProblems();
-    problems.reverseList(root);
+    problems.swapPairs(root);
+  }
+
+  /**
+   * medium
+   */
+  /**
+   * https://leetcode.com/problems/swap-nodes-in-pairs/description/
+   */
+  public ListNode swapPairs(ListNode head) {
+    ListNode ans = new ListNode(-1), p = ans, f = head, s;
+    ans.next = f;
+    while (f != null && f.next != null) {
+      s = f.next;
+      p.next = s;
+      f.next = s.next;
+      s.next = f;
+      p = f;
+      f = f.next;
+    }
+    return ans.next;
   }
 
   /**
@@ -36,6 +58,10 @@ public class ListNodeProblems {
     }
     return head;
   }
+
+  /**
+   * easy
+   */
 
   public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     ListNode head = null;
