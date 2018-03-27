@@ -10,7 +10,25 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  if (problems.checkPerfectNumber(i)) System.out.println(i);
     //}
-    System.out.println(problems.generateParenthesis(3));
+    System.out.println(problems.divide(Integer.MAX_VALUE, 1));
+  }
+
+  /**
+   * https://leetcode.com/problems/divide-two-integers/description/
+   */
+  public int divide(int dividend, int divisor) {
+    if (divisor == 0 || (dividend == Integer.MIN_VALUE && divisor == -1)) return Integer.MAX_VALUE;
+    if (divisor == 1) return dividend;
+    boolean neg = (dividend > 0) ^ (divisor > 0);
+    long dividendL = Math.abs((long) dividend);
+    long divisorL = Math.abs((long) divisor);
+    int ans = 0;
+    while (divisorL <= dividendL) {
+      ans++;
+      dividendL -= divisorL;
+    }
+
+    return neg ? -ans : ans;
   }
 
   /**
