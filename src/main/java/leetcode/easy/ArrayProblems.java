@@ -22,8 +22,65 @@ public class ArrayProblems {
     //String[] list2 =
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
     //System.out.println(problems.findRestaurant(list1, list2));
+    problems.nextPermutation(new int[] {1, 5, 1});
+    //System.out.println();
+  }
 
-    System.out.println(problems.threeSum(new int[] {0, 0, 0, 0}));
+  /**
+   * https://leetcode.com/problems/search-in-rotated-sorted-array/description/ Search in Rotated
+   * Sorted Array
+   */
+  public int searchRotatedSortedArray(int[] nums, int target) {
+    if (nums == null || nums.length == 0) return -1;
+    int start = 0, end = nums.length - 1;
+    while (start < end) {
+      int mid = (start + end) / 2;
+      if (nums[mid] > nums[end]) {  // eg. 3,4,5,6,1,2
+        if (target > nums[mid] || target <= nums[end]) {
+          start = mid + 1;
+        } else {
+          end = mid;
+        }
+      } else {  // eg. 5,6,1,2,3,4
+        if (target > nums[mid] && target <= nums[end]) {
+          start = mid + 1;
+        } else {
+          end = mid;
+        }
+      }
+    }
+    if (start == end && target != nums[start]) return -1;
+    return start;
+  }
+
+  /**
+   * https://leetcode.com/problems/next-permutation/description/
+   */
+  public void nextPermutation(int[] nums) {
+
+    if (nums == null || nums.length < 2) return;
+
+    int index = nums.length - 1;
+    while (index > 0 && nums[index] <= nums[index - 1]) {
+      index--;
+    }
+    if (index == 0) {
+      Arrays.sort(nums);
+      return;
+    }
+
+    int t = nums[index - 1];
+    int i = index;
+    for (; i < nums.length; i++) {
+      if (nums[i] <= t) {
+        break;
+      }
+    }
+
+    nums[index - 1] = nums[i - 1];
+    nums[i - 1] = t;
+
+    Arrays.sort(nums, index, nums.length);
   }
 
   public List<List<Integer>> threeSum(int[] nums) {
