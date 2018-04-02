@@ -21,9 +21,104 @@ public class ArrayProblems {
     //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
     //String[] list2 =
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-    //System.out.println(problems.findRestaurant(list1, list2));
-    problems.nextPermutation(new int[] {1, 5, 1});
+    System.out.println(problems.searchRange(new int[] {1, 2, 3, 3, 3, 3, 4, 5, 9}, 3));
+    //problems.nextPermutation(new int[] {1, 5, 1});
     //System.out.println();
+  }
+
+  /**
+   * https://leetcode.com/problems/valid-sudoku/description/
+   */
+  public boolean isValidSudoku(char[][] board) {
+    int[] temp;
+
+    // line check
+    for (char[] l : board) {
+      temp = new int[10];
+      for (char c : l) {
+        if (!checkSudoku(c, temp)) return false;
+      }
+    }
+
+    // row check
+    for (int i = 0; i < board.length; i++) {
+      temp = new int[10];
+      for (char[] r : board) {
+        char c = r[i];
+        if (!checkSudoku(c, temp)) return false;
+      }
+    }
+
+    // square check
+    for (int i = 1; i < 9; i += 3) {
+      for (int j = 1; j < 9; j += 3) {
+        temp = new int[10];
+        if (!squareCheckSudoku(board, i, j, temp)) return false;
+      }
+    }
+    return true;
+  }
+
+  private boolean checkSudoku(char c, int[] temp) {
+    if (c == '.') return true;
+    int index = c - '0';
+    if (temp[index] > 0) {
+      return false;
+    } else {
+      temp[index] = 1;
+      return true;
+    }
+  }
+
+  private boolean squareCheckSudoku(char[][] board, int x, int y, int[] temp) {
+    for (int i = x - 1; i <= x + 1; i++) {
+      for (int j = y - 1; j <= y + 1; j++) {
+        char c = board[i][j];
+        if (!checkSudoku(c, temp)) return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * https://leetcode.com/problems/search-for-a-range/description/
+   */
+  public int[] searchRange(int[] nums, int target) {
+    int[] ans = new int[] {-1, -1};
+
+    if (nums.length == 0 || nums[0] > target || nums[nums.length - 1] < target) return ans;
+
+    int l = 0, r = nums.length - 1;
+
+    while (l < r) {
+      int mid = (l + r) / 2;
+      if (nums[mid] < target) {
+        l = mid + 1;
+      } else {
+        r = mid;
+      }
+    }
+
+    if (nums[l] != target) {
+      return ans;
+    } else {
+      ans[0] = l;
+    }
+
+    r = nums.length - 1;
+    while (l < r) {
+      int mid = (l + r) / 2 + 1;
+      if (nums[mid] > target) {
+        r = mid - 1;
+      } else {
+        l = mid;
+      }
+    }
+
+    ans[1] = r;
+
+    return ans;
   }
 
   /**
