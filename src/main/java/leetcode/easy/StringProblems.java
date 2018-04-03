@@ -20,6 +20,19 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/multiply-strings/description/
+   */
+  public String multiply(String num1, String num2) {
+    StringBuilder ans = new StringBuilder();
+
+    for (char c : num2.toCharArray()) {
+
+    }
+
+    return ans.toString();
+  }
+
+  /**
    * https://leetcode.com/problems/count-binary-substrings/description/
    */
   public int countBinarySubstrings(String s) {

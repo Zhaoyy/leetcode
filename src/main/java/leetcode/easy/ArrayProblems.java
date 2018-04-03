@@ -27,6 +27,63 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/combination-sum-ii/description/
+   */
+  public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    List<List<Integer>> ans = new ArrayList<>();
+
+    Arrays.sort(candidates);
+    combinationSum2Helper(ans, new ArrayList<>(), candidates, target, 0);
+
+    return ans;
+  }
+
+  private void combinationSum2Helper(List<List<Integer>> ans, List<Integer> temp, int[] candidates,
+      int target,
+      int index) {
+    if (target < 0) return;
+    if (temp.size() > 0 && target == 0) {
+      ans.add(new ArrayList<>(temp));
+    } else {
+      for (int i = index; i < candidates.length; i++) {
+
+        if (i > index && candidates[i] == candidates[i - 1]) continue;
+
+        temp.add(candidates[i]);
+        combinationSum2Helper(ans, temp, candidates, target - candidates[i], i + 1);
+        temp.remove(temp.size() - 1);
+      }
+    }
+  }
+
+  /**
+   * https://leetcode.com/problems/combination-sum/description/
+   */
+  public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    List<List<Integer>> ans = new ArrayList<>();
+
+    Arrays.sort(candidates);
+    combinationSumHelper(ans, new ArrayList<>(), candidates, target, 0);
+
+    return ans;
+  }
+
+  private void combinationSumHelper(List<List<Integer>> ans, List<Integer> temp, int[] candidates,
+      int target,
+      int index) {
+    if (target < 0) return;
+    if (temp.size() > 0 && target == 0) {
+      ans.add(new ArrayList<>(temp));
+    } else {
+      for (int i = index; i < candidates.length; i++) {
+        temp.add(candidates[i]);
+        combinationSumHelper(ans, temp, candidates, target - candidates[i], i);
+        temp.remove(temp.size() - 1);
+      }
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/valid-sudoku/description/
    */
   public boolean isValidSudoku(char[][] board) {
