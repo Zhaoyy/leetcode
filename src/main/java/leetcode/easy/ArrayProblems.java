@@ -21,7 +21,7 @@ public class ArrayProblems {
     //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
     //String[] list2 =
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-    System.out.println(problems.searchRange(new int[] {1, 2, 3, 3, 3, 3, 4, 5, 9}, 3));
+    System.out.println(problems.permuteUniqueBetter(new int[] {1, 1, 2}));
     //problems.nextPermutation(new int[] {1, 5, 1});
     //System.out.println();
   }
@@ -203,6 +203,93 @@ public class ArrayProblems {
     }
     if (start == end && target != nums[start]) return -1;
     return start;
+  }
+
+  /**
+   * https://leetcode.com/problems/permutations-ii/description/
+   */
+  public List<List<Integer>> permuteUniqueBetter(int[] nums) {
+    List<List<Integer>> ans = new ArrayList<>();
+    Arrays.sort(nums);
+    puHelper(nums, 0, ans);
+    return ans;
+  }
+
+  private void puHelper(int[] nums, int index, List<List<Integer>> ret) {
+    if (index == nums.length - 1) {
+      List<Integer> list = new ArrayList<>();
+      for (int n : nums) list.add(n);
+      ret.add(list);
+    } else {
+      for (int i = index; i < nums.length; i++) {
+        boolean flag = false;
+        for (int j = index; j < i; j++) {
+          if (nums[j] == nums[i]) {
+            flag = true;
+            break;
+          }
+        }
+
+        if (flag) continue;
+
+        puSwap(nums, index, i);
+        puHelper(nums, index + 1, ret);
+        puSwap(nums, index, i);
+      }
+    }
+  }
+
+  private void puSwap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
+  }
+
+  public List<List<Integer>> permuteUnique(int[] nums) {
+    List<List<Integer>> ans = new ArrayList<>();
+    Arrays.sort(nums);
+    permuteUniqueHelper(ans, new ArrayList<>(), nums, new ArrayList<>());
+    return ans;
+  }
+
+  private void permuteUniqueHelper(List<List<Integer>> ans, List<Integer> temp, int[] nums,
+      List<Integer> indexs) {
+    if (temp.size() == nums.length) {
+      ans.add(new ArrayList<>(temp));
+    } else {
+      for (int i = 0; i < nums.length; i++) {
+        if (i > 0 && nums[i] == nums[i - 1] && indexs.contains(i - 1) || indexs.contains(i)) {
+          continue;
+        }
+        temp.add(nums[i]);
+        indexs.add(i);
+        permuteUniqueHelper(ans, temp, nums, indexs);
+        indexs.remove(indexs.size() - 1);
+        temp.remove(temp.size() - 1);
+      }
+    }
+  }
+
+  /**
+   * https://leetcode.com/problems/permutations/description/
+   */
+  public List<List<Integer>> permute(int[] nums) {
+    List<List<Integer>> ans = new ArrayList<>();
+    permuteHelper(ans, new ArrayList<>(), nums);
+    return ans;
+  }
+
+  private void permuteHelper(List<List<Integer>> ans, List<Integer> temp, int[] nums) {
+    if (temp.size() == nums.length) {
+      ans.add(new ArrayList<>(temp));
+    } else {
+      for (int n : nums) {
+        if (temp.contains(n)) continue;
+        temp.add(n);
+        permuteHelper(ans, temp, nums);
+        temp.remove(temp.size() - 1);
+      }
+    }
   }
 
   /**

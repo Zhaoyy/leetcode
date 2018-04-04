@@ -16,20 +16,100 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.validPalindrome("beeee"));
+    System.out.println(problems.multiplyBetter("0", "0"));
   }
 
   /**
    * https://leetcode.com/problems/multiply-strings/description/
    */
-  public String multiply(String num1, String num2) {
-    StringBuilder ans = new StringBuilder();
+  public String multiplyBetter(String num1, String num2) {
 
-    for (char c : num2.toCharArray()) {
-
+    if (num1.length() == 1 && num1.charAt(0) == '0' || num2.length() == 1 & num2.charAt(0) == '0') {
+      return "0";
     }
 
-    return ans.toString();
+    if (num2.length() > num1.length()) {
+      String t = num1;
+      num1 = num2;
+      num2 = t;
+    }
+
+    char[] n1 = num1.toCharArray();
+    char[] n2 = num2.toCharArray();
+    int[] ans = new int[n1.length + n2.length];
+    for (int i = n1.length - 1; i >= 0; i--) {
+      for (int j = n2.length - 1; j >= 0; j--) {
+        ans[i + j + 1] += (n1[i] - '0') * (n2[j] - '0');
+      }
+    }
+
+    for (int i = ans.length - 1; i > 0; i--) {
+      ans[i - 1] += ans[i] / 10;
+      ans[i] %= 10;
+    }
+
+    StringBuilder sb = new StringBuilder();
+    if (ans[0] > 0) sb.append(ans[0]);
+    for (int i = 1; i < ans.length; i++) {
+      sb.append(ans[i]);
+    }
+    return sb.toString();
+  }
+
+  public String multiply(String num1, String num2) {
+
+    if (num2.length() > num1.length()) {
+      String t = num1;
+      num1 = num2;
+      num2 = t;
+    }
+
+    StringBuilder ans = new StringBuilder();
+
+    char[] chars1 = num1.toCharArray();
+    char[] chars2 = num2.toCharArray();
+    int chars1LastIndex = chars1.length - 1;
+    List<Integer> temp = new ArrayList<>();
+
+    for (int i = chars2.length - 1; i >= 0; i--) {
+
+      if (temp.size() == 0) {
+        temp.add(0);
+      }
+
+      int n = chars2[i] - '0';
+      if (n == 0) {
+        ans.append(temp.remove(0));
+        continue;
+      }
+      int carry = 0;
+      for (int j = chars1LastIndex; j >= 0; j--) {
+        int m = chars1[j] - '0';
+        int p = m * n + carry;
+
+        int index = chars1LastIndex - j;
+        if (temp.size() > index) {
+          p += temp.get(index);
+          int r = p % 10;
+          temp.set(index, r);
+        } else {
+          int r = p % 10;
+          temp.add(r);
+        }
+
+        carry = p / 10;
+      }
+
+      if (carry > 0) temp.add(carry);
+
+      ans.append(temp.remove(0));
+    }
+
+    for (int n : temp) {
+      ans.append(n);
+    }
+
+    return ans.reverse().toString();
   }
 
   /**
