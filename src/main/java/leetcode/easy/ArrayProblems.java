@@ -27,6 +27,41 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/group-anagrams/description/
+   */
+  public List<List<String>> groupAnagrams(String[] strs) {
+    Map<String, List<String>> map = new HashMap<>();
+
+    for (String s : strs) {
+      char[] t = s.toCharArray();
+      Arrays.sort(t);
+      String key = String.valueOf(t);
+      if (!map.containsKey(key)) map.put(key, new ArrayList<>());
+      map.get(key).add(s);
+    }
+
+    return new ArrayList<>(map.values());
+  }
+
+  /**
+   * https://leetcode.com/problems/rotate-image/description/
+   */
+  public void rotate(int[][] matrix) {
+
+    int n = matrix.length - 1;
+
+    for (int i = 0; i < (matrix.length + 1) / 2; i++) {
+      for (int j = 0; j < matrix.length / 2; j++) {
+        int t = matrix[i][j];
+        matrix[i][j] = matrix[n - j][i];
+        matrix[n - j][i] = matrix[n - i][n - j];
+        matrix[n - i][n - j] = matrix[j][n - i];
+        matrix[j][n - i] = t;
+      }
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/combination-sum-ii/description/
    */
   public List<List<Integer>> combinationSum2(int[] candidates, int target) {
