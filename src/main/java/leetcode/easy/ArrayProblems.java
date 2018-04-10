@@ -21,9 +21,83 @@ public class ArrayProblems {
     //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
     //String[] list2 =
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-    System.out.println(problems.permuteUniqueBetter(new int[] {1, 1, 2}));
+    int[][] t = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
+    System.out.println(problems.spiralOrder(problems.generateArray(4, 4)));
     //problems.nextPermutation(new int[] {1, 5, 1});
     //System.out.println();
+  }
+
+  private int[][] generateArray(int m, int n) {
+    int[][] ans = new int[m][n];
+    int t = 0;
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        t++;
+        ans[i][j] = t;
+      }
+    }
+    return ans;
+  }
+
+  /**
+   * https://leetcode.com/problems/jump-game/description/
+   */
+  public boolean canJump(int[] nums) {
+    int start = 0;
+    while (start < nums.length) {
+      if (nums[start] == 0) return false;
+      start += nums[start];
+    }
+
+    return start == nums.length - 1;
+  }
+
+  /**
+   * https://leetcode.com/problems/spiral-matrix/description/
+   */
+  public List<Integer> spiralOrder(int[][] matrix) {
+    List<Integer> ans = new ArrayList<>();
+    if (matrix == null || matrix.length == 0) return ans;
+
+    int m = matrix.length, n = matrix[0].length;
+    int size = m * n;
+
+    for (int i = 0; i < n - 1; i++) {
+      ans.add(matrix[0][i]);
+    }
+    if (ans.size() == size) return ans;
+    for (int i = 0; i < m; i++) {
+      int k = n - 1 - i;
+      int j = i;
+      // (i, n-1-i) -> (m-1-i, n-1-i)
+      for (; j < m - i; j++) {
+        ans.add(matrix[j][k]);
+        if (ans.size() == size) return ans;
+      }
+      // (m-1-i, n-1-i) -> (m-1-i, i)
+      j--;
+      k--;
+      for (; k > i; k--) {
+        ans.add(matrix[j][k]);
+        if (ans.size() == size) return ans;
+      }
+
+      // (m-1-i, i) -> (i+1, i)
+      for (; j > i; j--) {
+        ans.add(matrix[j][i]);
+        if (ans.size() == size) return ans;
+      }
+
+      // (i+1,i) -> (i+1, n-1-i-1)
+      j++;
+      k = n - 2 - i;
+      for (int t = i + 1; t < k; t++) {
+        ans.add(matrix[j][t]);
+        if (ans.size() == size) return ans;
+      }
+    }
+
+    return ans;
   }
 
   /**
