@@ -43,13 +43,14 @@ public class ArrayProblems {
    * https://leetcode.com/problems/jump-game/description/
    */
   public boolean canJump(int[] nums) {
-    int start = 0;
-    while (start < nums.length) {
-      if (nums[start] == 0) return false;
-      start += nums[start];
+    int leftMostGoodPosition = nums.length - 1;
+    for (int i = nums.length - 1; i >= 0; i--) {
+      if (i + nums[i] >= leftMostGoodPosition) {
+        leftMostGoodPosition = i;
+      }
     }
 
-    return start == nums.length - 1;
+    return leftMostGoodPosition == 0;
   }
 
   /**

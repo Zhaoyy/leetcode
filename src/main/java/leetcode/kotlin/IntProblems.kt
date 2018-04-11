@@ -2,6 +2,35 @@ package leetcode.kotlin
 
 import leetcode.easy.TreeNodeProblems.TreeNode
 
+fun main(args: Array<String>) {
+  val intervals = ArrayList<Interval>()
+  intervals.add(Interval(1, 4))
+  intervals.add(Interval(0, 4))
+  println(merge(intervals))
+}
+
+class Interval(
+  var start: Int = 0,
+  var end: Int = 0
+)
+
+fun merge(intervals: List<Interval>): List<Interval> {
+
+  val ans = ArrayList<Interval>()
+  for (i in intervals.sortedBy {
+    it.start
+  }) {
+
+    if (ans.size > 0 && i.start <= ans.last().end) {
+      val last = ans.last()
+      last.end = Math.max(i.end, last.end)
+    } else {
+      ans.add(i)
+    }
+  }
+  return ans
+}
+
 class IntProblems {
 
   /**
