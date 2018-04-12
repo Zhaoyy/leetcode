@@ -16,6 +16,41 @@ public class ListNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/rotate-list/description/
+   */
+  public ListNode rotateRight(ListNode head, int k) {
+
+    if (head == null) return head;
+
+    int count = 0;
+    ListNode t = head;
+    while (t != null) {
+      count++;
+      t = t.next;
+    }
+
+    k = k % count;
+    if (k == 0) return head;
+
+    int m = count - k;
+    t = head;
+    for (int i = 1; i < m; i++) {
+      t = t.next;
+    }
+
+    ListNode ans = new ListNode(0);
+    ans.next = t.next;
+    t.next = null;
+    t = ans.next;
+    for (int i = 1; i < k; i++) {
+      t = t.next;
+    }
+    t.next = head;
+
+    return ans.next;
+  }
+
+  /**
    * medium
    */
   /**

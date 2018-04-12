@@ -40,6 +40,26 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/permutation-sequence/description/
+   */
+  public String getPermutation(int n, int k) {
+    StringBuilder sb = new StringBuilder();
+    ArrayList<Integer> num = new ArrayList<Integer>();
+    int fact = 1;
+    for (int i = 1; i <= n; i++) {
+      fact *= i;
+      num.add(i);
+    }
+    for (int i = 0, l = k - 1; i < n; i++) {
+      fact /= (n - i);
+      int index = (l / fact);
+      sb.append(num.remove(index));
+      l -= index * fact;
+    }
+    return sb.toString();
+  }
+
+  /**
    * https://leetcode.com/problems/jump-game/description/
    */
   public boolean canJump(int[] nums) {
@@ -51,6 +71,38 @@ public class ArrayProblems {
     }
 
     return leftMostGoodPosition == 0;
+  }
+
+  /**
+   * https://leetcode.com/problems/spiral-matrix-ii/description/
+   */
+  public int[][] generateMatrix(int n) {
+    if (n == 0) {
+      return new int[0][0];
+    }
+    int rMatrix[][] = new int[n][n];
+    int stx = 0;
+    int enx = n - 1;
+    int sty = 0;
+    int eny = n - 1;
+    int count = 1;
+    while (stx <= enx && sty <= eny) {
+      for (int i = stx; i <= enx; i++)
+        rMatrix[sty][i] = count++;
+      sty++;
+      for (int i = sty; i <= eny; i++)
+        rMatrix[i][enx] = count++;
+      enx--;
+      for (int i = enx; i >= stx; i--) {
+        rMatrix[eny][i] = count++;
+      }
+      eny--;
+      for (int i = eny; i >= sty; i--) {
+        rMatrix[i][stx] = count++;
+      }
+      stx++;
+    }
+    return rMatrix;
   }
 
   /**
