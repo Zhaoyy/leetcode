@@ -21,8 +21,8 @@ public class ArrayProblems {
     //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
     //String[] list2 =
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-    int[][] t = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
-    System.out.println(problems.spiralOrder(problems.generateArray(4, 4)));
+    int[][] t = {{0, 0, 0}, {0, 1, 0}};
+    System.out.println(problems.uniquePathsWithObstacles(t));
     //problems.nextPermutation(new int[] {1, 5, 1});
     //System.out.println();
   }
@@ -37,6 +37,25 @@ public class ArrayProblems {
       }
     }
     return ans;
+  }
+
+  /**
+   * https://leetcode.com/problems/unique-paths-ii/description/
+   */
+  public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+    int width = obstacleGrid[0].length;
+    int[] dp = new int[width];
+    dp[0] = 1;
+    for (int[] row : obstacleGrid) {
+      for (int j = 0; j < width; j++) {
+        if (row[j] == 1) {
+          dp[j] = 0;
+        } else if (j > 0) {
+          dp[j] += dp[j - 1];
+        }
+      }
+    }
+    return dp[width - 1];
   }
 
   /**
