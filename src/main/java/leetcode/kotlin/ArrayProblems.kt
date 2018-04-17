@@ -32,6 +32,27 @@ fun main(args: Array<String>) {
 class ArrayProblems {
 
   /**
+   * https://leetcode.com/problems/minimum-path-sum/description/
+   */
+  fun minPathSum(grid: Array<IntArray>): Int {
+    val m = grid[0].lastIndex;
+    for (i in grid.indices) {
+      for (j in 0..m) {
+        if (i == 0 && j == 0) {
+
+        } else if (i == 0 && j != 0) {
+          grid[i][j] += grid[i][j - 1]
+        } else if (j == 0 && i != 0) {
+          grid[i][j] += grid[i - 1][j]
+        } else {
+          grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1])
+        }
+      }
+    }
+    return grid[grid.lastIndex][m]
+  }
+
+  /**
    * https://leetcode.com/problems/4sum/description/
    */
   fun fourSum(nums: IntArray, target: Int): List<List<Int>> {

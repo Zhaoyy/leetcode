@@ -16,7 +16,30 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.multiplyBetter("0", "0"));
+    System.out.println(problems.simplifyPath("/.."));
+  }
+
+  /**
+   * https://leetcode.com/problems/simplify-path/description/
+   */
+  public String simplifyPath(String path) {
+    Stack<String> stack = new Stack<>();
+    for (String s : path.split("/")) {
+      if (s != null && s.length() != 0 && !s.equals(".")) {
+        if (s.equals("..")) {
+          if (!stack.isEmpty()) stack.pop();
+        } else {
+          stack.push(s);
+        }
+      }
+    }
+
+    StringBuilder sb = new StringBuilder("/");
+    for (String s : stack.subList(0, stack.size())) {
+      sb.append(s).append("/");
+    }
+    if (sb.length() > 1) sb.setLength(sb.length() - 1);
+    return sb.toString();
   }
 
   /**

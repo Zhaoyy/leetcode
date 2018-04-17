@@ -11,21 +11,10 @@ import java.util.Set;
 
 public class ArrayProblems {
 
-  public static void main(String[] args) {
-    ArrayProblems problems = new ArrayProblems();
-    //System.out.println(problems.findPairs(
-    //    new int[] {2, 9, 0, 8, 9, 6, 5, 9, 8, 1, 9, 6, 9, 2, 8, 8, 7, 5, 7, 8, 8, 3, 7, 4, 1, 1, 6,
-    //        2, 9, 9, 3, 9, 2, 4, 6, 5, 6, 5, 1, 5, 9, 9, 8, 1, 4, 3, 2, 8, 5, 3, 5, 4, 5, 7, 0, 0,
-    //        7, 6, 4, 7, 2, 4, 9, 3, 6, 6, 5, 0, 0, 0, 8, 9, 9, 6, 5, 4, 6, 2, 1, 3, 2, 5, 0, 1, 4,
-    //        2, 6, 9, 5, 4, 9, 6, 0, 8, 3, 8, 0, 0, 2, 1}, 1))
-    //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
-    //String[] list2 =
-    //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-    int[][] t = {{0, 0, 0}, {0, 1, 0}};
-    System.out.println(problems.uniquePathsWithObstacles(t));
-    //problems.nextPermutation(new int[] {1, 5, 1});
-    //System.out.println();
-  }
+  /**
+   * https://leetcode.com/problems/minimum-path-sum/description/
+   */
+  private int minGridSum = 0;
 
   private int[][] generateArray(int m, int n) {
     int[][] ans = new int[m][n];
@@ -37,6 +26,71 @@ public class ArrayProblems {
       }
     }
     return ans;
+  }
+
+  public static void main(String[] args) {
+    ArrayProblems problems = new ArrayProblems();
+    //System.out.println(problems.findPairs(
+    //    new int[] {2, 9, 0, 8, 9, 6, 5, 9, 8, 1, 9, 6, 9, 2, 8, 8, 7, 5, 7, 8, 8, 3, 7, 4, 1, 1, 6,
+    //        2, 9, 9, 3, 9, 2, 4, 6, 5, 6, 5, 1, 5, 9, 9, 8, 1, 4, 3, 2, 8, 5, 3, 5, 4, 5, 7, 0, 0,
+    //        7, 6, 4, 7, 2, 4, 9, 3, 6, 6, 5, 0, 0, 0, 8, 9, 9, 6, 5, 4, 6, 2, 1, 3, 2, 5, 0, 1, 4,
+    //        2, 6, 9, 5, 4, 9, 6, 0, 8, 3, 8, 0, 0, 2, 1}, 1))
+    //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
+    //String[] list2 =
+    //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
+    int[][] t = {{0, 0, 0, 5}, {4, 3, 1, 4}, {0, 1, 1, 4}, {1, 2, 1, 3}, {0, 0, 1, 1}};
+    System.out.println(problems.uniquePathsWithObstacles(t));
+    problems.setZeroes(t);
+    //System.out.println();
+  }
+
+  /**
+   * https://leetcode.com/problems/set-matrix-zeroes/description/
+   */
+  public void setZeroes(int[][] matrix) {
+    boolean start = false;
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    // use matrix[x][0] & matrix[0][x] to store the information.
+    for (int i = 0; i < rows; i++) {
+      if (matrix[i][0] == 0) start = true;
+      for (int j = 1; j < cols; j++) {
+        if (matrix[i][j] == 0) {
+          matrix[i][0] = matrix[0][j] = 0;
+        }
+      }
+    }
+
+    for (int i = rows - 1; i >= 0; i--) {
+      for (int j = cols - 1; j > 0; j--) {
+        if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+          matrix[i][j] = 0;
+        }
+      }
+
+      if (start) matrix[i][0] = 0;
+    }
+  }
+
+  public int minPathSum(int[][] grid) {
+    return minPathSumHelper(grid, 0, 0);
+  }
+
+  private int minPathSumHelper(int[][] grid, int x, int y) {
+    int sum = grid[x][y];
+    if (x == grid.length - 1 && y == grid[0].length - 1) {
+      return sum;
+    }
+
+    if (x == grid.length - 1) {
+      sum += minPathSumHelper(grid, x, y + 1);
+    } else if (y == grid[0].length - 1) {
+      sum += minPathSumHelper(grid, x + 1, y);
+    } else {
+      sum += Math.min(minPathSumHelper(grid, x, y + 1), minPathSumHelper(grid, x + 1, y));
+    }
+
+    return sum;
   }
 
   /**
