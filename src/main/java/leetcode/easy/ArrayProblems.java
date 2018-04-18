@@ -45,6 +45,63 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/sort-colors/description/
+   */
+  public void sortColors(int[] nums) {
+    int n0 = -1, n1 = -1, n2 = -1;
+    for (int n : nums) {
+      if (n == 0) {
+        nums[++n2] = 2;
+        nums[++n1] = 1;
+        nums[++n0] = 0;
+      } else if (n == 1) {
+        nums[++n2] = 2;
+        nums[++n1] = 1;
+      } else if (n == 2) {
+        nums[++n2] = 2;
+      }
+    }
+  }
+
+  /**
+   * https://leetcode.com/problems/search-a-2d-matrix/description/
+   */
+  public boolean searchMatrix(int[][] matrix, int target) {
+
+    if (matrix.length == 0 || matrix[0].length == 0 || target < matrix[0][0] || target > matrix[
+        matrix.length
+            - 1][matrix[0].length - 1]) {
+      return false;
+    }
+
+    int cols = matrix[0].length;
+
+    for (int[] aMatrix : matrix) {
+      if (target > aMatrix[0] && target < aMatrix[cols - 1]) {
+        return searchMatrixBS(aMatrix, target);
+      } else if (target == aMatrix[0] || target == aMatrix[cols - 1]) return true;
+    }
+
+    return false;
+  }
+
+  private boolean searchMatrixBS(int[] nums, int target) {
+    int l = 0, r = nums.length - 1;
+    while (l <= r) {
+      int mid = l + (r - l) / 2;
+      if (nums[mid] == target) {
+        return true;
+      } else if (nums[mid] < target) {
+        l = mid + 1;
+      } else {
+        r = mid - 1;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * https://leetcode.com/problems/set-matrix-zeroes/description/
    */
   public void setZeroes(int[][] matrix) {
