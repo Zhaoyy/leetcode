@@ -45,6 +45,57 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/subsets/description/
+   */
+  public List<List<Integer>> subsets(int[] nums) {
+    List<List<Integer>> ans = new ArrayList<>();
+    ans.add(new ArrayList<>());
+
+    for (int i = 1; i <= nums.length; i++) {
+      subsetsHelper(ans, new ArrayList<>(), nums, -1, i);
+    }
+
+    return ans;
+  }
+
+  private void subsetsHelper(List<List<Integer>> ans, List<Integer> t, int[] nums, int start,
+      int size) {
+    if (t.size() == size) {
+      ans.add(new ArrayList<>(t));
+    } else {
+      int last = nums.length + t.size() - size;
+      for (int i = start + 1; i <= last; i++) {
+        t.add(nums[i]);
+        subsetsHelper(ans, t, nums, i, size);
+        t.remove(t.size() - 1);
+      }
+    }
+  }
+
+  /**
+   * https://leetcode.com/problems/combinations/description/
+   */
+  public List<List<Integer>> combine(int n, int k) {
+    List<List<Integer>> ans = new ArrayList<>();
+    combineHelper(n, k, ans, new ArrayList<>());
+    return ans;
+  }
+
+  private void combineHelper(int n, int k, List<List<Integer>> ans, List<Integer> t) {
+    if (t.size() == k) {
+      ans.add(new ArrayList<>(t));
+    } else {
+      int start = t.size() > 0 ? t.get(t.size() - 1) : 0;
+      int last = n + 1 + t.size() - k;
+      for (int i = start + 1; i <= last; i++) {
+        t.add(i);
+        combineHelper(n, k, ans, t);
+        t.remove(t.size() - 1);
+      }
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/sort-colors/description/
    */
   public void sortColors(int[] nums) {
