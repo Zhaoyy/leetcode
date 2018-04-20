@@ -39,9 +39,65 @@ public class ArrayProblems {
     //String[] list2 =
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
     int[][] t = {{0, 0, 0, 5}, {4, 3, 1, 4}, {0, 1, 1, 4}, {1, 2, 1, 3}, {0, 0, 1, 1}};
-    System.out.println(problems.uniquePathsWithObstacles(t));
+    char[][] chars = {{'b', 'b', 'b', 'b'}, {'b', 'a', 'b', 'b'}, {'b', 'd', 'c', 'b'}};
+    System.out.println(problems.removeDuplicatesII(new int[] {1, 1, 1, 2, 2, 3}));
     problems.setZeroes(t);
     //System.out.println();
+  }
+
+  /**
+   * https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/
+   */
+  public int removeDuplicatesII(int[] nums) {
+    if (nums.length < 3) return nums.length;
+    int ans = nums.length - 1;
+    int count = 1;
+    int last = nums[ans];
+    for (int i = ans - 1; i >= 0; i--) {
+      if (nums[i] == last) {
+        count++;
+        if (count > 2) {
+          int t = nums[i];
+          nums[i] = nums[ans];
+          nums[ans] = t;
+          ans--;
+          count--;
+        }
+      } else {
+        count = 1;
+        last = nums[i];
+      }
+    }
+
+    Arrays.sort(nums, 0, ans + 1);
+    return ans + 1;
+  }
+
+  /**
+   * https://leetcode.com/problems/word-search/description/
+   */
+  public boolean exist(char[][] board, String word) {
+
+    char[] w = word.toCharArray();
+    for (int y = 0; y < board.length; y++) {
+      for (int x = 0; x < board[y].length; x++) {
+        if (exist(board, y, x, w, 0)) return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean exist(char[][] board, int y, int x, char[] word, int i) {
+    if (i == word.length) return true;
+    if (y < 0 || x < 0 || y == board.length || x == board[y].length) return false;
+    if (board[y][x] != word[i]) return false;
+    board[y][x] ^= 256;
+    boolean exist = exist(board, y, x + 1, word, i + 1)
+        || exist(board, y, x - 1, word, i + 1)
+        || exist(board, y + 1, x, word, i + 1)
+        || exist(board, y - 1, x, word, i + 1);
+    board[y][x] ^= 256;
+    return exist;
   }
 
   /**
