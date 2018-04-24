@@ -46,6 +46,38 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/
+   */
+  public boolean search(int[] nums, int target) {
+    if (nums == null || nums.length == 0) return false;
+
+    int l = 0, r = nums.length - 1;
+    while (l < r) {
+
+      while (l < nums.length - 1 && nums[l] == nums[l + 1]) l++;
+      while (r > 0 && nums[r] == nums[r - 1]) r--;
+
+      int mid = (l + r) / 2;
+      if (nums[mid] == target || nums[l] == target || nums[r] == target) return true;
+      if (nums[mid] >= nums[r]) {
+        if (target > nums[mid] || target < nums[r]) {
+          l = mid + 1;
+        } else {
+          r = mid;
+        }
+      } else {
+        if (target > nums[mid] && target < nums[r]) {
+          l = mid + 1;
+        } else {
+          r = mid;
+        }
+      }
+    }
+
+    return nums[l] == target;
+  }
+
+  /**
    * https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/
    */
   public int removeDuplicatesII(int[] nums) {

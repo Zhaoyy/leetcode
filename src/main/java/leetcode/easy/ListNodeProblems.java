@@ -8,11 +8,63 @@ public class ListNodeProblems {
 
   public static void main(String[] args) {
     ListNode root = new ListNode(1);
-    root.next = new ListNode(2);
+    root.next = new ListNode(4);
     root.next.next = new ListNode(3);
+    root.next.next.next = new ListNode(2);
+    root.next.next.next.next = new ListNode(5);
+    root.next.next.next.next.next = new ListNode(2);
     //root.next.next.next = new ListNode(4);
     ListNodeProblems problems = new ListNodeProblems();
-    problems.swapPairs(root);
+    problems.partition(root, 3);
+  }
+
+  /**
+   * https://leetcode.com/problems/partition-list/description/
+   */
+  public ListNode partition(ListNode head, int x) {
+    ListNode ans = new ListNode(-1), p = ans;
+    ListNode big = new ListNode(-1), q = big;
+
+    while (head != null) {
+      if (head.val < x) {
+        p.next = head;
+        p = p.next;
+      } else {
+        q.next = head;
+        q = q.next;
+      }
+      head = head.next;
+    }
+    p.next = null;
+    q.next = null;
+
+    if (big.next != null) {
+      p.next = big.next;
+    }
+
+    return ans.next;
+  }
+
+  /**
+   * https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/
+   */
+  public ListNode deleteDuplicatesII(ListNode head) {
+    ListNode ans = new ListNode(-1);
+
+    ListNode dup = null, p = ans, c = head;
+
+    while (c != null) {
+      if (c.next != null && c.val == c.next.val || dup != null && c.val == dup.val) {
+        dup = c;
+        p.next = null;
+      } else {
+        p.next = c;
+        p = c;
+      }
+      c = c.next;
+    }
+
+    return ans.next;
   }
 
   /**

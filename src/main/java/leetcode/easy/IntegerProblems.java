@@ -14,6 +14,16 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/gray-code/description/
+   */
+  public List<Integer> grayCode(int n) {
+    List<Integer> ans = new ArrayList<>();
+    ans.add(0);
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/unique-paths/description/
    */
   public int uniquePaths(int m, int n) {
