@@ -17,10 +17,9 @@ public class IntegerProblems {
    * https://leetcode.com/problems/gray-code/description/
    */
   public List<Integer> grayCode(int n) {
-    List<Integer> ans = new ArrayList<>();
-    ans.add(0);
-
-    return ans;
+    List<Integer> result = new ArrayList<>();
+    for (int i = 0; i < 1 << n; i++) result.add(i ^ i >> 1);
+    return result;
   }
 
   /**
