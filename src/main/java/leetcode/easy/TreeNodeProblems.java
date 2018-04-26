@@ -29,6 +29,23 @@ public class TreeNodeProblems {
   }
 
   /**
+   * 中序遍历
+   *
+   * @link https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+   */
+  public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> ans = new ArrayList<>();
+    if (root != null) inorderTraversalHelper(ans, root);
+    return ans;
+  }
+
+  private void inorderTraversalHelper(List<Integer> ans, TreeNode node) {
+    if (node.left != null) inorderTraversalHelper(ans, node.left);
+    ans.add(node.val);
+    if (node.right != null) inorderTraversalHelper(ans, node.right);
+  }
+
+  /**
    * https://leetcode.com/problems/longest-univalue-path/description/
    */
   public int longestUnivaluePath(TreeNode root) {

@@ -16,7 +16,70 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.simplifyPath("/.."));
+    System.out.println(problems.restoreIpAddresses("240102"));
+  }
+
+  /**
+   * https://leetcode.com/problems/restore-ip-addresses/description/
+   */
+  public List<String> restoreIpAddresses(String s) {
+    List<String> ans = new ArrayList<>();
+
+    if (s == null || s.length() < 4 || s.length() > 12) return ans;
+
+    restoreIPAddressHelper(ans, s.toCharArray(), new StringBuilder(), 0, 0);
+
+    return ans;
+  }
+
+  private void restoreIPAddressHelper(List<String> ans, char[] chars, StringBuilder sb, int index,
+      int ipCount) {
+    if (sb.length() > 0) sb.append(".");
+
+    int r = chars.length - index;
+    if (ipCount == 3) {
+      if (r < 4) {
+        int t = 0;
+        for (int i = index; i < chars.length; i++) {
+
+          if ((sb.charAt(sb.length() - 1) == '0' || t == 0 && i < chars.length - 1)
+              && chars[i] == '0') {
+            return;
+          }
+
+          t = t * 10 + (chars[i] - '0');
+          sb.append(chars[i]);
+        }
+
+        if (t < 256) ans.add(sb.toString());
+      }
+    } else {
+
+      int len = sb.length();
+      int t = chars[index] - '0';
+      // 1 item
+      sb.append(chars[index]);
+      restoreIPAddressHelper(ans, chars, sb, index + 1, ipCount + 1);
+
+      if (t > 0 && chars.length - 4 - index + ipCount > 0 && (chars[index] != '0'
+          || chars[index + 1] != '0')) {
+        // 2 items
+        t = t * 10 + chars[index + 1] - '0';
+        sb.setLength(len + 1);
+        sb.append(chars[index + 1]);
+        restoreIPAddressHelper(ans, chars, sb, index + 2, ipCount + 1);
+
+        // 3 items
+        t = t * 10 + chars[index + 2] - '0';
+        if (chars.length - 5 - index + ipCount > 0 && t < 256) {
+          sb.setLength(len + 2);
+          sb.append(chars[index + 2]);
+          restoreIPAddressHelper(ans, chars, sb, index + 3, ipCount + 1);
+        }
+      }
+
+      sb.setLength(len);
+    }
   }
 
   /**

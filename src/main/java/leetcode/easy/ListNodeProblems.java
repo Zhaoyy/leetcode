@@ -11,11 +11,38 @@ public class ListNodeProblems {
     root.next = new ListNode(4);
     root.next.next = new ListNode(3);
     root.next.next.next = new ListNode(2);
-    root.next.next.next.next = new ListNode(5);
-    root.next.next.next.next.next = new ListNode(2);
+    //root.next.next.next.next = new ListNode(5);
+    //root.next.next.next.next.next = new ListNode(2);
     //root.next.next.next = new ListNode(4);
     ListNodeProblems problems = new ListNodeProblems();
-    problems.partition(root, 3);
+    ListNode node = problems.reverseBetween(root, 1, 3);
+    System.out.println(node.val);
+  }
+
+  /**
+   * https://leetcode.com/problems/reverse-linked-list-ii/description/
+   */
+  public ListNode reverseBetween(ListNode head, int m, int n) {
+
+    if (head == null) return null;
+
+    ListNode r = new ListNode(-1), pre = r;
+
+    r.next = head;
+    for (int i = 1; i < m; i++) {
+      pre = pre.next;
+    }
+
+    ListNode first = pre.next, second = first.next;
+
+    for (int i = 0; i < n - m; i++) {
+      first.next = second.next;
+      second.next = pre.next;
+      pre.next = second;
+      second = first.next;
+    }
+
+    return r.next;
   }
 
   /**
