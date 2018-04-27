@@ -24,8 +24,44 @@ public class TreeNodeProblems {
     //root.left.right.left = new TreeNode(0);
     root.right = new TreeNode(2);
     //root.right.left = new TreeNode(-2);
+    problems.generateTrees(4);
+    //generateTreesII(4);
+    //System.out.println(problems.trimBST(root, 1, 2));
+  }
 
-    System.out.println(problems.trimBST(root, 1, 2));
+  /**
+   * https://leetcode.com/problems/unique-binary-search-trees-ii/description/
+   */
+  public List<TreeNode> generateTrees(int n) {
+    List<TreeNode>[] trees = new List[n + 1];
+    trees[0] = new ArrayList<>();
+    if (n == 0) return trees[0];
+    trees[0].add(null);
+
+    for (int len = 1; len <= n; len++) {
+      trees[len] = new ArrayList<>();
+      for (int j = 0; j < len; j++) {
+        for (TreeNode l : trees[j]) {
+          for (TreeNode r : trees[len - j - 1]) {
+            TreeNode node = new TreeNode(j + 1);
+            node.left = l;
+            node.right = cloneTree(r, j + 1);
+            trees[len].add(node);
+          }
+        }
+      }
+    }
+
+    return trees[n];
+  }
+
+  private TreeNode cloneTree(TreeNode node, int offset) {
+    if (node == null) return null;
+    TreeNode t = new TreeNode(node.val + offset);
+    t.left = cloneTree(node.left, offset);
+    t.right = cloneTree(node.right, offset);
+
+    return t;
   }
 
   /**
