@@ -29,6 +29,37 @@ public class TreeNodeProblems {
     //System.out.println(problems.trimBST(root, 1, 2));
   }
 
+  ///**
+  // * https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
+  // */
+  //public TreeNode buildTree(int[] preorder, int[] inorder) {
+  //
+  //}
+
+  /**
+   * https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
+   */
+  public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    List<List<Integer>> ans = new ArrayList<>();
+
+    zigzagLevelOrderHelper(ans, root, 0);
+
+    return ans;
+  }
+
+  private void zigzagLevelOrderHelper(List<List<Integer>> ans, TreeNode node, int level) {
+    if (node != null) {
+      if (ans.size() <= level) ans.add(new ArrayList<>());
+      if (level % 2 == 0) {
+        ans.get(level).add(node.val);
+      } else {
+        ans.get(level).add(0, node.val);
+      }
+      if (node.left != null) zigzagLevelOrderHelper(ans, node.left, level + 1);
+      if (node.right != null) zigzagLevelOrderHelper(ans, node.right, level + 1);
+    }
+  }
+
   /**
    * https://leetcode.com/problems/binary-tree-level-order-traversal/description/
    */
