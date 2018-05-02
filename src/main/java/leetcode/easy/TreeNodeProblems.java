@@ -24,9 +24,61 @@ public class TreeNodeProblems {
     //root.left.right.left = new TreeNode(0);
     root.right = new TreeNode(2);
     //root.right.left = new TreeNode(-2);
-    problems.generateTrees(4);
+    problems.generateTrees(3);
     //generateTreesII(4);
     //System.out.println(problems.trimBST(root, 1, 2));
+  }
+
+  /**
+   * https://leetcode.com/problems/binary-tree-level-order-traversal/description/
+   */
+  public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> ans = new ArrayList<>();
+
+    levelOrderHelper(ans, root, 0);
+
+    return ans;
+  }
+
+  private void levelOrderHelper(List<List<Integer>> ans, TreeNode node, int level) {
+    if (node != null) {
+      if (ans.size() <= level) ans.add(new ArrayList<>());
+      ans.get(level).add(node.val);
+      if (node.left != null) levelOrderHelper(ans, node.left, level + 1);
+      if (node.right != null) levelOrderHelper(ans, node.right, level + 1);
+    }
+  }
+
+  /**
+   * https://leetcode.com/problems/validate-binary-search-tree/description/
+   */
+  public boolean isValidBST(TreeNode root) {
+    return root == null || BSTChecker(root, new ArrayList<>());
+  }
+
+  private boolean BSTChecker(TreeNode node, List<Integer> list) {
+    if (node.left != null && !BSTChecker(node.left, list)) return false;
+    if (list.size() > 0 && node.val <= list.get(list.size() - 1)) return false;
+    list.add(node.val);
+    return node.right == null || BSTChecker(node.right, list);
+  }
+
+  /**
+   * https://leetcode.com/problems/unique-binary-search-trees/description/
+   */
+  public int numTrees(int n) {
+    int[] array = new int[n + 1];
+    if (n == 0) return array[0];
+    array[0] = 1;
+    for (int len = 1; len <= n; len++) {
+      int t = 0;
+      for (int j = 0; j < len; j++) {
+        t += array[j] * array[len - j - 1];
+      }
+      array[len] = t;
+    }
+
+    return array[n];
   }
 
   /**
