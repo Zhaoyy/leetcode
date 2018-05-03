@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import leetcode.easy.ListNodeProblems.ListNode;
 
 public class TreeNodeProblems {
   /**
@@ -31,9 +32,34 @@ public class TreeNodeProblems {
     //root.left.right.left = new TreeNode(0);
     root.right = new TreeNode(2);
     //root.right.left = new TreeNode(-2);
-    problems.buildTree(new int[] {3, 9, 20, 15, 7}, new int[] {9, 3, 15, 20, 7});
+    problems.buildTreeII(new int[] {9, 3, 15, 20, 7}, new int[] {9, 15, 7, 20, 3});
     //generateTreesII(4);
     //System.out.println(problems.trimBST(root, 1, 2));
+  }
+
+  /**
+   * https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/
+   */
+  public TreeNode sortedListToBST(ListNode head) {
+    return sortedList2BSTHelper(head, null);
+  }
+
+  private TreeNode sortedList2BSTHelper(ListNode head, ListNode tail) {
+
+    if (head == tail) return null;
+
+    ListNode slow, fast;
+    slow = fast = head;
+    while (fast != tail && fast.next != tail) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+
+    TreeNode node = new TreeNode(slow.val);
+    node.left = sortedList2BSTHelper(head, slow);
+    node.right = sortedList2BSTHelper(slow.next, tail);
+
+    return node;
   }
 
   public TreeNode buildTreeII(int[] inorder, int[] postorder) {
