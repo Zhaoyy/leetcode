@@ -1,6 +1,7 @@
 package leetcode.easy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,12 @@ public class TreeNodeProblems {
   private int diff = Integer.MAX_VALUE;
   private TreeNode lastNode;
 
+  /**
+   * https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/
+   */
+  private int postIndex, inorderIndex;
+  private int inIndex = 0, preIndex = 0;
+
   public static void main(String[] args) {
     TreeNodeProblems problems = new TreeNodeProblems();
     TreeNode root = new TreeNode(1);
@@ -24,17 +31,74 @@ public class TreeNodeProblems {
     //root.left.right.left = new TreeNode(0);
     root.right = new TreeNode(2);
     //root.right.left = new TreeNode(-2);
-    problems.generateTrees(3);
+    problems.buildTree(new int[] {3, 9, 20, 15, 7}, new int[] {9, 3, 15, 20, 7});
     //generateTreesII(4);
     //System.out.println(problems.trimBST(root, 1, 2));
   }
 
-  ///**
-  // * https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
-  // */
-  //public TreeNode buildTree(int[] preorder, int[] inorder) {
-  //
-  //}
+  public TreeNode buildTreeII(int[] inorder, int[] postorder) {
+    inorderIndex = inorder.length - 1;
+    postIndex = postorder.length - 1;
+    return buildTreeIIHelper(inorder, postorder, Integer.MAX_VALUE);
+  }
+
+  private TreeNode buildTreeIIHelper(int[] inorder, int[] postorder, int target) {
+    if (inorderIndex < 0 || inorder[inorderIndex] == target) return null;
+    TreeNode node = new TreeNode(postorder[postIndex]);
+    postIndex--;
+    node.right = buildTreeIIHelper(inorder, postorder, node.val);
+    inorderIndex--;
+    node.left = buildTreeIIHelper(inorder, postorder, target);
+
+    return node;
+  }
+
+  /**
+   * https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
+   */
+  public TreeNode buildTree(int[] preorder, int[] inorder) {
+    if (inorder.length == 0) return null;
+    if (inorder.length == 1) return new TreeNode(inorder[0]);
+
+    TreeNode treeNode = new TreeNode(preorder[0]);
+
+    int index = -1;
+
+    for (int i = 0; i < inorder.length; i++) {
+      if (inorder[i] == treeNode.val) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index > 0) {
+      treeNode.left = buildTree(Arrays.copyOfRange(preorder, 1, index + 1),
+          Arrays.copyOfRange(inorder, 0, index));
+    }
+
+    if (index > -1 && index < inorder.length - 1) {
+      treeNode.right = buildTree(Arrays.copyOfRange(preorder, index + 1, preorder.length),
+          Arrays.copyOfRange(inorder, index + 1, inorder.length));
+    }
+
+    return treeNode;
+  }
+
+  public TreeNode buildTreeBetter(int[] preorder, int[] inorder) {
+    return helper(preorder, inorder, Integer.MAX_VALUE);
+  }
+
+  private TreeNode helper(int[] preorder, int[] inorder, int target) {
+    if (inIndex >= inorder.length || inorder[inIndex] == target) {
+      return null;
+    }
+    TreeNode root = new TreeNode(preorder[preIndex]);
+    preIndex++;
+    root.left = helper(preorder, inorder, root.val);
+    inIndex++;
+    root.right = helper(preorder, inorder, target);
+    return root;
+  }
 
   /**
    * https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
