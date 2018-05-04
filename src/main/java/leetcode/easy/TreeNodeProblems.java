@@ -32,9 +32,56 @@ public class TreeNodeProblems {
     //root.left.right.left = new TreeNode(0);
     root.right = new TreeNode(2);
     //root.right.left = new TreeNode(-2);
-    problems.buildTreeII(new int[] {9, 3, 15, 20, 7}, new int[] {9, 15, 7, 20, 3});
+    problems.flatten(root);
     //generateTreesII(4);
     //System.out.println(problems.trimBST(root, 1, 2));
+  }
+
+  /**
+   * https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
+   */
+  public void flatten(TreeNode root) {
+    if (root == null) return;
+
+    TreeNode left = root.left;
+    TreeNode right = root.right;
+
+    root.left = null;
+
+    flatten(left);
+    flatten(right);
+
+    root.right = left;
+    TreeNode cur = root;
+    while (cur.right != null) cur = cur.right;
+    cur.right = right;
+  }
+
+  /**
+   * https://leetcode.com/problems/path-sum-ii/description/
+   */
+  public List<List<Integer>> pathSumII(TreeNode root, int sum) {
+    List<List<Integer>> ans = new ArrayList<>();
+    if (root != null) pathSumIIHelper(ans, new ArrayList<>(), root, sum);
+    return ans;
+  }
+
+  private void pathSumIIHelper(List<List<Integer>> ans, List<Integer> temp, TreeNode node,
+      int sum) {
+    temp.add(node.val);
+    sum -= node.val;
+    if (node.left == null && node.right == null) {
+      if (sum == 0) ans.add(new ArrayList<>(temp));
+    } else {
+      if (node.left != null) {
+        pathSumIIHelper(ans, temp, node.left, sum);
+      }
+      if (node.right != null) {
+        pathSumIIHelper(ans, temp, node.right, sum);
+      }
+    }
+
+    temp.remove(temp.size() - 1);
   }
 
   /**
