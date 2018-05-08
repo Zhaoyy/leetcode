@@ -38,6 +38,27 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/sum-root-to-leaf-numbers/description/
+   */
+  private int sum = 0;
+
+  public int sumNumbers(TreeNode root) {
+    if (root != null) sumNumbersHelper(root, 0);
+    return sum;
+  }
+
+  private void sumNumbersHelper(TreeNode node, int temp) {
+    temp = temp * 10 + node.val;
+    if (node.left == null && node.right == null) {
+      sum += temp;
+      return;
+    }
+
+    if (node.left != null) sumNumbersHelper(node.left, temp);
+    if (node.right != null) sumNumbersHelper(node.right, temp);
+  }
+
+  /**
    * https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
    */
   public void flatten(TreeNode root) {

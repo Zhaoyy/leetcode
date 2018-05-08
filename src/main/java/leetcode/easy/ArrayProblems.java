@@ -40,9 +40,106 @@ public class ArrayProblems {
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
     int[][] t = {{0, 0, 0, 5}, {4, 3, 1, 4}, {0, 1, 1, 4}, {1, 2, 1, 3}, {0, 0, 1, 1}};
     char[][] chars = {{'b', 'b', 'b', 'b'}, {'b', 'a', 'b', 'b'}, {'b', 'd', 'c', 'b'}};
-    System.out.println(problems.removeDuplicatesII(new int[] {1, 1, 1, 2, 2, 3}));
+    System.out.println(problems.ladderLength("hit", "cog",
+        Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     problems.setZeroes(t);
     //System.out.println();
+  }
+
+  /**
+   * https://leetcode.com/problems/surrounded-regions/description/
+   */
+  public void solve(char[][] board) {
+
+    if (board.length < 2 || board[0].length < 2) return;
+
+    int[][] keep = new int[board.length][board[0].length];
+
+    for (int i = 0; i < board.length; i++) {
+      if (board[i][0] == 'O') {
+        solveHelper(board, keep, i, 0);
+      }
+
+      if (board[i][board[0].length - 1] == 'O') {
+        solveHelper(board, keep, i, board[0].length - 1);
+      }
+    }
+
+    for (int i = 0; i < board[0].length; i++) {
+      if (board[0][i] == 'O') {
+        solveHelper(board, keep, 0, i);
+      }
+
+      if (board[board.length - 1][i] == 'O') {
+        solveHelper(board, keep, board.length - 1, i);
+      }
+    }
+
+    for (int x = 1; x < board.length - 1; x++) {
+      for (int y = 1; y < board[0].length - 1; y++) {
+        if (keep[x][y] == 0) board[x][y] = 'X';
+      }
+    }
+  }
+
+  private void solveHelper(char[][] board, int[][] keep, int x, int y) {
+    if (keep[x][y] == 1) return;
+    keep[x][y] = 1;
+
+    // left
+    if (y > 0 && board[x][y - 1] == 'O') {
+      solveHelper(board, keep, x, y - 1);
+    }
+
+    // top
+    if (x > 0 && board[x - 1][y] == 'O') {
+      solveHelper(board, keep, x - 1, y);
+    }
+
+    // right
+    if (y < board[0].length - 1 && board[x][y + 1] == 'O') {
+      solveHelper(board, keep, x, y + 1);
+    }
+
+    // bottom
+    if (x < board.length - 1 && board[x + 1][y] == 'O') {
+      solveHelper(board, keep, x + 1, y);
+    }
+  }
+
+  /**
+   * https://leetcode.com/problems/word-ladder/description/
+   */
+  public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    int index = -1;
+    for (int i = 0; i < wordList.size(); i++) {
+      if (wordList.get(i).equals(endWord)) {
+        index = i;
+        break;
+      }
+    }
+    if (index < 0) return 0;
+    int step = 0;
+    for (; index >= 0; index--) {
+      step++;
+      if (ladderHelper(beginWord, wordList.get(index))) return step;
+      if (step > 1 && !ladderHelper(wordList.get(index), wordList.get(index + 1))) return 0;
+    }
+
+    return 0;
+  }
+
+  private boolean ladderHelper(String a, String b) {
+    boolean found = false;
+
+    for (char c : a.toCharArray()) {
+      if (b.indexOf(c) < 0) {
+        if (found) return false;
+        found = true;
+      }
+    }
+
+    return true;
   }
 
   /**
