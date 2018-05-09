@@ -16,7 +16,41 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.restoreIpAddresses("240102"));
+    System.out.println(problems.partition("aab"));
+  }
+
+  /**
+   * https://leetcode.com/problems/palindrome-partitioning/description/
+   */
+  public List<List<String>> partition(String s) {
+    List<List<String>> result = new ArrayList<>();
+    if (s == null || s.length() == 0) return result;
+    solver(result, new ArrayList<>(), s, 0);
+    return result;
+  }
+
+  private void solver(List<List<String>> result, List<String> temp, String s, int left) {
+    if (left == s.length()) {
+      result.add(new ArrayList<String>(temp));
+    }
+
+    for (int right = left; right < s.length(); right++) {
+      if (checkPartition(s, left, right)) {
+        temp.add(s.substring(left, right + 1));
+        solver(result, temp, s, right + 1);
+        temp.remove(temp.size() - 1);
+      }
+    }
+  }
+
+  private boolean checkPartition(String s, int l, int r) {
+    while (l < r) {
+      if (s.charAt(l) != s.charAt(r)) return false;
+      l++;
+      r--;
+    }
+
+    return true;
   }
 
   /**
