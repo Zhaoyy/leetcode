@@ -47,6 +47,27 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/single-number-ii/description/
+   */
+  public int singleNumberII(int[] nums) {
+    int ans = 0;
+    for (int i = 0; i < 32; i++) {
+      int sum = 0;
+      for (int j = 0; j < nums.length; j++) {
+        if ((nums[j] >> i & 1) == 1) {
+          sum = (sum + 1) % 3;
+        }
+      }
+
+      if (sum != 0) {
+        ans |= 1 << i;
+      }
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/gas-station/description/
    */
   public int canCompleteCircuit(int[] gas, int[] cost) {
