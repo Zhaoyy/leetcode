@@ -20,6 +20,26 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/word-break/description/
+   */
+  public boolean wordBreak(String s, List<String> wordDict) {
+    int mL = Integer.MIN_VALUE;
+    for (String e : wordDict) mL = Math.max(mL, e.length());
+
+    boolean[] dp = new boolean[s.length() + 1];
+    dp[0] = true;
+    for (int i = 1; i <= s.length(); i++) {
+      for (int j = i - 1; i - j <= mL && j >= 0; j--) {
+        if (dp[j] && wordDict.contains(s.substring(j, i))) {
+          dp[i] = true;
+          break;
+        }
+      }
+    }
+    return dp[s.length()];
+  }
+
+  /**
    * https://leetcode.com/problems/palindrome-partitioning/description/
    */
   public List<List<String>> partition(String s) {
