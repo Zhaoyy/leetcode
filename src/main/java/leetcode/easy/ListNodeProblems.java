@@ -8,15 +8,78 @@ public class ListNodeProblems {
 
   public static void main(String[] args) {
     ListNode root = new ListNode(1);
-    root.next = new ListNode(4);
+    root.next = new ListNode(2);
     root.next.next = new ListNode(3);
-    root.next.next.next = new ListNode(2);
+    root.next.next.next = new ListNode(4);
+    //root.next.next.next.next = new ListNode(5);
+    //root.next.next.next.next.next = root;
     //root.next.next.next.next = new ListNode(5);
     //root.next.next.next.next.next = new ListNode(2);
     //root.next.next.next = new ListNode(4);
     ListNodeProblems problems = new ListNodeProblems();
-    ListNode node = problems.reverseBetween(root, 1, 3);
-    System.out.println(node.val);
+    //ListNode node = problems.reverseBetween(root, 1, 3);
+    //System.out.println(problems.detectCycle(root).val);
+    problems.reorderList(root);
+  }
+
+  /**
+   * https://leetcode.com/problems/linked-list-cycle-ii/description/
+   */
+  public ListNode detectCycle(ListNode head) {
+    ListNode s, q;
+    s = q = head;
+    while (s != null && q != null && q.next != null) {
+      s = s.next;
+      q = q.next.next;
+      if (s == q) {
+        s = head;
+        while (s != q) {
+          s = s.next;
+          q = q.next;
+        }
+
+        return s;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * https://leetcode.com/problems/reorder-list/description/
+   */
+  public void reorderList(ListNode head) {
+
+    if (head == null || head.next == null || head.next.next == null) return;
+
+    ListNode slow, fast;
+    slow = fast = head;
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+
+    ListNode mid = slow;
+    ListNode next = slow.next;
+    mid.next = null;
+    while (next != null) {
+      ListNode node = next.next;
+      next.next = mid;
+      mid = next;
+      next = node;
+    }
+
+    slow = head;
+    fast = mid;
+
+    while (fast.next != null) {
+      ListNode t = slow.next;
+      ListNode node = fast.next;
+      slow.next = fast;
+      fast.next = t;
+      slow = t;
+      fast = node;
+    }
   }
 
   /**

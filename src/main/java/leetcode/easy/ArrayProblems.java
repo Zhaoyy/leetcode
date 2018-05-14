@@ -11,11 +11,6 @@ import java.util.Set;
 
 public class ArrayProblems {
 
-  /**
-   * https://leetcode.com/problems/minimum-path-sum/description/
-   */
-  private int minGridSum = 0;
-
   private int[][] generateArray(int m, int n) {
     int[][] ans = new int[m][n];
     int t = 0;
@@ -446,6 +441,9 @@ public class ArrayProblems {
     }
   }
 
+  /**
+   * https://leetcode.com/problems/minimum-path-sum/description/
+   */
   public int minPathSum(int[][] grid) {
     return minPathSumHelper(grid, 0, 0);
   }
