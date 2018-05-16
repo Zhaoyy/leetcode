@@ -38,6 +38,22 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/binary-tree-preorder-traversal/description/
+   */
+  public List<Integer> preorderTraversal(TreeNode root) {
+    List<Integer> ans = new ArrayList<>();
+    preorderTraversalHelper(ans, root);
+    return ans;
+  }
+
+  private void preorderTraversalHelper(List<Integer> ans, TreeNode node) {
+    if (node == null) return;
+    ans.add(node.val);
+    preorderTraversalHelper(ans, node.left);
+    preorderTraversalHelper(ans, node.right);
+  }
+
+  /**
    * https://leetcode.com/problems/sum-root-to-leaf-numbers/description/
    */
   private int sum = 0;

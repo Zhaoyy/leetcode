@@ -7,10 +7,10 @@ import java.util.Stack;
 public class ListNodeProblems {
 
   public static void main(String[] args) {
-    ListNode root = new ListNode(1);
+    ListNode root = new ListNode(4);
     root.next = new ListNode(2);
-    root.next.next = new ListNode(3);
-    root.next.next.next = new ListNode(4);
+    root.next.next = new ListNode(1);
+    root.next.next.next = new ListNode(3);
     //root.next.next.next.next = new ListNode(5);
     //root.next.next.next.next.next = root;
     //root.next.next.next.next = new ListNode(5);
@@ -19,7 +19,38 @@ public class ListNodeProblems {
     ListNodeProblems problems = new ListNodeProblems();
     //ListNode node = problems.reverseBetween(root, 1, 3);
     //System.out.println(problems.detectCycle(root).val);
-    problems.reorderList(root);
+    problems.insertionSortList(root);
+  }
+
+  /**
+   * https://leetcode.com/problems/insertion-sort-list/description/
+   */
+  public ListNode insertionSortList(ListNode head) {
+    ListNode ans = new ListNode(-1);
+    ListNode hp = ans;
+    ans.next = head;
+
+    while (head != null) {
+      ListNode t = ans.next;
+      ListNode p = ans;
+      while (t != null && t != head && t.val < head.val) {
+        p = t;
+        t = t.next;
+      }
+      ListNode next = head.next;
+
+      if (t != null && t != head) {
+        p.next = head;
+        head.next = t;
+        hp.next = next;
+      } else {
+        hp = head;
+      }
+
+      head = next;
+    }
+
+    return ans.next;
   }
 
   /**
