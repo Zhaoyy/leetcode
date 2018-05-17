@@ -19,7 +19,7 @@ public class ListNodeProblems {
     ListNodeProblems problems = new ListNodeProblems();
     //ListNode node = problems.reverseBetween(root, 1, 3);
     //System.out.println(problems.detectCycle(root).val);
-    problems.insertionSortList(root);
+    problems.sortList(root);
   }
 
   /**
@@ -51,6 +51,36 @@ public class ListNodeProblems {
     }
 
     return ans.next;
+  }
+
+  /**
+   * https://leetcode.com/problems/sort-list/description/
+   */
+  public ListNode sortList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode p, slow, fast;
+    p = slow = fast = head;
+    while (fast != null && fast.next != null) {
+      p = slow;
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+
+    p.next = null;
+
+    return sortListMerge(sortList(head), sortList(slow));
+  }
+
+  private ListNode sortListMerge(ListNode l, ListNode r) {
+    if (l == null) return r;
+    if (r == null) return l;
+    if (l.val < r.val) {
+      l.next = sortListMerge(l.next, r);
+      return l;
+    } else {
+      r.next = sortListMerge(l, r.next);
+      return r;
+    }
   }
 
   /**

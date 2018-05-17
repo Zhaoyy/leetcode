@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 public class ArrayProblems {
 
@@ -33,12 +34,46 @@ public class ArrayProblems {
     //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
     //String[] list2 =
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-    int[][] t = {{0, 0, 0, 5}, {4, 3, 1, 4}, {0, 1, 1, 4}, {1, 2, 1, 3}, {0, 0, 1, 1}};
-    char[][] chars = {{'b', 'b', 'b', 'b'}, {'b', 'a', 'b', 'b'}, {'b', 'd', 'c', 'b'}};
-    System.out.println(problems.ladderLength("hit", "cog",
-        Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
-    problems.setZeroes(t);
-    //System.out.println();
+    //int[][] t = {{0, 0, 0, 5}, {4, 3, 1, 4}, {0, 1, 1, 4}, {1, 2, 1, 3}, {0, 0, 1, 1}};
+    //char[][] chars = {{'b', 'b', 'b', 'b'}, {'b', 'a', 'b', 'b'}, {'b', 'd', 'c', 'b'}};
+    //System.out.println(problems.ladderLength("hit", "cog",
+    //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
+    //problems.setZeroes(t);
+    System.out.println(problems.evalRPN(
+        new String[] {"4", "13", "5", "/", "+"}));
+  }
+
+  /**
+   * https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
+   */
+  public int evalRPN(String[] tokens) {
+    Stack<Integer> stack = new Stack<>();
+
+    for (String token : tokens) {
+      switch (token) {
+        case "+":
+          stack.push(stack.pop() + stack.pop());
+          break;
+
+        case "-":
+          stack.push(-stack.pop() + stack.pop());
+          break;
+
+        case "*":
+          stack.push(stack.pop() * stack.pop());
+          break;
+
+        case "/":
+          int n1 = stack.pop(), n2 = stack.pop();
+          stack.push(n2 / n1);
+          break;
+
+        default:
+          stack.push(Integer.parseInt(token));
+      }
+    }
+
+    return stack.pop();
   }
 
   /**
