@@ -20,6 +20,33 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/reverse-words-in-a-string/description/
+   */
+  public String reverseWordsII(String s) {
+    StringBuilder sb = new StringBuilder();
+    StringBuilder ans = new StringBuilder();
+
+    for (char c : s.toCharArray()) {
+      if (c == ' ') {
+        if (sb.length() > 0) {
+          if (ans.length() > 0) ans.insert(0, ' ');
+          ans.insert(0, sb.toString());
+          sb.setLength(0);
+        }
+      } else {
+        sb.append(c);
+      }
+    }
+    if (sb.length() > 0) {
+      if (ans.length() > 0) ans.insert(0, ' ');
+      ans.insert(0, sb.toString());
+      sb.setLength(0);
+    }
+
+    return ans.toString();
+  }
+
+  /**
    * https://leetcode.com/problems/word-break/description/
    */
   public boolean wordBreak(String s, List<String> wordDict) {
