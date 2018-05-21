@@ -39,8 +39,48 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.evalRPN(
-        new String[] {"4", "13", "5", "/", "+"}));
+    System.out.println(problems.findMin(
+        new int[] {5, 6, 7, 0, 1, 2, 3, 4,}));
+  }
+
+  /**
+   * https://leetcode.com/problems/find-peak-element/description/
+   */
+  public int findPeakElement(int[] nums) {
+    if (nums.length < 2) return 0;
+    int l = 0, r = nums.length - 1;
+    while (l <= r) {
+      if ((l == 0 || nums[l] > nums[l - 1]) && nums[l] > nums[l + 1]) {
+        return l;
+      } else {
+        l++;
+      }
+
+      if (nums[r] > nums[r - 1] && (r == nums.length - 1 || nums[r] > nums[r + 1])) {
+        return r;
+      } else {
+        r--;
+      }
+    }
+
+    return 0;
+  }
+
+  /**
+   * https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
+   */
+  public int findMin(int[] nums) {
+    int l = 0, r = nums.length - 1;
+    while (l < r) {
+      int mid = (l + r) / 2;
+      if (nums[mid] > nums[r]) {
+        l = mid + 1;
+      } else {
+        r = mid;
+      }
+    }
+
+    return nums[l];
   }
 
   /**
