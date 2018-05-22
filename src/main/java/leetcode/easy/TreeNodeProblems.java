@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import leetcode.easy.ListNodeProblems.ListNode;
 
 public class TreeNodeProblems {
@@ -878,6 +879,34 @@ public class TreeNodeProblems {
 
     public TreeNode(int val) {
       this.val = val;
+    }
+  }
+
+  public class BSTIterator {
+    private Stack<TreeNode> stack;
+
+    public BSTIterator(TreeNode root) {
+      stack = new Stack<>();
+      push(root);
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+      return !stack.isEmpty();
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+      TreeNode node = stack.pop();
+      push(node.right);
+      return node.val;
+    }
+
+    void push(TreeNode node) {
+      while (node != null) {
+        stack.push(node);
+        node = node.left;
+      }
     }
   }
 }

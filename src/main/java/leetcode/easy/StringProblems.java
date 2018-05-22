@@ -2,6 +2,7 @@ package leetcode.easy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,92 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.partition("aab"));
+    System.out.println(problems.largestNumber(new int[] {3, 30, 34, 5, 9}));
+  }
+
+  /**
+   * https://leetcode.com/problems/largest-number/description/
+   */
+  public String largestNumber(int[] nums) {
+
+    List<Integer> list = new ArrayList<>(nums.length);
+    for (int n : nums) {
+      list.add(n);
+    }
+
+    list.sort(new Comparator<Integer>() {
+      @Override public int compare(Integer o1, Integer o2) {
+
+        char[] chars1 = o1.toString().toCharArray();
+        char[] chars2 = o2.toString().toCharArray();
+        int len = Math.min(chars1.length, chars2.length);
+        for (int i = 0; i < len; i++) {
+          if (chars1[i] > chars2[i]) return -1;
+          if (chars1[i] < chars2[i]) return 1;
+        }
+
+        if (chars2.length > len) {
+          return chars2[len] > chars1[0] ? 1 : -1;
+        }
+
+        if (chars1.length > len) {
+          return chars1[len] > chars2[0] ? -1 : 1;
+        }
+
+        return 0;
+      }
+    });
+
+    StringBuilder sb = new StringBuilder();
+    for (int n : list) {
+      sb.append(n);
+    }
+
+    while (sb.length() > 1 && sb.charAt(0) == '0') {
+      sb.deleteCharAt(0);
+    }
+
+    return sb.toString();
+  }
+
+  /**
+   * https://leetcode.com/problems/fraction-to-recurring-decimal/description/
+   */
+  public String fractionToDecimal(int numerator, int denominator) {
+
+    if (numerator == 0) return "0";
+    if (denominator == 0) return "";
+
+    StringBuilder sb = new StringBuilder();
+
+    if (numerator < 0 && denominator > 0 || numerator > 0 && denominator < 0) sb.append('-');
+    long lNumerator = Math.abs((long) numerator);
+    long lDenominator = Math.abs((long) denominator);
+
+    int dotIndex = -1;
+    sb.append(lNumerator / lDenominator);
+    long last = lNumerator % lDenominator;
+    List<Long> history = new ArrayList<>();
+    history.add(last);
+    if (last > 0) {
+      dotIndex = sb.length();
+      sb.append('.');
+    }
+
+    while (last > 0) {
+      long t = last * 10;
+      sb.append(t / lDenominator);
+      last = t % lDenominator;
+      int index = history.indexOf(last);
+      if (index >= 0) {
+        sb.insert(dotIndex + 1 + index, "(");
+        sb.append(")");
+        break;
+      }
+      history.add(last);
+    }
+
+    return sb.toString();
   }
 
   /**
