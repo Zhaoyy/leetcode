@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
 
 public class StringProblems {
@@ -17,7 +19,31 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.largestNumber(new int[] {3, 30, 34, 5, 9}));
+    System.out.println(problems.findRepeatedDnaSequences("AAAAAAAAAAA"));
+  }
+
+  /**
+   * https://leetcode.com/problems/repeated-dna-sequences/description/
+   */
+  public List<String> findRepeatedDnaSequences(String s) {
+    Set<String> set = new HashSet<>();
+    List<String> result = new ArrayList<>();
+
+    if (s == null || s.length() < 10) {
+      return result;
+    }
+
+    for (int i = 0; i < s.length() - 9; i++) {
+      String subStr = s.substring(i, i + 10);
+
+      if (set.contains(subStr) && !result.contains(subStr)) {
+        result.add(subStr);
+      } else {
+        set.add(subStr);
+      }
+    }
+
+    return result;
   }
 
   /**
