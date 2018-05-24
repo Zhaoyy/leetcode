@@ -14,6 +14,18 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/bitwise-and-of-numbers-range/description/
+   */
+  public int rangeBitwiseAnd(int m, int n) {
+    int i = 0;
+    for (; m != n; ++i) {
+      m >>= 1;
+      n >>= 1;
+    }
+    return n << i;
+  }
+
+  /**
    * https://leetcode.com/problems/gray-code/description/
    */
   public List<Integer> grayCode(int n) {

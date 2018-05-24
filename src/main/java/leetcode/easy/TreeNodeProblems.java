@@ -39,6 +39,30 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/binary-tree-right-side-view/description/
+   */
+  public List<Integer> rightSideView(TreeNode root) {
+    List<Integer> ans = new ArrayList<>();
+    rightSideViewHelper(root, ans, 0);
+    return ans;
+  }
+
+  private void rightSideViewHelper(TreeNode node, List<Integer> ans, int level) {
+    if (node == null) return;
+    if (level >= ans.size()) {
+      ans.add(node.val);
+    }
+
+    if (node.right != null) {
+      rightSideViewHelper(node.right, ans, level + 1);
+    }
+
+    if (node.left != null) {
+      rightSideViewHelper(node.left, ans, level + 1);
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/binary-tree-preorder-traversal/description/
    */
   public List<Integer> preorderTraversal(TreeNode root) {

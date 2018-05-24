@@ -44,6 +44,47 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/number-of-islands/description/
+   */
+  public int numIslands(char[][] grid) {
+    if (grid.length == 0) return 0;
+    int ans = 0;
+    int size = grid[0].length;
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < size; j++) {
+        if (grid[i][j] == '0') continue;
+        numIslandsHelper(grid, i, j);
+        ans++;
+      }
+    }
+
+    return ans;
+  }
+
+  private void numIslandsHelper(char[][] grid, int x, int y) {
+    grid[x][y] = '0';
+    // left
+    if (x > 0 && grid[x - 1][y] == '1') {
+      numIslandsHelper(grid, x - 1, y);
+    }
+
+    // top
+    if (y < grid[x].length - 1 && grid[x][y + 1] == '1') {
+      numIslandsHelper(grid, x, y + 1);
+    }
+
+    // right
+    if (x < grid.length - 1 && grid[x + 1][y] == '1') {
+      numIslandsHelper(grid, x + 1, y);
+    }
+
+    // bottom
+    if (y > 0 && grid[x][y - 1] == '1') {
+      numIslandsHelper(grid, x, y - 1);
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/find-peak-element/description/
    */
   public int findPeakElement(int[] nums) {
