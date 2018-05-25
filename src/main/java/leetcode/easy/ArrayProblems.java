@@ -44,6 +44,65 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/course-schedule/description/
+   */
+  public boolean canFinish(int numCourses, int[][] prerequisites) {
+    Map<Integer, Course> map = new HashMap<>(numCourses);
+
+    for (int[] prerequisite : prerequisites) {
+      Course child = map.get(prerequisite[0]);
+      if (child == null) {
+        child = new Course(prerequisite[0]);
+        map.put(prerequisite[0], child);
+      }
+
+      if (prerequisite.length == 1) continue;
+      Course parent = map.get(prerequisite[1]);
+      if (parent == null) {
+        parent = new Course(prerequisite[1], child);
+        map.put(prerequisite[1], parent);
+      } else {
+        parent.children.add(child);
+      }
+    }
+
+    for (int i = 0; i < numCourses; i++) {
+      if (!map.containsKey(i) || map.get(i).children.isEmpty()) continue;
+      if (map.get(i).isCyclic()) return false;
+    }
+
+    return true;
+  }
+
+  private static class Course {
+    private boolean visited;
+    private boolean done;
+    private int value;
+    private List<Course> children = new ArrayList<>();
+
+    public Course(int value) {
+      this.value = value;
+    }
+
+    public Course(int value, Course child) {
+      this.value = value;
+      children.add(child);
+    }
+
+    public boolean isCyclic() {
+      if (done) return false;
+      if (visited) return true;
+      visited = true;
+      for (Course c : children) {
+        if (c.isCyclic()) return true;
+      }
+
+      done = true;
+      return false;
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/number-of-islands/description/
    */
   public int numIslands(char[][] grid) {
