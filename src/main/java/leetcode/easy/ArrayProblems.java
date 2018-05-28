@@ -39,8 +39,74 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.findMin(
-        new int[] {5, 6, 7, 0, 1, 2, 3, 4,}));
+    System.out.println(problems.minSubArrayLen(7,
+        new int[] {2, 3, 1, 2, 4, 3,}));
+  }
+
+  /**
+   * https://leetcode.com/problems/house-robber-ii/description/
+   */
+  public int robII(int[] nums) {
+    if (nums.length == 1) {
+      return nums[0];
+    }
+
+    int a = 0, b = 0;
+
+    for (int i = 0; i < nums.length - 1; i++) {
+      if (i % 2 == 0) {
+        a = Math.max(b, a + nums[i]);
+      } else {
+        b = Math.max(a, b + nums[i]);
+      }
+    }
+
+    int max = Math.max(a, b);
+    a = 0;
+    b = 0;
+
+    for (int i = 1; i < nums.length; i++) {
+      if (i % 2 == 0) {
+        a = Math.max(b, a + nums[i]);
+      } else {
+        b = Math.max(a, b + nums[i]);
+      }
+    }
+
+    max = Math.max(max, Math.max(a, b));
+
+    return max;
+  }
+
+  /**
+   * https://leetcode.com/problems/course-schedule-ii/description/
+   */
+  //public int[] findOrder(int numCourses, int[][] prerequisites) {
+  //  Map<Integer, List<Integer>> map = new HashMap<>(numCourses);
+  //  for (int[] c : prerequisites) {
+  //    List<Integer> child = map.computeIfAbsent(c[1], k -> new ArrayList<>());
+  //    child.add(c[0]);
+  //  }
+  //}
+
+  /**
+   * https://leetcode.com/problems/minimum-size-subarray-sum/description/
+   */
+
+  public int minSubArrayLen(int s, int[] nums) {
+    int min_len = Integer.MAX_VALUE;
+    int left = 0;
+    int right = 0;
+    int sum = 0;
+    for (int i = 0; i < nums.length; i++) {
+      sum += nums[i];
+      while (sum >= s) {
+        min_len = Math.min(min_len, i - left + 1);
+        sum -= nums[left++];
+      }
+    }
+
+    return min_len == Integer.MAX_VALUE ? 0 : min_len;
   }
 
   /**
