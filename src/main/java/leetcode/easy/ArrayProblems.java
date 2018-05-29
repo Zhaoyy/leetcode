@@ -39,8 +39,42 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.minSubArrayLen(7,
-        new int[] {2, 3, 1, 2, 4, 3,}));
+    System.out.println(problems.findKthLargest(
+        new int[] {3, 2, 1, 5, 6, 4}, 2));
+  }
+
+  /**
+   * https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+   */
+  public int findKthLargest(int[] nums, int k) {
+    List<Integer> list = new ArrayList<>();
+
+    for (int n : nums) {
+      if (list.size() == k) {
+        if (n > list.get(0)) {
+          list.remove(0);
+          sortedInsert(list, n);
+        }
+      } else {
+        sortedInsert(list, n);
+      }
+    }
+
+    return list.get(0);
+  }
+
+  private void sortedInsert(List<Integer> list, int n) {
+    int l = 0, r = list.size() - 1;
+    while (l <= r) {
+      if (list.get(l) >= n) break;
+      if (list.get(r) <= n) {
+        l = r + 1;
+        break;
+      }
+      l++;
+      r--;
+    }
+    list.add(l, n);
   }
 
   /**
