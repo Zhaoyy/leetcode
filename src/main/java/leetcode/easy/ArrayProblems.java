@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 
 public class ArrayProblems {
 
@@ -39,8 +40,52 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.findKthLargest(
-        new int[] {3, 2, 1, 5, 6, 4}, 2));
+    System.out.println(problems.containsNearbyAlmostDuplicate(new int[] {1, 2, 3, 1},
+        4, 0));
+  }
+
+  /**
+   * https://leetcode.com/problems/contains-duplicate-iii/description/
+   */
+  public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+    TreeSet<Long> set = new TreeSet<>();
+    for (int i = 0; i < nums.length; i++) {
+
+      Long ceiling = set.ceiling((long) nums[i]);
+      Long floor = set.floor((long) nums[i]);
+      if (ceiling != null && ceiling - nums[i] <= t || floor != null && nums[i] - floor <= t) {
+        return true;
+      }
+      set.add((long) nums[i]);
+      if (i >= k) {
+        set.remove((long) nums[i - k]);
+      }
+    }
+    return false;
+  }
+
+  /**
+   * https://leetcode.com/problems/combination-sum-iii/description/
+   */
+  public List<List<Integer>> combinationSum3(int k, int n) {
+    List<List<Integer>> ans = new ArrayList<>();
+    combinationSum3Helper(ans, new ArrayList<>(), k, n);
+    return ans;
+  }
+
+  private void combinationSum3Helper(List<List<Integer>> ans, List<Integer> temp, int k, int n) {
+    if (n < 0 || k == 0 && n > 0) return;
+    if (k == 0 && n == 0) {
+      ans.add(new ArrayList<>(temp));
+      return;
+    }
+
+    int start = temp.size() > 0 ? temp.get(temp.size() - 1) : 0;
+    for (int i = start + 1; i <= 9 && i <= n; i++) {
+      temp.add(i);
+      combinationSum3Helper(ans, temp, k - 1, n - i);
+      temp.remove(temp.size() - 1);
+    }
   }
 
   /**
