@@ -45,6 +45,47 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/maximal-square/description/
+   */
+  public int maximalSquare(char[][] matrix) {
+    if (matrix.length == 0 || matrix[0].length == 0) return 0;
+    int max = 0;
+    int len = matrix[0].length;
+    for (int x = 0; x < matrix.length; x++) {
+      for (int y = 0; y < len; y++) {
+        if (matrix[x][y] == '1') {
+          max = Math.max(max, maximalSquareHelper(matrix, x, y));
+        }
+      }
+    }
+    return max;
+  }
+
+  private int maximalSquareHelper(char[][] matrix, int x, int y) {
+    int len = Math.min(matrix.length - x, matrix[x].length - y);
+    int i = 1;
+    boolean found = false;
+    for (; i < len; i++) {
+      if (found) break;
+      for (int j = y; j <= y + i; j++) {
+        if (matrix[x + i][j] != '1') {
+          found = true;
+          break;
+        }
+      }
+
+      for (int j = x; j < x + i; j++) {
+        if (matrix[j][y + i] != '1') {
+          found = true;
+          break;
+        }
+      }
+    }
+    if (found) i--;
+    return i * i;
+  }
+
+  /**
    * https://leetcode.com/problems/contains-duplicate-iii/description/
    */
   public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
