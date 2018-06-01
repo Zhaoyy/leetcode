@@ -14,6 +14,17 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/rectangle-area/description/
+   */
+  public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+    long a = A, b = B, c = C, d = D, e = E, f = F, g = G, h = H;
+    long s1 = (c - a) * (d - b) + (g - e) * (h - f);
+    long s2 = (Math.min(c, g) - Math.max(a, e) <= 0 || Math.min(d, h) - Math.max(b, f) <= 0) ? 0
+        : (Math.min(c, g) - Math.max(a, e)) * (Math.min(d, h) - Math.max(b, f));
+    return (int) (s1 - s2);
+  }
+
+  /**
    * https://leetcode.com/problems/bitwise-and-of-numbers-range/description/
    */
   public int rangeBitwiseAnd(int m, int n) {
