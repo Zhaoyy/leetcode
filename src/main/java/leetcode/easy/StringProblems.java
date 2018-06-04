@@ -19,7 +19,64 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.findRepeatedDnaSequences("AAAAAAAAAAA"));
+    System.out.println(problems.calculate("2*3-4"));
+  }
+
+  /**
+   * https://leetcode.com/problems/basic-calculator-ii/description/
+   */
+  public int calculate(String s) {
+    Stack<Character> op = new Stack<>();
+    Stack<Long> num = new Stack<>();
+    long ans = 0;
+    for (char c : s.toCharArray()) {
+      if (c == ' ') continue;
+
+      if (c >= '0' && c <= '9') {
+        ans = ans * 10 + (c - '0');
+      } else {
+        if (op.isEmpty() || op.peek() == '+' || op.peek() == '-') {
+          num.push(ans);
+        } else {
+          num.push(calculateHelper(num.pop(), ans, op.pop()));
+        }
+        op.push(c);
+        ans = 0;
+      }
+    }
+
+    if (op.isEmpty() || op.peek() == '+' || op.peek() == '-') {
+      num.push(ans);
+    } else {
+      num.push(calculateHelper(num.pop(), ans, op.pop()));
+    }
+
+    ans = 0;
+
+    while (!num.isEmpty()) {
+      if (!op.isEmpty()) {
+        ans += calculateHelper(0, num.pop(), op.pop());
+      } else {
+        ans += num.pop();
+      }
+    }
+
+    return (int) ans;
+  }
+
+  private long calculateHelper(long a, long b, char c) {
+    switch (c) {
+      case '-':
+        return a - b;
+      case '*':
+        return a * b;
+      case '/':
+        return a / b;
+      case '+':
+        return a + b;
+      default:
+        return 0;
+    }
   }
 
   /**

@@ -40,8 +40,36 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.containsNearbyAlmostDuplicate(new int[] {1, 2, 3, 1},
-        4, 0));
+    System.out.println(problems.summaryRanges(new int[] {1, 3, 5, 6, 9}));
+  }
+
+  /**
+   * https://leetcode.com/problems/summary-ranges/description/
+   */
+  public List<String> summaryRanges(int[] nums) {
+    List<String> ans = new ArrayList<>();
+    if (nums == null || nums.length == 0) return ans;
+    StringBuilder sb = new StringBuilder();
+    long pre = 0, start = 0;
+    for (int i = 0; i < nums.length; i++) {
+      long cur = nums[i];
+      if (i == 0) {
+        sb.append(cur);
+        start = cur;
+      } else if (cur - pre > 1) {
+        if (pre != start) sb.append("->").append(pre);
+        ans.add(sb.toString());
+        sb.setLength(0);
+        sb.append(cur);
+        start = cur;
+      }
+      pre = cur;
+    }
+
+    if (pre != start) sb.append("->").append(pre);
+    ans.add(sb.toString());
+
+    return ans;
   }
 
   /**
