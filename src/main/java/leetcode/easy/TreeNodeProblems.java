@@ -39,6 +39,28 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+   */
+  private Integer kthSmallest;
+  private int kth;
+
+  public int kthSmallest(TreeNode root, int k) {
+    kth = k;
+    kthSmallestHelper(root);
+    return kthSmallest;
+  }
+
+  private void kthSmallestHelper(TreeNode node) {
+    if (node.left != null) kthSmallestHelper(node.left);
+    kth--;
+    if (kth == 0) {
+      if (kthSmallest == null) kthSmallest = node.val;
+      return;
+    }
+    if (node.right != null) kthSmallestHelper(node.right);
+  }
+
+  /**
    * https://leetcode.com/problems/count-complete-tree-nodes/description/
    */
   int height(TreeNode root) {

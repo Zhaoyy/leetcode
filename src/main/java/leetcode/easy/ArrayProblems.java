@@ -44,6 +44,31 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/majority-element-ii/description/
+   */
+  public List<Integer> majorityElementII(int[] nums) {
+    List<Integer> ans = new ArrayList<>();
+    if (nums.length == 0) return ans;
+    int flag = nums.length / 3;
+
+    Arrays.sort(nums);
+    int count = 0;
+
+    for (int i = 0; i < nums.length; i++) {
+      if (i == 0) {
+        count = 1;
+      } else if (nums[i] != nums[i - 1]) {
+        if (count > flag) ans.add(nums[i - 1]);
+        count = 1;
+      } else {
+        count++;
+      }
+    }
+    if (count > flag) ans.add(nums[nums.length - 1]);
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/summary-ranges/description/
    */
   public List<String> summaryRanges(int[] nums) {
