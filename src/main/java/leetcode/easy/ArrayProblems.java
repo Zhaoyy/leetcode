@@ -40,7 +40,44 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.summaryRanges(new int[] {1, 3, 5, 6, 9}));
+    System.out.println(
+        problems.searchMatrixII(
+            new int[][] {{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}}, 5));
+  }
+
+  /**
+   * https://leetcode.com/problems/search-a-2d-matrix-ii/description/
+   */
+  public boolean searchMatrixII(int[][] matrix, int target) {
+
+    if (matrix.length == 0) return false;
+    int m = matrix[0].length;
+    for (int[] a : matrix) {
+      if (a[0] == target || a[m - 1] == target) return true;
+      if (a[0] < target && a[m - 1] > target) {
+        if (Arrays.binarySearch(a, target) >= 0) return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * https://leetcode.com/problems/product-of-array-except-self/description/
+   */
+  public int[] productExceptSelf(int[] nums) {
+    int n = nums.length;
+    int[] res = new int[n];
+    res[0] = 1;
+    for (int i = 1; i < n; i++) {
+      res[i] = res[i - 1] * nums[i - 1];
+    }
+    int right = 1;
+    for (int i = n - 1; i >= 0; i--) {
+      res[i] *= right;
+      right *= nums[i];
+    }
+    return res;
   }
 
   /**
