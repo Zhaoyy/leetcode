@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 
 public class StringProblems {
 
@@ -20,6 +21,23 @@ public class StringProblems {
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
     System.out.println(problems.calculate("2*3-4"));
+  }
+
+  /**
+   * https://leetcode.com/problems/ugly-number-ii/description/
+   */
+  public int nthUglyNumber(int n) {
+    TreeSet<Long> ans = new TreeSet<>();
+    ans.add(1L);
+    n--;
+    for (int i = 0; i < n; ++i) {
+      long first = ans.pollFirst();
+      n--;
+      ans.add(first * 2);
+      ans.add(first * 3);
+      ans.add(first * 5);
+    }
+    return ans.first().intValue();
   }
 
   /**
