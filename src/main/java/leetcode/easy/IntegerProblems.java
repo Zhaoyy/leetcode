@@ -14,6 +14,24 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/find-the-duplicate-number/description/
+   */
+  public int findDuplicate(int[] nums) {
+    int slow = 0, fast = 0;
+    while (true) {
+      fast = nums[nums[fast]];
+      slow = nums[slow];
+      if (fast == slow) break;
+    }
+    fast = 0;
+    while (fast != slow) {
+      fast = nums[fast];
+      slow = nums[slow];
+    }
+    return fast;
+  }
+
+  /**
    * https://leetcode.com/problems/rectangle-area/description/
    */
   public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
