@@ -40,9 +40,33 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(
-        problems.searchMatrixII(
-            new int[][] {{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}}, 5));
+    //System.out.println(
+    //    problems.searchMatrixII(
+    //        new int[][] {{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}}, 5));
+    System.out.println(problems.lengthOfLIS(new int[] {10, 9, 2, 5, 3, 7, 101, 18}));
+  }
+
+  /**
+   * https://leetcode.com/problems/longest-increasing-subsequence/description/
+   */
+  public int lengthOfLIS(int[] nums) {
+    if (nums.length == 0) return 0;
+    int size = 0;
+    int[] tail = new int[nums.length];
+    for (int n : nums) {
+      int l = 0, r = size;
+      while (l != r) {
+        int m = (l + r) / 2;
+        if (tail[m] < n) {
+          l = m + 1;
+        } else {
+          r = m;
+        }
+      }
+      tail[l] = n;
+      if (l == size) size++;
+    }
+    return size;
   }
 
   /**

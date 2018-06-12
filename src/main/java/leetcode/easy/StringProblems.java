@@ -24,6 +24,32 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/bulls-and-cows/description/
+   */
+  public String getHint(String secret, String guess) {
+    int bulls = 0;
+    int cows = 0;
+    int[] c = new int[10];
+    char[] cs = secret.toCharArray();
+    char[] cg = guess.toCharArray();
+    for (int i = 0; i < cs.length; i++) {
+      int s = cs[i] - '0';
+      int g = cg[i] - '0';
+      if (s == g) {
+        bulls++;
+      } else {
+        if (c[s]++ < 0) {
+          cows++;
+        }
+        if (c[g]-- > 0) {
+          cows++;
+        }
+      }
+    }
+    return bulls + "A" + cows + "B";
+  }
+
+  /**
    * https://leetcode.com/problems/ugly-number-ii/description/
    */
   public int nthUglyNumber(int n) {
