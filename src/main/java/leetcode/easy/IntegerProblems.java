@@ -10,7 +10,28 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  if (problems.checkPerfectNumber(i)) System.out.println(i);
     //}
-    System.out.println(problems.uniquePaths(4, 4));
+    System.out.println(problems.maxProfit(new int[] {1, 2, 3, 0, 2}));
+  }
+
+  /**
+   * https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/
+   */
+  public int maxProfit(int[] prices) {
+    if (prices == null || prices.length == 0) {
+      return 0;
+    }
+    int[] buy = new int[prices.length];
+    int[] sell = new int[prices.length];
+    int[] rest = new int[prices.length];
+    buy[0] = prices[0] * -1;
+    sell[0] = 0;
+    rest[0] = 0;
+    for (int i = 1; i < prices.length; i++) {
+      buy[i] = Math.max(buy[i - 1], rest[i - 1] - prices[i]);
+      rest[i] = Math.max(rest[i - 1], sell[i - 1]);
+      sell[i] = Math.max(sell[i - 1], buy[i] + prices[i]);
+    }
+    return Math.max(sell[prices.length - 1], rest[prices.length - 1]);
   }
 
   /**
