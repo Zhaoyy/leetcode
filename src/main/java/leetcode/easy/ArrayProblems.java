@@ -47,6 +47,32 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+   */
+  public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    if (nums1.length > nums2.length) return findMedianSortedArrays(nums2, nums1);
+    int n1 = nums1.length, n2 = nums2.length;
+    int lo = 0, hi = n1;
+    while (lo <= hi) {
+      int c1 = (lo + hi) / 2;
+      int c2 = (n1 + n2) / 2 - c1;
+      int l1 = c1 == 0 ? Integer.MIN_VALUE : nums1[c1 - 1];
+      int l2 = c2 == 0 ? Integer.MIN_VALUE : nums2[c2 - 1];
+      int h1 = c1 == n1 ? Integer.MAX_VALUE : nums1[c1];
+      int h2 = c2 == n2 ? Integer.MAX_VALUE : nums2[c2];
+      if (l1 > h2) {
+        hi = c1 - 1;
+      } else if (l2 > h1) {
+        lo = c1 + 1;
+      } else {
+        return (n1 + n2) % 2 > 0 ? Math.min(h1, h2)
+            : (Integer.max(l1, l2) + Math.min(h1, h2)) / 2.0;
+      }
+    }
+    return 0;
+  }
+
+  /**
    * https://leetcode.com/problems/longest-increasing-subsequence/description/
    */
   public int lengthOfLIS(int[] nums) {
