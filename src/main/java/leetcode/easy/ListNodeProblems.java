@@ -22,6 +22,33 @@ public class ListNodeProblems {
     problems.sortList(root);
   }
 
+  /**
+   * https://leetcode.com/problems/reverse-nodes-in-k-group/description/
+   */
+  public ListNode reverseKGroup(ListNode head, int k) {
+    if (head == null || k == 1) return head;
+    int c = k;
+    ListNode t = head;
+    while (c > 1 && head != null) {
+      head = head.next;
+      c--;
+    }
+
+    if (c > 1 || head == null) return t;
+
+    ListNode next = reverseKGroup(head.next, k);
+    head.next = null;
+    head = next;
+    ListNode temp;
+    while (t != null) {
+      temp = t.next;
+      t.next = head;
+      head = t;
+      t = temp;
+    }
+    return head;
+  }
+
   public static ListNode mergeKListsHelper(ListNode l1, ListNode l2) {
     if (l1 == null) return l2;
     if (l2 == null) return l1;
