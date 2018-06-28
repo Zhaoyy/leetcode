@@ -47,6 +47,27 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/first-missing-positive/description/
+   */
+  public int firstMissingPositive(int[] nums) {
+    int i = 0, n = nums.length;
+    while (i < n) {
+      if (nums[i] > 0 && nums[i] <= n && nums[i] != nums[nums[i] - 1]) {
+        int t = nums[nums[i] - 1];
+        nums[nums[i] - 1] = nums[i];
+        nums[i] = t;
+      } else {
+        i++;
+      }
+    }
+
+    for (i = 0; i < n; i++) {
+      if (nums[i] != i + 1) return i + 1;
+    }
+    return n + 1;
+  }
+
+  /**
    * https://leetcode.com/problems/median-of-two-sorted-arrays/description/
    */
   public double findMedianSortedArrays(int[] nums1, int[] nums2) {
