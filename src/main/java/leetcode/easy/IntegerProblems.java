@@ -10,7 +10,54 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  if (problems.checkPerfectNumber(i)) System.out.println(i);
     //}
-    System.out.println(problems.maxProfit(new int[] {1, 2, 3, 0, 2}));
+    System.out.println(problems.solveNQueens(4));
+  }
+
+  /**
+   * https://leetcode.com/problems/n-queens/description/
+   */
+  public List<List<String>> solveNQueens(int n) {
+    List<List<String>> ans = new ArrayList<>();
+    boolean[][] matrix = new boolean[n + 1][n + 1];
+    solveNQueensHelper(ans, matrix, 0, n);
+    return ans;
+  }
+
+  private void solveNQueensHelper(List<List<String>> ans, boolean[][] matrix, int step,
+      int n) {
+    if (step == n) {
+      StringBuilder sb = new StringBuilder();
+      List<String> r = new ArrayList<>();
+      for (int i = 0; i < n; i++) {
+        sb.setLength(0);
+        for (int j = 0; j < n; j++) {
+          sb.append(matrix[i][j] ? 'Q' : '.');
+        }
+        r.add(sb.toString());
+      }
+      ans.add(r);
+    } else {
+      for (int i = 0; i < n; i++) {
+        if (solveNQueensChecker(matrix, step, i, n)) {
+          matrix[step][i] = true;
+          matrix[step][n] = true;
+          matrix[n][i] = true;
+          solveNQueensHelper(ans, matrix, step + 1, n);
+          matrix[step][i] = false;
+          matrix[step][n] = false;
+          matrix[n][i] = false;
+        }
+      }
+    }
+  }
+
+  private boolean solveNQueensChecker(boolean[][] matrix, int x, int y, int n) {
+    if (matrix[n][y] || matrix[x][n]) return false;
+    for (int i = 1; i <= x; i++) {
+      if (y - i >= 0 && matrix[x - i][y - i]) return false;
+      if (y + i < n && matrix[x - i][y + i]) return false;
+    }
+    return true;
   }
 
   /**

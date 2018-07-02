@@ -43,7 +43,37 @@ public class ArrayProblems {
     //System.out.println(
     //    problems.searchMatrixII(
     //        new int[][] {{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}}, 5));
-    System.out.println(problems.lengthOfLIS(new int[] {10, 9, 2, 5, 3, 7, 101, 18}));
+    System.out.println(problems.trap(new int[] {4, 2, 3}));
+  }
+
+  /**
+   * https://leetcode.com/problems/trapping-rain-water/description/
+   */
+  public int trap(int[] height) {
+    if (height.length == 0) return 0;
+    int ans = 0, start = 0;
+    while (start < height.length && height[start] == 0) start++;
+    while (start < height.length) {
+      int h = height[start], t = height[start];
+      int b = start + 1;
+      for (; b < height.length; b++) {
+        if (height[b] >= h) {
+          break;
+        } else {
+          t += height[b];
+        }
+      }
+
+      if (b < height.length) {
+        int temp = h * (b - start) - t;
+        if (temp > 0) ans += temp;
+        start = b;
+      } else {
+        start++;
+      }
+    }
+
+    return ans;
   }
 
   /**
