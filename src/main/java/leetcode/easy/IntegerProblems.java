@@ -14,6 +14,36 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/n-queens-ii/description/
+   */
+  private int NQueens = 0;
+
+  public int totalNQueens(int n) {
+    boolean[][] matrix = new boolean[n + 1][n + 1];
+    totalNQueensHelper(matrix, 0, n);
+    return NQueens;
+  }
+
+  private void totalNQueensHelper(boolean[][] matrix, int step,
+      int n) {
+    if (step == n) {
+      NQueens++;
+    } else {
+      for (int i = 0; i < n; i++) {
+        if (solveNQueensChecker(matrix, step, i, n)) {
+          matrix[step][i] = true;
+          matrix[step][n] = true;
+          matrix[n][i] = true;
+          totalNQueensHelper(matrix, step + 1, n);
+          matrix[step][i] = false;
+          matrix[step][n] = false;
+          matrix[n][i] = false;
+        }
+      }
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/n-queens/description/
    */
   public List<List<String>> solveNQueens(int n) {
