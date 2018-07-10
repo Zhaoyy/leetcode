@@ -20,7 +20,44 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.longestValidParentheses(")()())"));
+    System.out.println(problems.isNumber(" 1  "));
+  }
+
+  /**
+   * https://leetcode.com/problems/valid-number/description/
+   */
+  public boolean isNumber(String s) {
+    if (s.isEmpty()) return false;
+
+    int r = s.length() - 1;
+    while (r > 0 && s.charAt(r) == ' ') r--;
+
+    int flag = 0, count = 0;
+    boolean e = false, dot = false;
+
+    for (char c : s.substring(0, r + 1).toCharArray()) {
+      if (c < '0' || c > '9') {
+        if (c == 'e') {
+          if (flag == 0 || e || count == r) return false;
+          e = true;
+          flag = 0;
+        } else if (c == '.') {
+          if (flag == 0 || dot || count == r) return false;
+          dot = true;
+          flag = 0;
+        } else if (c == '+' || c == '-') {
+          if (flag > 0) return false;
+        } else {
+          return false;
+        }
+      } else {
+        flag++;
+      }
+
+      count++;
+    }
+
+    return true;
   }
 
   /**
