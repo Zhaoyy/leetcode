@@ -14,13 +14,68 @@ import java.util.TreeSet;
 
 public class StringProblems {
 
+  /**
+   * https://leetcode.com/problems/unique-morse-code-words/description/
+   */
+  private String[] morse =
+      new String[] {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-",
+          ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
+          "-..-", "-.--", "--.."};
+
   public static void main(String[] args) {
     StringProblems problems = new StringProblems();
     //System.out.println(
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.isNumber(" 1  "));
+    //System.out.println(problems.isNumber(" 1  "));
+    problems.subdomainVisits(new String[] {"9001 discuss.leetcode.com"});
+  }
+
+  /**
+   * https://leetcode.com/problems/subdomain-visit-count/description/
+   */
+  public List<String> subdomainVisits(String[] cpdomains) {
+    List<String> ans = new ArrayList<>();
+    Map<String, Integer> map = new HashMap<>();
+    for (String s : cpdomains) {
+      subdomainVisitsHelper(map, s);
+    }
+    StringBuilder sb = new StringBuilder();
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+      sb.setLength(0);
+      sb.append(entry.getValue()).append(" ").append(entry.getKey());
+      ans.add(sb.toString());
+    }
+
+    return ans;
+  }
+
+  private void subdomainVisitsHelper(Map<String, Integer> map, String cpdomains) {
+    String[] cp = cpdomains.split(" ");
+    if (cp.length == 2) {
+      int time = Integer.valueOf(cp[0]);
+      int index = cp[1].indexOf('.');
+      while (index > 0) {
+        map.put(cp[1], map.getOrDefault(cp[1], 0) + time);
+        cp[1] = cp[1].substring(index + 1);
+        index = cp[1].indexOf('.');
+      }
+      map.put(cp[1], map.getOrDefault(cp[1], 0) + time);
+    }
+  }
+
+  public int uniqueMorseRepresentations(String[] words) {
+    Set<String> set = new HashSet<>();
+    StringBuilder sb = new StringBuilder();
+    for (String s : words) {
+      sb.setLength(0);
+      for (char c : s.toCharArray()) {
+        sb.append(morse[c - 'a']);
+      }
+      set.add(sb.toString());
+    }
+    return set.size();
   }
 
   /**
