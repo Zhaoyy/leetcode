@@ -29,7 +29,40 @@ public class StringProblems {
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
     //System.out.println(problems.isNumber(" 1  "));
-    problems.subdomainVisits(new String[] {"9001 discuss.leetcode.com"});
+    problems.shortestToChar("loveleetcode", 'e');
+  }
+
+  /**
+   * https://leetcode.com/problems/shortest-distance-to-a-character/description/
+   */
+  public int[] shortestToChar(String S, char C) {
+    int[] ans = new int[S.length()];
+    int index = S.indexOf(C), last = -1;
+    while (index >= 0) {
+
+      if (last >= 0) {
+        int l = last + 1, r = index - 1;
+        while (l <= r) {
+          ans[l] = l - last;
+          ans[r] = index - r;
+          l++;
+          r--;
+        }
+      } else {
+        for (int i = 0; i < index; i++) {
+          ans[i] = index - i;
+        }
+      }
+
+      last = index;
+      index = S.indexOf(C, index + 1);
+    }
+
+    for (int i = last + 1; i < ans.length; i++) {
+      ans[i] = i - last;
+    }
+
+    return ans;
   }
 
   /**
