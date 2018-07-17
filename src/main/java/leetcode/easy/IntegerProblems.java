@@ -14,6 +14,17 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/chalkboard-xor-game/description/ Assuming both players play
+   * optimally: 1:If all numbers xor result is 0, Alice will win. 2:If xor result is not 0, but
+   * nums.length % 2 == 0, Alice will win.
+   */
+  public boolean xorGame(int[] nums) {
+    int r = 0;
+    for (int n : nums) r ^= n;
+    return r == 0 || nums.length % 2 == 0;
+  }
+
+  /**
    * https://leetcode.com/problems/n-queens-ii/description/
    */
   private int NQueens = 0;
