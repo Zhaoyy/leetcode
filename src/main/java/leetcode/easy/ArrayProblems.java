@@ -393,9 +393,9 @@ public class ArrayProblems {
    * https://leetcode.com/problems/course-schedule-ii/description/
    */
   //public int[] findOrder(int numCourses, int[][] prerequisites) {
-  //  Map<Integer, List<Integer>> map = new HashMap<>(numCourses);
+  //  Map<Integer, List<Integer>> sortMap = new HashMap<>(numCourses);
   //  for (int[] c : prerequisites) {
-  //    List<Integer> child = map.computeIfAbsent(c[1], k -> new ArrayList<>());
+  //    List<Integer> child = sortMap.computeIfAbsent(c[1], k -> new ArrayList<>());
   //    child.add(c[0]);
   //  }
   //}
@@ -1986,7 +1986,7 @@ public class ArrayProblems {
     Map<Character, Integer> map = new HashMap<>(26);
     for (int i = 0; i < strs.length; i++) {
       for (char c : strs[i].toCharArray()) {
-        map.put(c, i);//put <char, rowIndex> pair into the map
+        map.put(c, i);//put <char, rowIndex> pair into the sortMap
       }
     }
 

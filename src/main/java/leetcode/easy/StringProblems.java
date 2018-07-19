@@ -29,7 +29,34 @@ public class StringProblems {
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
     //System.out.println(problems.isNumber(" 1  "));
-    problems.shortestToChar("loveleetcode", 'e');
+    problems.customSortString("cba", "abcd");
+  }
+
+  /**
+   * https://leetcode.com/problems/custom-sort-string/description/
+   */
+  public String customSortString(String S, String T) {
+    Map<Character, Integer> sortMap = new HashMap<>(26);
+    for (int i = 0; i < S.length(); i++) {
+      sortMap.put(S.charAt(i), i);
+    }
+
+    Character[] temp = new Character[T.length()];
+    for (int i = 0; i < T.length(); i++) {
+      temp[i] = T.charAt(i);
+    }
+    Arrays.sort(temp, new Comparator<Character>() {
+      int t = 26;
+
+      @Override public int compare(Character o1, Character o2) {
+        return sortMap.getOrDefault(o1, t++) - sortMap.getOrDefault(o2, t++);
+      }
+    });
+    StringBuilder sb = new StringBuilder();
+    for (char c : temp) {
+      sb.append(c);
+    }
+    return sb.toString();
   }
 
   /**
