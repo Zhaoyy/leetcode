@@ -28,8 +28,34 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    //System.out.println(problems.isNumber(" 1  "));
-    problems.customSortString("cba", "abcd");
+    System.out.println(problems.reorganizeString("ogccckcwmbmxtsbmozli"));
+    //problems.customSortString("cba", "abcd");
+  }
+
+  /**
+   * https://leetcode.com/problems/reorganize-string/description/
+   */
+  public String reorganizeString(String S) {
+
+    int N = S.length();
+    int[] counts = new int[26];
+    for (char ch : S.toCharArray()) counts[ch - 'a'] += 100;
+    for (int i = 0; i < 26; i++) counts[i] += i;
+    Arrays.sort(counts);
+
+    char[] ans = new char[N];
+    int t = 1;
+    for (int code : counts) {
+      int ct = code / 100; // actual count
+      char ch = (char) ('a' + code % 100); // actual letter
+      if (ct > (N + 1) / 2) return "";
+      for (int i = 0; i < ct; i++) {
+        if (t >= N) t = 0;
+        ans[t] = ch;
+        t += 2;
+      }
+    }
+    return String.valueOf(ans);
   }
 
   /**
