@@ -28,8 +28,69 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.reorganizeString("ogccckcwmbmxtsbmozli"));
+    System.out.println(problems.largeGroupPositions("abbxxxxzzyyy"));
     //problems.customSortString("cba", "abcd");
+  }
+
+  /**
+   * https://leetcode.com/problems/positions-of-large-groups/description/
+   */
+  public List<List<Integer>> largeGroupPositions(String S) {
+    List<List<Integer>> ans = new ArrayList<>();
+    List<Integer> t = new ArrayList<>();
+    int last = -1;
+    char lastChar = '0';
+    for (int i = 0; i < S.length(); i++) {
+      if (i == 0) {
+        last = 0;
+        lastChar = S.charAt(i);
+      } else if (lastChar != S.charAt(i)) {
+        if (i - last >= 3) {
+          t.add(last);
+          t.add(i - 1);
+          ans.add(new ArrayList<>(t));
+          t.clear();
+        }
+        last = i;
+        lastChar = S.charAt(i);
+      }
+    }
+
+    if (S.length() - last >= 3) {
+      t.add(last);
+      t.add(S.length() - 1);
+      ans.add(new ArrayList<>(t));
+    }
+    return ans;
+  }
+
+  /**
+   * https://leetcode.com/problems/goat-latin/description/
+   */
+  public String toGoatLatin(String S) {
+    String[] words = S.split(" ");
+    String extra = "ma";
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < words.length; i++) {
+      String word = words[i];
+      char first = word.charAt(0);
+      if (first == 'a' || first == 'A'
+          || first == 'e' || first == 'E'
+          || first == 'i' || first == 'I'
+          || first == 'o' || first == 'O'
+          || first == 'u' || first == 'U') {
+        sb.append(word).append(extra);
+      } else {
+        sb.append(word.substring(1)).append(first).append(extra);
+      }
+
+      for (int j = 0; j <= i; j++) {
+        sb.append('a');
+      }
+      sb.append(' ');
+    }
+    if (sb.length() > 0) sb.setLength(sb.length() - 1);
+    return sb.toString();
   }
 
   /**
