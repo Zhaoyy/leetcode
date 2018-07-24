@@ -47,6 +47,23 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/flipping-an-image/description/
+   */
+  public int[][] flipAndInvertImage(int[][] A) {
+    if (A.length == 0) return A;
+    int last = A[0].length - 1;
+    int[][] ans = new int[A.length][last + 1];
+
+    for (int i = 0; i < ans.length; i++) {
+      for (int j = last; j >= 0; j--) {
+        ans[i][last - j] = A[i][j] ^ 1;
+      }
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/trapping-rain-water/description/
    */
   public int trap(int[] height) {
