@@ -47,6 +47,17 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/rectangle-overlap/description/
+   */
+  public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
+    int left = Math.max(rec1[0], rec2[0]);
+    int right = Math.min(rec1[2], rec2[2]);
+    int top = Math.min(rec1[3], rec2[3]);
+    int bot = Math.max(rec1[1], rec2[1]);
+    return bot < top && right > left;
+  }
+
+  /**
    * https://leetcode.com/problems/flipping-an-image/description/
    */
   public int[][] flipAndInvertImage(int[][] A) {
