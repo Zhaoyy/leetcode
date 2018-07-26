@@ -33,6 +33,26 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/backspace-string-compare/description/
+   */
+  public boolean backspaceCompare(String S, String T) {
+    return S != null && backspaceHelper(S).equals(backspaceHelper(T));
+  }
+
+  private String backspaceHelper(String s) {
+    StringBuilder sb = new StringBuilder();
+
+    for (char c : s.toCharArray()) {
+      if (c == '#') {
+        if (sb.length() > 0) sb.setLength(sb.length() - 1);
+      } else {
+        sb.append(c);
+      }
+    }
+    return sb.toString();
+  }
+
+  /**
    * https://leetcode.com/problems/positions-of-large-groups/description/
    */
   public List<List<Integer>> largeGroupPositions(String S) {
