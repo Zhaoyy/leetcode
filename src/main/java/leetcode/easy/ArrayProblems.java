@@ -47,6 +47,45 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/peak-index-in-a-mountain-array/description/
+   */
+  public int peakIndexInMountainArray(int[] A) {
+    if (A == null || A.length == 0) {
+      return 0;
+    }
+    int left = 0, right = A.length - 1;
+    while (left < right) {
+      int mid = left + (right - left) / 2;
+      if (A[mid] < A[mid + 1]) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+    return left;
+  }
+
+  /**
+   * https://leetcode.com/problems/maximize-distance-to-closest-person/description/
+   */
+  public int maxDistToClosest(int[] seats) {
+    int max = 0, last = -1;
+
+    for (int i = 0; i < seats.length; i++) {
+      if (seats[i] == 1) {
+        max = Math.max(max, last < 0 ? i : (i - last) / 2);
+        last = i;
+      }
+    }
+
+    if (last < seats.length - 1) {
+      max = Math.max(max, seats.length - last - 1);
+    }
+
+    return max;
+  }
+
+  /**
    * https://leetcode.com/problems/rectangle-overlap/description/
    */
   public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
