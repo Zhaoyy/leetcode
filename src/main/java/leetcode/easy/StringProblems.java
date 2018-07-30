@@ -33,6 +33,39 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/buddy-strings/description/
+   */
+  public boolean buddyStrings(String A, String B) {
+    if (A.length() != B.length() || A.length() < 2) return false;
+    if (A.equals(B)) {
+      if (A.length() > 26) return true;
+      boolean[] found = new boolean[128];
+      for (char c : A.toCharArray()) {
+        if (found[c]) {
+          return true;
+        } else {
+          found[c] = true;
+        }
+      }
+      return false;
+    }
+    int first = -1, second = -1;
+    char[] aa = A.toCharArray(), bb = B.toCharArray();
+    for (int i = 0; i < aa.length; i++) {
+      if (aa[i] != bb[i]) {
+        if (first == -1) {
+          first = i;
+        } else if (second == -1) {
+          second = i;
+        } else {
+          return false;
+        }
+      }
+    }
+    return second != -1 && aa[first] == bb[second] && aa[second] == bb[first];
+  }
+
+  /**
    * https://leetcode.com/problems/backspace-string-compare/description/
    */
   public boolean backspaceCompare(String S, String T) {
