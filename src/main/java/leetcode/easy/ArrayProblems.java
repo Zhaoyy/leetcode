@@ -43,7 +43,29 @@ public class ArrayProblems {
     //System.out.println(
     //    problems.searchMatrixII(
     //        new int[][] {{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}}, 5));
-    System.out.println(problems.trap(new int[] {4, 2, 3}));
+    System.out.println(problems.lemonadeChange(new int[] {5, 5, 10, 10, 20}));
+  }
+
+  /**
+   * https://leetcode.com/problems/lemonade-change/description/
+   */
+  public boolean lemonadeChange(int[] bills) {
+    int five = 0, ten = 0;
+    for (int i : bills) {
+      if (i == 5) {
+        five++;
+      } else if (i == 10) {
+        five--;
+        ten++;
+      } else if (ten > 0) {
+        ten--;
+        five--;
+      } else {
+        five -= 3;
+      }
+      if (five < 0) return false;
+    }
+    return true;
   }
 
   /**
