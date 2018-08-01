@@ -10,7 +10,28 @@ public class IntegerProblems {
     //for (int i = 1; i < 60; i++) {
     //  if (problems.checkPerfectNumber(i)) System.out.println(i);
     //}
-    System.out.println(problems.solveNQueens(4));
+    System.out.println(problems.binaryGap(8));
+  }
+
+  /**
+   * https://leetcode.com/problems/binary-gap/description/
+   */
+  public int binaryGap(int N) {
+    int max = 0, last = -1, current = 0;
+
+    while (N > 0) {
+      int t = N & 1;
+      if (t == 1) {
+        if (last >= 0) {
+          max = Math.max(max, current - last);
+        }
+        last = current;
+      }
+      current++;
+      N >>>= 1;
+    }
+
+    return max;
   }
 
   /**
