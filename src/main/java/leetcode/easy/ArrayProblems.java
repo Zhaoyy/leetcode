@@ -47,6 +47,23 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/transpose-matrix/description/
+   */
+  public int[][] transpose(int[][] A) {
+    if (A.length == 0) return A;
+    int[][] ans = new int[A[0].length][A.length];
+
+    for (int i = 0; i < A.length; i++) {
+      int len = A[i].length;
+      for (int j = 0; j < len; j++) {
+        ans[j][i] = A[i][j];
+      }
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/lemonade-change/description/
    */
   public boolean lemonadeChange(int[] bills) {
