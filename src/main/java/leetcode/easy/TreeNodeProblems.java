@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Stack;
 import leetcode.easy.ListNodeProblems.ListNode;
 
@@ -36,6 +37,36 @@ public class TreeNodeProblems {
     //problems.countNodes(root);
     //generateTreesII(4);
     System.out.println(problems.countNodes(root));
+  }
+
+  /**
+   * https://leetcode.com/problems/leaf-similar-trees/description/
+   */
+  public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+    List<Integer> list1 = new ArrayList<>();
+    List<Integer> list2 = new ArrayList<>();
+
+    leafSimilarHelper(list1, root1);
+    leafSimilarHelper(list2, root2);
+
+    if (list1.size() != list2.size()) return false;
+
+    for (int i = 0; i < list1.size(); i++) {
+      if (!Objects.equals(list1.get(i), list2.get(i))) return false;
+    }
+
+    return true;
+  }
+
+  private void leafSimilarHelper(List<Integer> list, TreeNode node) {
+    if (node != null) {
+      if (node.left == null && node.right == null) {
+        list.add(node.val);
+      } else {
+        leafSimilarHelper(list, node.left);
+        leafSimilarHelper(list, node.right);
+      }
+    }
   }
 
   /**
