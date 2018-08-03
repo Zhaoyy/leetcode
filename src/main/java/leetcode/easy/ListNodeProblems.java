@@ -23,6 +23,19 @@ public class ListNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/middle-of-the-linked-list/description/
+   */
+  public ListNode middleNode(ListNode head) {
+    ListNode fast = head, slow = head;
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+
+    return slow;
+  }
+
+  /**
    * https://leetcode.com/problems/reverse-nodes-in-k-group/description/
    */
   public ListNode reverseKGroup(ListNode head, int k) {
