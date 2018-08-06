@@ -47,6 +47,40 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/projection-area-of-3d-shapes/description/
+   */
+  public int projectionArea(int[][] grid) {
+    int ans = 0;
+    int size = 0;
+
+    for (int[] array : grid) {
+      size = Math.max(size, array.length);
+    }
+
+    int[] zMax = new int[size];
+
+    for (int[] array : grid) {
+      int len = array.length;
+
+      int yMax = 0;
+      for (int j = 0; j < len; j++) {
+        if (array[j] > 0) {
+          ans++;
+          zMax[j] = Math.max(zMax[j], array[j]);
+          yMax = Math.max(yMax, array[j]);
+        }
+      }
+      ans += yMax;
+    }
+
+    for (int n : zMax) {
+      ans += n;
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/transpose-matrix/description/
    */
   public int[][] transpose(int[][] A) {
