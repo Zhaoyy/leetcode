@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
@@ -43,7 +44,24 @@ public class ArrayProblems {
     //System.out.println(
     //    problems.searchMatrixII(
     //        new int[][] {{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}}, 5));
-    System.out.println(problems.lemonadeChange(new int[] {5, 5, 10, 10, 20}));
+    System.out.println(problems.kSmallestPairs(new int[] {1, 2, 4}, new int[] {-1, 1, 2}, 10));
+  }
+
+  /**
+   * https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/
+   */
+  public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+    PriorityQueue<int[]> que = new PriorityQueue<>((a, b) -> a[0] + a[1] - b[0] - b[1]);
+    List<int[]> res = new ArrayList<>();
+    if (nums1.length == 0 || nums2.length == 0 || k == 0) return res;
+    for (int i = 0; i < nums1.length && i < k; i++) que.offer(new int[] {nums1[i], nums2[0], 0});
+    while (k-- > 0 && !que.isEmpty()) {
+      int[] cur = que.poll();
+      res.add(new int[] {cur[0], cur[1]});
+      if (cur[2] == nums2.length - 1) continue;
+      que.offer(new int[] {cur[0], nums2[cur[2] + 1], cur[2] + 1});
+    }
+    return res;
   }
 
   /**
