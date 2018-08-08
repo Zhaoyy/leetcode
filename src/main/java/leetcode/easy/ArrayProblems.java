@@ -48,6 +48,26 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/total-hamming-distance/description/
+   */
+  public int totalHammingDistance(int[] nums) {
+    int count = 0;
+    for (int i = 0; i < 32; i++) {
+      count += getHamming(nums, i);
+    }
+    return count;
+  }
+
+  private int getHamming(int[] arr, int b) {
+    int len = arr.length;
+    int count = 0;
+    for (int anArr : arr) {
+      count += (anArr >> b) & (0x01);
+    }
+    return count * (len - count);
+  }
+
+  /**
    * https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/
    */
   public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
