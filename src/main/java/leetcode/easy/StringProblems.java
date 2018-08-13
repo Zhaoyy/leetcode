@@ -33,6 +33,28 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/uncommon-words-from-two-sentences/description/
+   */
+  public String[] uncommonFromSentences(String A, String B) {
+    String[] sA = A.split(" ");
+    String[] sB = B.split(" ");
+    Map<String, Integer> map = new HashMap<>();
+    for (String s : sA) {
+      map.put(s, map.getOrDefault(s, 0) + 1);
+    }
+
+    for (String s : sB) {
+      map.put(s, map.getOrDefault(s, 0) + 1);
+    }
+
+    return map.entrySet()
+        .stream()
+        .filter(entry -> entry.getValue() == 1)
+        .map(Map.Entry::getKey)
+        .toArray(String[]::new);
+  }
+
+  /**
    * https://leetcode.com/problems/buddy-strings/description/
    */
   public boolean buddyStrings(String A, String B) {
