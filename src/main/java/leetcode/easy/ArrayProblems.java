@@ -44,7 +44,30 @@ public class ArrayProblems {
     //System.out.println(
     //    problems.searchMatrixII(
     //        new int[][] {{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}}, 5));
-    System.out.println(problems.kSmallestPairs(new int[] {1, 2, 4}, new int[] {-1, 1, 2}, 10));
+    System.out.println(problems.findSubsequences(new int[] {4, 6, 7, 7}));
+  }
+
+  /**
+   * https://leetcode.com/problems/increasing-subsequences/description/
+   */
+  public List<List<Integer>> findSubsequences(int[] nums) {
+    Set<List<Integer>> res = new HashSet<>();
+    List<Integer> holder = new ArrayList<>();
+    findSequence(res, holder, 0, nums);
+    return new ArrayList<>(res);
+  }
+
+  public void findSequence(Set<List<Integer>> res, List<Integer> holder, int index, int[] nums) {
+    if (holder.size() >= 2) {
+      res.add(new ArrayList<>(holder));
+    }
+    for (int i = index; i < nums.length; i++) {
+      if (holder.size() == 0 || holder.get(holder.size() - 1) <= nums[i]) {
+        holder.add(nums[i]);
+        findSequence(res, holder, i + 1, nums);
+        holder.remove(holder.size() - 1);
+      }
+    }
   }
 
   /**
