@@ -48,6 +48,27 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/target-sum/description/
+   */
+  private int sumWays = 0;
+
+  public int findTargetSumWays(int[] nums, int S) {
+    findTargetSumWaysHelper(nums, 0, 0, S);
+    return sumWays;
+  }
+
+  private void findTargetSumWaysHelper(int[] nums, int index, int temp, int S) {
+    if (index == nums.length) {
+      if (temp == S) sumWays++;
+    } else {
+      temp += nums[index];
+      findTargetSumWaysHelper(nums, index + 1, temp, S);
+      temp -= nums[index] * 2;
+      findTargetSumWaysHelper(nums, index + 1, temp, S);
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/increasing-subsequences/description/
    */
   public List<List<Integer>> findSubsequences(int[] nums) {
