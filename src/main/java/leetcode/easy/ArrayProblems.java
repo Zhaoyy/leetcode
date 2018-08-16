@@ -11,6 +11,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class ArrayProblems {
 
@@ -41,10 +42,49 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    //System.out.println(
-    //    problems.searchMatrixII(
-    //        new int[][] {{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}}, 5));
-    System.out.println(problems.findSubsequences(new int[] {4, 6, 7, 7}));
+    System.out.println(Arrays.stream(problems.findDiagonalOrder(
+        new int[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})).boxed().collect(Collectors.toList()));
+    //System.out.println(problems.findSubsequences(new int[] {4, 6, 7, 7}));
+  }
+
+  /**
+   * https://leetcode.com/problems/diagonal-traverse/description/
+   */
+  public int[] findDiagonalOrder(int[][] matrix) {
+    if (matrix.length == 0) return new int[] {};
+    int len = matrix[0].length;
+    int[] ans = new int[matrix.length * len];
+
+    int x = 0, y = 0, index = 0;
+    boolean up = true;
+
+    while (index < ans.length) {
+      ans[index++] = matrix[x][y];
+
+      if (index == ans.length) break;
+
+      if ((x == 0 || y + 1 == len) && up) {
+        if (y == len - 1) {
+          x++;
+        } else {
+          y++;
+        }
+
+        up = false;
+      } else if ((y == 0 || x + 1 == matrix.length) && !up) {
+        if (x + 1 == matrix.length) {
+          ++y;
+        } else {
+          ++x;
+        }
+        up = true;
+      } else {
+        x += up ? -1 : 1;
+        y += up ? 1 : -1;
+      }
+    }
+
+    return ans;
   }
 
   /**
