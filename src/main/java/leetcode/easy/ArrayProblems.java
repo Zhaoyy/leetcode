@@ -42,9 +42,28 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(Arrays.stream(problems.findDiagonalOrder(
-        new int[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})).boxed().collect(Collectors.toList()));
-    //System.out.println(problems.findSubsequences(new int[] {4, 6, 7, 7}));
+    //System.out.println(Arrays.stream(problems.findDiagonalOrder(
+    //    new int[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})).boxed().collect(Collectors.toList()));
+    System.out.println(Arrays.stream(problems.nextGreaterElements(new int[] {1, 2, 1}))
+        .boxed()
+        .collect(Collectors.toList()));
+  }
+
+  /**
+   * https://leetcode.com/problems/next-greater-element-ii/description/
+   */
+  public int[] nextGreaterElements(int[] nums) {
+    int n = nums.length, next[] = new int[n];
+    Arrays.fill(next, -1);
+    Stack<Integer> stack = new Stack<>(); // index stack
+    for (int i = 0; i < n * 2; i++) {
+      int num = nums[i % n];
+      while (!stack.isEmpty() && nums[stack.peek()] < num) {
+        next[stack.pop()] = num;
+      }
+      if (i < n) stack.push(i);
+    }
+    return next;
   }
 
   /**
