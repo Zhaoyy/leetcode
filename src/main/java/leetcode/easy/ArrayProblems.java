@@ -50,6 +50,34 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/fair-candy-swap/description/
+   */
+  public int[] fairCandySwap(int[] A, int[] B) {
+    int aTotal = 0;
+    int bTotal = 0;
+    Set<Integer> aNums = new HashSet<>();
+
+    for (int i : A) {
+      aTotal += i;
+      aNums.add(i);
+    }
+
+    for (int i : B) {
+      bTotal += i;
+    }
+
+    int target = (bTotal - aTotal) / 2; //Equals A-B
+
+    for (int i : B) {
+      if (aNums.contains(i - target)) {
+        return new int[] {i - target, i};
+      }
+    }
+
+    return new int[] {0, 0};
+  }
+
+  /**
    * https://leetcode.com/problems/next-greater-element-ii/description/
    */
   public int[] nextGreaterElements(int[] nums) {
