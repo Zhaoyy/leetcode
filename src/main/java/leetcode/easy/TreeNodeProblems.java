@@ -27,16 +27,50 @@ public class TreeNodeProblems {
 
   public static void main(String[] args) {
     TreeNodeProblems problems = new TreeNodeProblems();
-    TreeNode root = new TreeNode(1);
+    TreeNode root = new TreeNode(5);
     root.left = new TreeNode(2);
-    root.left.left = new TreeNode(4);
-    root.left.right = new TreeNode(5);
+    //root.left.left = new TreeNode(4);
+    //root.left.right = new TreeNode(5);
     //root.left.right.left = new TreeNode(0);
-    root.right = new TreeNode(3);
-    root.right.left = new TreeNode(6);
+    root.right = new TreeNode(-5);
+    //root.right.left = new TreeNode(6);
     //problems.countNodes(root);
     //generateTreesII(4);
-    System.out.println(problems.countNodes(root));
+    System.out.println(problems.findFrequentTreeSum(root));
+  }
+
+  /**
+   * https://leetcode.com/problems/most-frequent-subtree-sum/description/
+   */
+  public int[] findFrequentTreeSum(TreeNode root) {
+    Map<Integer, Integer> map = new HashMap<>();
+
+    findFrequentTreeSumHelper(map, root);
+
+    List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+
+    if (list.size() == 0) return new int[] {};
+
+    list.sort((a, b) -> b.getValue() - a.getValue());
+    int max = list.get(0).getValue();
+    return list.stream()
+        .filter(a -> a.getValue() == max)
+        .map(Map.Entry::getKey)
+        .mapToInt(value -> value)
+        .toArray();
+  }
+
+  private int findFrequentTreeSumHelper(Map<Integer, Integer> map, TreeNode node) {
+
+    if (node == null) return 0;
+
+    int left = findFrequentTreeSumHelper(map, node.left);
+    int right = findFrequentTreeSumHelper(map, node.right);
+
+    int sum = left + right + node.val;
+    map.put(sum, map.getOrDefault(sum, 0) + 1);
+
+    return sum;
   }
 
   /**
