@@ -40,6 +40,28 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/find-bottom-left-tree-value/description/
+   */
+  public int findBottomLeftValue(TreeNode root) {
+    List<Integer> list = new ArrayList<>();
+
+    findBottomLeftValueHelper(list, root, 0);
+
+    return list.get(list.size() - 1);
+  }
+
+  private void findBottomLeftValueHelper(List<Integer> list, TreeNode node, int index) {
+    if (node == null) return;
+
+    if (list.size() <= index) {
+      list.add(node.val);
+    }
+
+    findBottomLeftValueHelper(list, node.left, index + 1);
+    findBottomLeftValueHelper(list, node.right, index + 1);
+  }
+
+  /**
    * https://leetcode.com/problems/most-frequent-subtree-sum/description/
    */
   public int[] findFrequentTreeSum(TreeNode root) {
