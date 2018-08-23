@@ -40,6 +40,28 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/find-largest-value-in-each-tree-row/description/
+   */
+  public List<Integer> largestValues(TreeNode root) {
+    List<Integer> list = new ArrayList<>();
+    largestValuesHelper(list, root, 0);
+    return list;
+  }
+
+  private void largestValuesHelper(List<Integer> list, TreeNode node, int index) {
+    if (node == null) return;
+
+    if (list.size() <= index) {
+      list.add(node.val);
+    } else {
+      list.set(index, Math.max(node.val, list.get(index)));
+    }
+
+    largestValuesHelper(list, node.left, index + 1);
+    largestValuesHelper(list, node.right, index + 1);
+  }
+
+  /**
    * https://leetcode.com/problems/find-bottom-left-tree-value/description/
    */
   public int findBottomLeftValue(TreeNode root) {
