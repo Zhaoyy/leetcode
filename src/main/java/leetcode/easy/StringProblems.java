@@ -33,6 +33,44 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/longest-palindromic-subsequence/description/
+   */
+  public int longestPalindromeSubseq(String s) {
+
+    return longestPalindromeSubSqyHelper(s, 0, s.length() - 1);
+  }
+
+  private int longestPalindromeSubSqyHelper(String s, int l, int r) {
+    if (l == r) return 1;
+    if (l > r) return 0;
+
+    return s.charAt(l) == s.charAt(r) ? 2 + longestPalindromeSubSqyHelper(s, l + 1, r - 1)
+        : Math.max(longestPalindromeSubSqyHelper(s, l + 1, r),
+            longestPalindromeSubSqyHelper(s, l, r - 1));
+  }
+
+  public int longestPalindromeSubSquBetter(String s) {
+    int len = s.length();
+    int[] dp = new int[len];
+    char[] input = s.toCharArray();
+    Arrays.fill(dp, 1); //a single char is count as a palindrome with length 1
+    for (int i = 0; i < len; i++) {
+      //i and j start with difference as 1, hence no character between them initially(curLong==0)
+      int curLong = 0;
+      for (int j = i - 1; j >= 0; j--) {
+        int temp = dp[j];
+        if (input[j] == input[i]) {
+          dp[j] = curLong + 2;
+        }
+        curLong = Math.max(curLong, temp);
+      }
+    }
+    int max = 0;
+    for (int n : dp) max = Math.max(max, n);
+    return max;
+  }
+
+  /**
    * https://leetcode.com/problems/uncommon-words-from-two-sentences/description/
    */
   public String[] uncommonFromSentences(String A, String B) {
