@@ -50,6 +50,20 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/coin-change-2/description/
+   */
+  public int change(int amount, int[] coins) {
+    int[] ways = new int[amount + 1];
+    ways[0] = 1;
+    for (int val : coins) {
+      for (int i = val; i <= amount; ++i) {
+        ways[i] += ways[i - val];
+      }
+    }
+    return ways[amount];
+  }
+
+  /**
    * https://leetcode.com/problems/fair-candy-swap/description/
    */
   public int[] fairCandySwap(int[] A, int[] B) {
