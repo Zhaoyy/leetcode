@@ -50,6 +50,31 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/surface-area-of-3d-shapes/description/
+   */
+  public int surfaceArea(int[][] grid) {
+    int total = 0, self = 0, around = 0;
+
+    for (int i = 0; i < grid.length; i++) {
+      int len = grid[i].length;
+      for (int j = 0; j < len; j++) {
+        total += grid[i][j];
+        self += grid[i][j] > 0 ? grid[i][j] - 1 : 0;
+
+        if (j < len - 1) { // right
+          around += Math.min(grid[i][j], grid[i][j + 1]);
+        }
+
+        if (i < grid.length - 1) { // bottom
+          around += Math.min(grid[i][j], grid[i + 1][j]);
+        }
+      }
+    }
+
+    return total * 6 - 2 * (self + around);
+  }
+
+  /**
    * https://leetcode.com/problems/coin-change-2/description/
    */
   public int change(int amount, int[] coins) {
