@@ -33,6 +33,26 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/groups-of-special-equivalent-strings/description/
+   */
+  public int numSpecialEquivGroups(String[] A) {
+    Set<String> set = new HashSet<>();
+    for (String s : A) {
+      int[] map1 = new int[256];
+      int[] map2 = new int[256];
+      for (int i = 0; i < s.length(); i++) {
+        if (i % 2 == 0) {
+          map1[s.charAt(i)]++;
+        } else {
+          map2[s.charAt(i)]++;
+        }
+      }
+      set.add(Arrays.toString(map1) + " " + Arrays.toString(map2));
+    }
+    return set.size();
+  }
+
+  /**
    * https://leetcode.com/problems/longest-palindromic-subsequence/description/
    */
   public int longestPalindromeSubseq(String s) {
