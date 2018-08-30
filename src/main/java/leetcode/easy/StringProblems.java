@@ -2,6 +2,7 @@ package leetcode.easy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,8 +29,25 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.largeGroupPositions("abbxxxxzzyyy"));
+    System.out.println(problems.findLongestWord("wordgoodgoodgoodbestword",
+        Arrays.asList("word", "good", "best", "good")));
     //problems.customSortString("cba", "abcd");
+  }
+
+  /**
+   * https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/
+   */
+  public String findLongestWord(String s, List<String> d) {
+    Collections.sort(d,
+        (a, b) -> a.length() != b.length() ? -Integer.compare(a.length(), b.length())
+            : a.compareTo(b));
+    for (String dictWord : d) {
+      int i = 0;
+      for (char c : s.toCharArray())
+        if (i < dictWord.length() && c == dictWord.charAt(i)) i++;
+      if (i == dictWord.length()) return dictWord;
+    }
+    return "";
   }
 
   /**
