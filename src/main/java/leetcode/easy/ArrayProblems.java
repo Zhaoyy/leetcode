@@ -50,6 +50,29 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/monotonic-array/description/
+   */
+  public boolean isMonotonic(int[] A) {
+    int flag = 0; // increment 1, decrement -1
+    int last = A[0];
+
+    for (int n : A) {
+
+      if (n > last) {
+        if (flag < 0) return false;
+        flag = 1;
+      } else if (n < last) {
+        if (flag > 0) return false;
+        flag = -1;
+      }
+
+      last = n;
+    }
+
+    return true;
+  }
+
+  /**
    * https://leetcode.com/problems/continuous-subarray-sum/description/
    */
   public boolean checkSubarraySum(int[] nums, int k) {
