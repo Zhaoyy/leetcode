@@ -40,6 +40,25 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/increasing-order-search-tree/description/
+   */
+  public TreeNode increasingBST(TreeNode root) {
+    TreeNode ans = new TreeNode(0);
+    if (root != null) increasingBSTHelper(root, ans);
+
+    return ans.right;
+  }
+
+  private TreeNode increasingBSTHelper(TreeNode node, TreeNode parent) {
+    if (node.left != null) parent = increasingBSTHelper(node.left, parent);
+    node.left = null;
+    parent.right = node;
+    parent = node;
+    if (node.right != null) parent = increasingBSTHelper(node.right, parent);
+    return parent;
+  }
+
+  /**
    * https://leetcode.com/problems/find-largest-value-in-each-tree-row/description/
    */
   public List<Integer> largestValues(TreeNode root) {
