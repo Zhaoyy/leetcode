@@ -16,6 +16,35 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/beautiful-arrangement/description/
+   */
+  private int arrangeCount = 0;
+
+  public int countArrangement(int N) {
+
+    if (N == 0) return 0;
+
+    countArrangementHelper(N, 1, new int[N + 1]);
+
+    return arrangeCount;
+  }
+
+  private void countArrangementHelper(int n, int index, int[] record) {
+    if (index == record.length) {
+      arrangeCount++;
+      return;
+    }
+
+    for (int i = 1; i <= n; i++) {
+      if (record[i] == 0 && (i % index == 0 || index % i == 0)) {
+        record[i] = 1;
+        countArrangementHelper(n, index + 1, record);
+        record[i] = 0;
+      }
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/contiguous-array/description/
    */
   public int findMaxLength(int[] nums) {
