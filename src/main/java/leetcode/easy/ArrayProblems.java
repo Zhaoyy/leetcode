@@ -49,6 +49,43 @@ public class ArrayProblems {
         .collect(Collectors.toList()));
   }
 
+  private int[][] dirs =
+      new int[][] {{1, 1}, {1, 0}, {1, -1}, {0, 1}, {0, -1}, {-1, 1}, {-1, 0}, {-1, -1}};
+
+  /**
+   * https://leetcode.com/problems/minesweeper/description/
+   */
+  public char[][] updateBoard(char[][] board, int[] click) {
+    if (board[click[0]][click[1]] == 'M') {
+      board[click[0]][click[1]] = 'X';
+      return board;
+    }
+    dfs(click[0], click[1], board);
+    return board;
+  }
+
+  private void dfs(int x, int y, char[][] board) {
+    if (x < 0 || y < 0 || x > board.length - 1 || y > board[0].length - 1 || board[x][y] != 'E') {
+      return;
+    }
+    int mines = 0;
+    for (int[] dir : dirs) {
+      if (isMine(x + dir[0], y + dir[1], board)) mines++;
+    }
+    if (mines == 0) {
+      board[x][y] = 'B';
+      for (int[] dir : dirs) {
+        dfs(x + dir[0], y + dir[1], board);
+      }
+    } else {
+      board[x][y] = (char) ('0' + mines);
+    }
+  }
+
+  private boolean isMine(int x, int y, char[][] board) {
+    return x >= 0 && y >= 0 && x < board.length && y < board[0].length && board[x][y] == 'M';
+  }
+
   /**
    * https://leetcode.com/problems/monotonic-array/description/
    */
