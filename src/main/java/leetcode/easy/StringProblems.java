@@ -29,9 +29,21 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.findLongestWord("wordgoodgoodgoodbestword",
-        Arrays.asList("word", "good", "best", "good")));
+    System.out.println(problems.complexNumberMultiply("1+1i", "1+1i"));
     //problems.customSortString("cba", "abcd");
+  }
+
+  /**
+   * https://leetcode.com/problems/complex-number-multiplication/description/
+   */
+  public String complexNumberMultiply(String a, String b) {
+    int i1 = Integer.valueOf(a.substring(0, a.indexOf('+')));
+    int i2 = Integer.valueOf(a.substring(a.indexOf('+') + 1, a.length() - 1));
+
+    int j1 = Integer.valueOf(b.substring(0, b.indexOf('+')));
+    int j2 = Integer.valueOf(b.substring(b.indexOf('+') + 1, b.length() - 1));
+
+    return String.format("%1$d+%2$di", (i1 * j1 - i2 * j2), (i1 * j2 + i2 * j1));
   }
 
   /**
