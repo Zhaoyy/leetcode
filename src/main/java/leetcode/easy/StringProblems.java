@@ -29,8 +29,35 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(problems.complexNumberMultiply("1+1i", "1+1i"));
+    System.out.println(
+        problems.findMinDifference(Arrays.asList("01:01", "02:01", "03:00", "03:01")));
     //problems.customSortString("cba", "abcd");
+  }
+
+  /**
+   * https://leetcode.com/problems/minimum-time-difference/description/
+   */
+  public int findMinDifference(List<String> timePoints) {
+
+    int day = 1440;
+
+    Integer[] mins = timePoints.stream().map(s -> {
+      String[] v = s.split(":");
+      return Integer.valueOf(v[0]) * 60 + Integer.valueOf(v[1]);
+    }).sorted().toArray(Integer[]::new);
+
+    int ans = Integer.MAX_VALUE;
+    int last = mins[0];
+
+    for (int i = 1; i < mins.length; i++) {
+      ans = Math.min(mins[i] - last, ans);
+      ans = Math.min(last - mins[i] + day, ans);
+      last = mins[i];
+    }
+
+    ans = Math.min(mins[0] + day - mins[mins.length - 1], ans);
+
+    return ans;
   }
 
   /**
