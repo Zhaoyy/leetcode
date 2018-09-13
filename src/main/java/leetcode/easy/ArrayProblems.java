@@ -49,6 +49,24 @@ public class ArrayProblems {
         .collect(Collectors.toList()));
   }
 
+  /**
+   * https://leetcode.com/problems/single-element-in-a-sorted-array/description/
+   */
+  public int singleNonDuplicate(int[] nums) {
+    int i = 0, max = nums.length - 1;
+    while (i < max) {
+      if (nums[i] != nums[i + 1]) {
+        if (i == 0 || i != nums[i - 1]) return nums[i];
+
+        if (i + 1 == max || i != nums[i + 2]) return nums[i + 1];
+      }
+
+      i += 2;
+    }
+
+    return nums[max];
+  }
+
   private int[][] dirs =
       new int[][] {{1, 1}, {1, 0}, {1, -1}, {0, 1}, {0, -1}, {-1, 1}, {-1, 0}, {-1, -1}};
 
