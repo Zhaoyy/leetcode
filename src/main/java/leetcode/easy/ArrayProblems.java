@@ -11,7 +11,6 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class ArrayProblems {
 
@@ -37,16 +36,55 @@ public class ArrayProblems {
     //String[] list1 = new String[] {"Shogun", "Tapioca Express", "Burger King", "KFC"};
     //String[] list2 =
     //    new String[] {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"};
-    //int[][] t = {{0, 0, 0, 5}, {4, 3, 1, 4}, {0, 1, 1, 4}, {1, 2, 1, 3}, {0, 0, 1, 1}};
+    int[][] t = {{0, 0, 0}, {0, 1, 0}, {1, 1, 1}};
     //char[][] chars = {{'b', 'b', 'b', 'b'}, {'b', 'a', 'b', 'b'}, {'b', 'd', 'c', 'b'}};
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
     //System.out.println(Arrays.stream(problems.findDiagonalOrder(
     //    new int[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})).boxed().collect(Collectors.toList()));
-    System.out.println(Arrays.stream(problems.nextGreaterElements(new int[] {1, 2, 1}))
-        .boxed()
-        .collect(Collectors.toList()));
+    System.out.println(problems.updateMatrix(t));
+  }
+
+  /**
+   * https://leetcode.com/problems/01-matrix/description/
+   */
+  public int[][] updateMatrix(int[][] matrix) {
+    if (matrix.length == 0) return matrix;
+
+    for (int i = 0; i < matrix.length; i++)
+      for (int j = 0; j < matrix[0].length; j++)
+        if (matrix[i][j] == 1 && !hasNeiberZero(i, j, matrix)) {
+          matrix[i][j] = matrix.length + matrix[0].length + 1;
+        }
+
+    for (int i = 0; i < matrix.length; i++)
+      for (int j = 0; j < matrix[0].length; j++)
+        if (matrix[i][j] == 1) {
+          dfs(matrix, i, j, -1);
+        }
+
+    return matrix;
+  }
+
+  private void dfs(int[][] matrix, int x, int y, int val) {
+    if (x < 0 || y < 0 || y >= matrix[0].length || x >= matrix.length || matrix[x][y] <= val) {
+      return;
+    }
+
+    if (val > 0) matrix[x][y] = val;
+
+    dfs(matrix, x + 1, y, matrix[x][y] + 1);
+    dfs(matrix, x - 1, y, matrix[x][y] + 1);
+    dfs(matrix, x, y + 1, matrix[x][y] + 1);
+    dfs(matrix, x, y - 1, matrix[x][y] + 1);
+  }
+
+  private boolean hasNeiberZero(int x, int y, int[][] matrix) {
+    return x > 0 && matrix[x - 1][y] == 0
+        || x < matrix.length - 1 && matrix[x + 1][y] == 0
+        || y > 0 && matrix[x][y - 1] == 0
+        || y < matrix[0].length - 1 && matrix[x][y + 1] == 0;
   }
 
   /**
