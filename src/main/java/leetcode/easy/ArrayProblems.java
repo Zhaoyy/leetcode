@@ -47,6 +47,33 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/sort-array-by-parity/description/
+   */
+  public int[] sortArrayByParity(int[] A) {
+    int l = 0, r = A.length - 1;
+    while (l < r) {
+      if (A[l] % 2 == 0) {
+        l++;
+        continue;
+      }
+
+      if (A[r] % 2 > 0) {
+        r--;
+        continue;
+      }
+
+      // swap
+      int t = A[l];
+      A[l] = A[r];
+      A[r] = t;
+      l++;
+      r--;
+    }
+
+    return A;
+  }
+
+  /**
    * https://leetcode.com/problems/01-matrix/description/
    */
   public int[][] updateMatrix(int[][] matrix) {
