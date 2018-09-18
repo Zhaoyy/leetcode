@@ -35,6 +35,23 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/optimal-division/description/
+   */
+  public String optimalDivision(int[] nums) {
+    int n = nums.length;
+    if (n == 0) return "";
+    if (n == 1) return String.valueOf(nums[0]);// one num
+    if (n == 2) return String.valueOf(nums[0] + "/" + nums[1]);// two nums
+    StringBuilder sb = new StringBuilder(nums[0] + "");
+    sb.append("/(").append(nums[1]);
+    for (int i = 2; i < n; i++) { //n >= 3, res = x1 /(x2/x3/x4/.../xn)
+      sb.append("/").append(nums[i]);
+    }
+    sb.append(")");
+    return sb.toString();
+  }
+
+  /**
    * https://leetcode.com/problems/minimum-time-difference/description/
    */
   public int findMinDifference(List<String> timePoints) {
