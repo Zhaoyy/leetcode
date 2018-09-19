@@ -43,7 +43,51 @@ public class ArrayProblems {
     //problems.setZeroes(t);
     //System.out.println(Arrays.stream(problems.findDiagonalOrder(
     //    new int[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})).boxed().collect(Collectors.toList()));
-    System.out.println(problems.updateMatrix(t));
+    System.out.println(
+        problems.leastBricks(
+            Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
+                Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
+  }
+
+  /**
+   * https://leetcode.com/problems/brick-wall/description/
+   */
+  public int leastBricks(List<List<Integer>> wall) {
+    Map<Integer, Integer> map = new HashMap<>();
+
+    for (List<Integer> list : wall) {
+      int sum = 0;
+      for (int n : list) {
+        sum += n;
+        map.put(sum, map.getOrDefault(sum, 0) + 1);
+      }
+
+      map.remove(sum);
+    }
+
+    if (map.isEmpty()) return wall.size();
+
+    Integer max =
+        map.entrySet().stream().sorted((o1, o2) -> o2.getValue() - o1.getValue()).findFirst().map(
+            Map.Entry::getValue).get();
+    return wall.size() - max;
+  }
+
+  public int leastBricks7(List<List<Integer>> wall) {
+    int n = wall.size();
+    Map<Integer, Integer> map = new HashMap<>();
+    int max = 0;
+    for (List<Integer> row : wall) {
+      int st = -1;
+      int m = row.size();
+      for (int j = 0; j < m - 1; j++) {
+        st += row.get(j);
+        int val = map.getOrDefault(st, 0);
+        map.put(st, val + 1);
+        if (val + 1 > max) max = val + 1;
+      }
+    }
+    return n - max;
   }
 
   /**

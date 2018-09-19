@@ -2,7 +2,6 @@ package leetcode.easy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -94,9 +93,8 @@ public class StringProblems {
    * https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/
    */
   public String findLongestWord(String s, List<String> d) {
-    Collections.sort(d,
-        (a, b) -> a.length() != b.length() ? -Integer.compare(a.length(), b.length())
-            : a.compareTo(b));
+    d.sort((a, b) -> a.length() != b.length() ? -Integer.compare(a.length(), b.length())
+        : a.compareTo(b));
     for (String dictWord : d) {
       int i = 0;
       for (char c : s.toCharArray())
