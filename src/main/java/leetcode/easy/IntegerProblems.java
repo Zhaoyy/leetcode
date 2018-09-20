@@ -16,6 +16,51 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/next-greater-element-iii/description/
+   */
+  public int nextGreaterElement(int n) {
+    if (n <= 11 || n == Integer.MAX_VALUE) return -1;
+
+    int[] record = new int['9' + 1];
+    boolean found = false;
+
+    char[] digits = String.valueOf(n).toCharArray();
+
+    for (int i = digits.length - 1; !found && i >= 1; i--) {
+      if (digits[i] > digits[i - 1]) {
+        found = true;
+
+        char limit = digits[i - 1];
+        record[digits[i - 1]]++;
+        record[digits[i]]++;
+        int index = '0';
+
+        while (record[index] == 0 || index <= limit) {
+          index++;
+        }
+
+        digits[i - 1] = (char) index;
+        record[index]--;
+
+        index = '0';
+        for (int j = i; j < digits.length; j++) {
+          while (record[index] == 0) index++;
+          digits[j] = (char) index;
+          record[index]--;
+        }
+      } else {
+        record[digits[i]]++;
+      }
+    }
+
+    if (!found) return -1;
+
+    Long ans = Long.valueOf(String.valueOf(digits));
+
+    return ans <= Integer.MAX_VALUE ? ans.intValue() : -1;
+  }
+
+  /**
    * https://leetcode.com/problems/beautiful-arrangement/description/
    */
   private int arrangeCount = 0;
