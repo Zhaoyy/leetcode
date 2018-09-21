@@ -28,9 +28,45 @@ public class StringProblems {
     //    problems.reverseStr(
     //        "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl",
     //        39));
-    System.out.println(
-        problems.findMinDifference(Arrays.asList("01:01", "02:01", "03:00", "03:01")));
+    //System.out.println(
+    //    problems.findMinDifference(Arrays.asList("01:01", "02:01", "03:00", "03:01")));
     //problems.customSortString("cba", "abcd");
+    System.out.println(problems.checkInclusion("adc",
+        "dadc"));
+  }
+
+  /**
+   * https://leetcode.com/problems/permutation-in-string/description/
+   */
+  public boolean checkInclusion(String s1, String s2) {
+    Map<Character, Integer> map = new HashMap<>(26);
+    for (char c : s1.toCharArray()) {
+      map.put(c, map.getOrDefault(c, 0) + 1);
+    }
+
+    int len = s2.length() - s1.length();
+    for (int i = 0; i <= len; i++) {
+      if (checkInclusionHelper(s2, map, i, s1.length())) return true;
+    }
+
+    return false;
+  }
+
+  private boolean checkInclusionHelper(String s, Map<Character, Integer> map, int index, int len) {
+
+    Map<Character, Integer> temp = new HashMap<>(map);
+
+    for (int i = index; i < index + len; i++) {
+      char c = s.charAt(i);
+      if (temp.containsKey(c)) {
+        if (temp.get(c) == 0) return false;
+        temp.put(c, temp.get(c) - 1);
+      } else {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**
