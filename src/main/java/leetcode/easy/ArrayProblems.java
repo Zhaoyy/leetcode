@@ -50,6 +50,23 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/smallest-range-i/description/
+   */
+  public int smallestRangeI(int[] A, int K) {
+
+    int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+
+    for (int n : A) {
+      if (n < min) min = n;
+      if (n > max) max = n;
+    }
+
+    int ans = max - min - K * 2;
+
+    return ans < 0 ? 0 : ans;
+  }
+
+  /**
    * https://leetcode.com/problems/brick-wall/description/
    */
   public int leastBricks(List<List<Integer>> wall) {
