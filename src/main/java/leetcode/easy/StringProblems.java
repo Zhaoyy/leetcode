@@ -31,8 +31,56 @@ public class StringProblems {
     //System.out.println(
     //    problems.findMinDifference(Arrays.asList("01:01", "02:01", "03:00", "03:01")));
     //problems.customSortString("cba", "abcd");
-    System.out.println(problems.checkInclusion("adc",
-        "dadc"));
+    System.out.println(problems.fractionAddition("1/3-1/2"));
+  }
+
+  /**
+   * https://leetcode.com/problems/fraction-addition-and-subtraction/description/
+   */
+  public String fractionAddition(String expression) {
+    int denominator = 5 * 7 * 8 * 9;
+    long numerator = 0L;
+    int rate = 1;
+    int x = 0;
+    int y = 0;
+    boolean flag = false;
+    for (char ch : expression.toCharArray()) {
+      switch (ch) {
+        case '+':
+        case '-':
+          if (y == 0) {
+            y = 1;
+          }
+          numerator += denominator * rate * x / y;
+          rate = ch == '+' ? 1 : -1;
+          x = 0;
+          y = 0;
+          flag = false;
+          break;
+        case '/':
+          flag = true;
+          break;
+        default:
+          if (flag) {
+            y *= 10;
+            y += ch - '0';
+          } else {
+            x *= 10;
+            x += ch - '0';
+          }
+      }
+    }
+    if (y == 0) {
+      y = 1;
+    }
+    numerator += denominator * rate * x / y;
+    for (int i = 9; i > 1; i--) {
+      if ((denominator % i == 0) && (numerator % i) == 0) {
+        denominator /= i;
+        numerator /= i;
+      }
+    }
+    return String.valueOf(numerator) + "/" + denominator;
   }
 
   /**
