@@ -41,12 +41,33 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    //System.out.println(Arrays.stream(problems.findDiagonalOrder(
-    //    new int[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})).boxed().collect(Collectors.toList()));
-    System.out.println(
-        problems.leastBricks(
-            Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
-                Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
+    System.out.println(problems.validSquare(new int[] {0, 1},
+        new int[] {1, 2},
+        new int[] {0, 2},
+        new int[] {0, 0}));
+    //System.out.println(
+    //    problems.leastBricks(
+    //        Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
+    //            Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
+  }
+
+  /**
+   * https://leetcode.com/problems/valid-square/description/
+   */
+  public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
+    Set set = new HashSet<Integer>();
+    set.add(helper(p1, p2));
+    set.add(helper(p1, p3));
+    set.add(helper(p1, p4));
+    set.add(helper(p2, p3));
+    set.add(helper(p2, p4));
+    set.add(helper(p3, p4));
+
+    return !set.contains(0) && set.size() == 2;
+  }
+
+  private int helper(int[] a, int[] b) {
+    return (a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]);
   }
 
   /**
