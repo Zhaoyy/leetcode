@@ -52,6 +52,39 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/description/
+   */
+  public boolean hasGroupsSizeX(int[] deck) {
+    if (deck.length < 2) return false;
+
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int n : deck) {
+      map.put(n, map.getOrDefault(n, 0) + 1);
+    }
+
+    int min = deck.length;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+      min = Math.min(min, entry.getValue());
+    }
+    if (min < 2) {
+      return false;
+    }
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+      if (gcd(entry.getValue(), min) == 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public int gcd(int a, int b) {
+    if (b == 0) {
+      return a;
+    }
+    return gcd(b, a % b);
+  }
+
+  /**
    * https://leetcode.com/problems/valid-square/description/
    */
   public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
