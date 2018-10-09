@@ -35,6 +35,35 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/reverse-only-letters/description/
+   */
+  public String reverseOnlyLetters(String S) {
+    char[] chars = S.toCharArray();
+
+    int l = 0, r = S.length() - 1;
+
+    while (l < r) {
+      if (!Character.isAlphabetic(chars[l])) {
+        l++;
+        continue;
+      }
+
+      if (!Character.isAlphabetic(chars[r])) {
+        r--;
+        continue;
+      }
+
+      char temp = chars[l];
+      chars[l] = chars[r];
+      chars[r] = temp;
+      l++;
+      r--;
+    }
+
+    return String.valueOf(chars);
+  }
+
+  /**
    * https://leetcode.com/problems/fraction-addition-and-subtraction/description/
    */
   public String fractionAddition(String expression) {
