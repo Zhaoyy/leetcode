@@ -41,14 +41,42 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.validSquare(new int[] {0, 1},
-        new int[] {1, 2},
-        new int[] {0, 2},
-        new int[] {0, 0}));
+    System.out.println(problems.findDuplicate(
+        new String[] {"root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)",
+            "root/c/d 4.txt(efgh)", "root 4.txt(efgh)"}));
     //System.out.println(
     //    problems.leastBricks(
     //        Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
     //            Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
+  }
+
+  /**
+   * https://leetcode.com/problems/find-duplicate-file-in-system/description/
+   */
+  public List<List<String>> findDuplicate(String[] paths) {
+    Map<String, List<String>> map = new HashMap<>();
+
+    for (String path : paths) {
+
+      String[] ss = path.split(" ");
+      String p = ss[0];
+
+      for (int i = 1; i < ss.length; i++) {
+        int index = ss[i].lastIndexOf("(");
+
+        String content = ss[i].substring(index + 1, ss[i].length() - 1);
+        if (!map.containsKey(content)) map.put(content, new ArrayList<>());
+        map.get(content).add(p + "/" + ss[i].substring(0, index));
+      }
+    }
+
+    List<List<String>> ans = new ArrayList<>();
+
+    for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+      if (entry.getValue().size() > 1) ans.add(entry.getValue());
+    }
+
+    return ans;
   }
 
   /**
