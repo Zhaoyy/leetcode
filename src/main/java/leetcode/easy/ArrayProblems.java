@@ -51,6 +51,40 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/sort-array-by-parity-ii/description/
+   */
+  public int[] sortArrayByParityII(int[] A) {
+    int l = 0, r = A.length - 1;
+
+    while (l < r) {
+
+      if (l % 2 == 0 && A[l] % 2 == 0 || l % 2 > 0 && A[l] % 2 > 0) {
+        l++;
+        continue;
+      }
+
+      if (r % 2 == 0 && A[r] % 2 == 0 || r % 2 > 0 && A[r] % 2 > 0) {
+        r--;
+        continue;
+      }
+      int i = r;
+      for (; i > l; i--) {
+        if (A[l] % 2 == 0) {
+          if (A[i] % 2 > 0) break;
+        } else {
+          if (A[i] % 2 == 0) break;
+        }
+      }
+
+      int temp = A[l];
+      A[l] = A[i];
+      A[i] = temp;
+      l++;
+    }
+    return A;
+  }
+
+  /**
    * https://leetcode.com/problems/valid-triangle-number/description/
    */
   public int triangleNumber(int[] nums) {
