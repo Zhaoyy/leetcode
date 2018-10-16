@@ -51,6 +51,33 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/walking-robot-simulation/description/
+   */
+  public int robotSim(int[] commands, int[][] obstacles) {
+    Set<String> set = new HashSet<>();
+    for (int[] o : obstacles) set.add(o[0] + "," + o[1]);
+    int[] d = new int[] {0, 1, 0, -1, 0};
+    int x = 0, y = 0, k = 0, res = 0;
+    for (int c : commands) {
+      if (c == -1) {
+        k++;
+      } else if (c == -2) {
+        k += 3;
+      } else {
+        k %= 4;
+        for (int i = 0; i < c; i++) {
+          int X = x + d[k], Y = y + d[k + 1];
+          if (set.contains(X + "," + Y)) break;
+          x = X;
+          y = Y;
+        }
+      }
+      res = Math.max(res, x * x + y * y);
+    }
+    return res;
+  }
+
+  /**
    * https://leetcode.com/problems/sort-array-by-parity-ii/description/
    */
   public int[] sortArrayByParityII(int[] A) {
