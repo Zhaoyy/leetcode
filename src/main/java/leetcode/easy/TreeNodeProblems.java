@@ -40,6 +40,35 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/add-one-row-to-tree/description/
+   */
+  public TreeNode addOneRow(TreeNode root, int v, int d) {
+    TreeNode parent = new TreeNode(0);
+    parent.left = root;
+    addOneRowHelper(parent, v, d, 1);
+
+    return parent.left;
+  }
+
+  private void addOneRowHelper(TreeNode parent, int v, int d, int index) {
+
+    if (parent == null) return;
+
+    if (index == d) {
+      TreeNode left = parent.left;
+      parent.left = new TreeNode(v);
+      parent.left.left = left;
+
+      TreeNode right = parent.right;
+      parent.right = new TreeNode(v);
+      parent.right.right = right;
+    } else {
+      addOneRowHelper(parent.left, v, d, index + 1);
+      addOneRowHelper(parent.right, v, d, index + 1);
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/increasing-order-search-tree/description/
    */
   public TreeNode increasingBST(TreeNode root) {
