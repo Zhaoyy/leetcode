@@ -40,6 +40,36 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/maximum-binary-tree/description/
+   */
+  public TreeNode constructMaximumBinaryTree(int[] nums) {
+    return maxBTHelper(nums, 0, nums.length - 1);
+  }
+
+  private TreeNode maxBTHelper(int[] nums, int l, int r) {
+    int a = l, b = r;
+    while (l < r) {
+      if (nums[l] > nums[r]) {
+        r--;
+      } else {
+        l++;
+      }
+    }
+
+    TreeNode node = new TreeNode(nums[l]);
+
+    if (l > a) {
+      node.left = maxBTHelper(nums, a, l - 1);
+    }
+
+    if (l < b) {
+      node.right = maxBTHelper(nums, l + 1, b);
+    }
+
+    return node;
+  }
+
+  /**
    * https://leetcode.com/problems/house-robber-iii/description/
    */
   public int rob(TreeNode root) {
