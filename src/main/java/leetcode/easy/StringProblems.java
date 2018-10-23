@@ -35,6 +35,62 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/long-pressed-name/description/
+   */
+  public boolean isLongPressedName(String name, String typed) {
+    if (name.length() > typed.length()) return false;
+    if (name.length() == typed.length()) return name.equals(typed);
+
+    int n = 0, t = 0;
+
+    while (n < name.length() && t < typed.length()) {
+
+      if (name.charAt(n) != typed.charAt(t)) {
+
+        if (n == 0) return false;
+
+        if (typed.charAt(t) == name.charAt(n - 1)) {
+          t++;
+        } else {
+          return false;
+        }
+      } else {
+        n++;
+        t++;
+      }
+    }
+
+    if (n < name.length()) return false;
+
+    while (t < typed.length()) {
+      if (typed.charAt(t) != name.charAt(n - 1)) return false;
+      t++;
+    }
+
+    return true;
+  }
+
+  public boolean isLongPressedNameBetter(String name, String typed) {
+    int difference = 0;
+    for (int i = 0; i < typed.length(); ) {
+      //letters are equal -> go next
+      if (difference <= i && i - difference < name.length() && typed.charAt(i) == name.charAt(
+          i - difference)) {
+        i++;
+      } else if (difference < i
+          && i - difference - 1 < name.length()
+          && typed.charAt(i) == name.charAt(i - difference - 1)) {
+        // letters are not equal,  but we can link typed letter to name letter from the previous iteration
+        difference++;
+      } else {
+        return false;
+      }
+    }
+    // check that at the end of name there's no odd symbols
+    return typed.length() - difference == name.length();
+  }
+
+  /**
    * https://leetcode.com/problems/reverse-only-letters/description/
    */
   public String reverseOnlyLetters(String S) {
