@@ -12,3 +12,9 @@ CREATE FUNCTION getNthHighestSalary(N INT)
 
     );
   END
+
+    # https://leetcode.com/problems/rank-scores/description/
+    SELECT Score,
+    ( SELECT COUNT (*) FROM ( SELECT DISTINCT Score AS s FROM Scores) AS temp WHERE s >= Score) AS Rank
+    FROM Scores
+    ORDER BY Score DESC
