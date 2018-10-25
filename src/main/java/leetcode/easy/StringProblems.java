@@ -35,6 +35,28 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/flip-string-to-monotone-increasing/discuss/183874/O(n)-Java-with-O(1)-space
+   */
+  public int minFlipsMonoIncr(String S) {
+    int r0 = 0, l1 = 0;
+    for (int i = 0; i < S.length(); i++) {
+      if (S.charAt(i) == '0') {
+        r0++;
+      }
+    }
+    int res = r0;
+    for (int j = 0; j < S.length(); j++) {
+      if (S.charAt(j) == '0') {
+        r0--;
+      } else {
+        l1++;
+      }
+      res = Math.min(l1 + r0, res);
+    }
+    return res;
+  }
+
+  /**
    * https://leetcode.com/problems/long-pressed-name/description/
    */
   public boolean isLongPressedName(String name, String typed) {
