@@ -31,7 +31,25 @@ public class StringProblems {
     //System.out.println(
     //    problems.findMinDifference(Arrays.asList("01:01", "02:01", "03:00", "03:01")));
     //problems.customSortString("cba", "abcd");
-    System.out.println(problems.fractionAddition("1/3-1/2"));
+    System.out.println(problems.minAddToMakeValid("()))(("));
+  }
+
+  /**
+   * https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/description/
+   */
+  public int minAddToMakeValid(String S) {
+    if (S.isEmpty()) return 0;
+    Stack<Character> stack = new Stack<>();
+
+    for (char c : S.toCharArray()) {
+      if (c == ')' && !stack.isEmpty() && stack.peek() == '(') {
+        stack.pop();
+      } else {
+        stack.push(c);
+      }
+    }
+
+    return stack.size();
   }
 
   /**
