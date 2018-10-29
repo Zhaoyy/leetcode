@@ -35,6 +35,22 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/unique-email-addresses/description/
+   */
+  public int numUniqueEmails(String[] emails) {
+    Set<String> set = new HashSet<>();
+
+    for (String s : emails) {
+      int at = s.indexOf('@');
+      int plus = s.indexOf('+');
+      String real = s.substring(0, plus > 0 && plus < at ? plus : at).replaceAll("\\.", "");
+      set.add(real + s.substring(at));
+    }
+
+    return set.size();
+  }
+
+  /**
    * https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/description/
    */
   public int minAddToMakeValid(String S) {
