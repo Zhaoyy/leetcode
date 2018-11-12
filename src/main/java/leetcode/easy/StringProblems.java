@@ -35,6 +35,32 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/reorder-log-files/description/
+   */
+  public String[] reorderLogFiles(String[] logs) {
+    Arrays.sort(logs, (o1, o2) -> {
+
+      String[] words1 = o1.split(" ");
+      String[] words2 = o2.split(" ");
+
+      boolean isLetter1 = Character.isLetter(words1[1].charAt(0));
+      boolean isLetter2 = Character.isLetter(words2[1].charAt(0));
+
+      int index1 = o1.indexOf(" ");
+      int index2 = o2.indexOf(" ");
+
+      if (isLetter1 && isLetter2) {
+        return o1.substring(index1 + 1).compareTo(o2.substring(index2 + 1));
+      } else if (isLetter1 != isLetter2) {
+        return isLetter1 ? -1 : 1;
+      }
+
+      return 0;
+    });
+    return logs;
+  }
+
+  /**
    * https://leetcode.com/problems/unique-email-addresses/description/
    */
   public int numUniqueEmails(String[] emails) {
