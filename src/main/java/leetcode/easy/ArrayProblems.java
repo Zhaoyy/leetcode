@@ -51,6 +51,40 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/max-increase-to-keep-city-skyline/description/
+   */
+  public int maxIncreaseKeepingSkyline(int[][] grid) {
+
+    if (grid.length < 2 || grid[0].length < 2) return 0;
+
+    int[] xM = new int[grid.length];
+    int size = grid[0].length;
+    int[] yM = new int[size];
+
+    for (int i = 0; i < xM.length; i++) {
+      for (int j = 0; j < size; j++) {
+        if (grid[i][j] > xM[i]) {
+          xM[i] = grid[i][j];
+        }
+
+        if (grid[i][j] > yM[j]) {
+          yM[j] = grid[i][j];
+        }
+      }
+    }
+
+    int ans = 0;
+
+    for (int i = 0; i < xM.length; i++) {
+      for (int j = 0; j < size; j++) {
+        int min = Math.min(xM[i], yM[j]);
+        ans += min - grid[i][j];
+      }
+    }
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/walking-robot-simulation/description/
    */
   public int robotSim(int[] commands, int[][] obstacles) {
