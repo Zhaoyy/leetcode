@@ -35,6 +35,23 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/to-lower-case/description/
+   */
+  public String toLowerCase(String str) {
+    StringBuilder sb = new StringBuilder(str.length());
+
+    for (char c : str.toCharArray()) {
+      if (c >= 'A' && c <= 'Z') {
+        sb.append((char) (c + 32));
+      } else {
+        sb.append(c);
+      }
+    }
+
+    return sb.toString();
+  }
+
+  /**
    * https://leetcode.com/problems/reorder-log-files/description/
    */
   public String[] reorderLogFiles(String[] logs) {
