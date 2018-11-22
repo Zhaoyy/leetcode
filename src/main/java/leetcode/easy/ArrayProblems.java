@@ -51,6 +51,29 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/valid-mountain-array/description/
+   */
+  public boolean validMountainArray(int[] A) {
+    if (A == null || A.length < 3) return false;
+
+    if (A[0] > A[1] || A[A.length - 1] > A[A.length - 2]) return false;
+
+    boolean desc = false;
+    int last = A[0];
+    for (int i = 1; i < A.length; i++) {
+      if (last == A[i]) return false;
+      if (desc) {
+        if (A[i] > last) return false;
+      } else {
+        if (A[i] < last) desc = true;
+      }
+      last = A[i];
+    }
+
+    return true;
+  }
+
+  /**
    * https://leetcode.com/problems/max-increase-to-keep-city-skyline/description/
    */
   public int maxIncreaseKeepingSkyline(int[][] grid) {
