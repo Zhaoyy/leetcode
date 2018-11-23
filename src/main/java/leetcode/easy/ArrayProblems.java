@@ -41,13 +41,33 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.findDuplicate(
-        new String[] {"root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)",
-            "root/c/d 4.txt(efgh)", "root 4.txt(efgh)"}));
+    System.out.println(problems.diStringMatch("IDID"));
     //System.out.println(
     //    problems.leastBricks(
     //        Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
     //            Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
+  }
+
+  /**
+   * https://leetcode.com/problems/di-string-match/description/
+   */
+  public int[] diStringMatch(String S) {
+    int l = 0, h = S.length();
+    int[] ans = new int[h + 1];
+
+    for (int i = 0; i < S.length(); i++) {
+      if (S.charAt(i) == 'I') {
+        ans[i] = l;
+        l++;
+      } else {
+        ans[i] = h;
+        h--;
+      }
+    }
+
+    ans[S.length()] = l;
+
+    return ans;
   }
 
   /**
