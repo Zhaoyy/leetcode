@@ -49,6 +49,31 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/delete-columns-to-make-sorted/description/
+   */
+  public int minDeletionSize(String[] A) {
+
+    if (A == null || A.length == 0) return 0;
+
+    int ans = 0, len = A[0].length();
+
+    for (int i = 0; i < len; i++) {
+      char last = A[0].charAt(i);
+
+      for (int j = 1; j < A.length; j++) {
+        char t = A[j].charAt(i);
+        if (t < last) {
+          ans++;
+          break;
+        }
+        last = t;
+      }
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/di-string-match/description/
    */
   public int[] diStringMatch(String S) {
