@@ -40,6 +40,28 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/insert-into-a-binary-search-tree/description/
+   */
+  public TreeNode insertIntoBST(TreeNode root, int val) {
+
+    if (root.val > val) {
+      if (root.left != null) {
+        insertIntoBST(root.left, val);
+      } else {
+        root.left = new TreeNode(val);
+      }
+    } else {
+      if (root.right != null) {
+        insertIntoBST(root.right, val);
+      } else {
+        root.right = new TreeNode(val);
+      }
+    }
+
+    return root;
+  }
+
+  /**
    * https://leetcode.com/problems/range-sum-of-bst/description/
    */
   public int rangeSumBST(TreeNode root, int L, int R) {
