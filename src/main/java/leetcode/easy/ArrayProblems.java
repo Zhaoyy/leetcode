@@ -41,11 +41,39 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(problems.diStringMatch("IDID"));
+    System.out.println(
+        problems.findAndReplacePattern(new String[] {"abc", "deq", "mee", "aqq", "dkd", "ccc"},
+            "abb"));
     //System.out.println(
     //    problems.leastBricks(
     //        Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
     //            Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
+  }
+
+  /**
+   * https://leetcode.com/problems/find-and-replace-pattern/description/
+   */
+  public List<String> findAndReplacePattern(String[] words, String pattern) {
+    List<String> ans = new LinkedList<>();
+
+    for (String word : words) {
+      int[] p = new int[26], s = new int[26];
+      if (word.length() == pattern.length()) {
+        boolean isSame = true;
+        for (int i = 0; i < pattern.length(); i++) {
+          if (s[word.charAt(i) - 'a'] != p[pattern.charAt(i) - 'a']) {
+            isSame = false;
+            break;
+          } else {
+            s[word.charAt(i) - 'a'] = p[pattern.charAt(i) - 'a'] = i + 1;
+          }
+        }
+
+        if (isSame) ans.add(word);
+      }
+    }
+
+    return ans;
   }
 
   /**
