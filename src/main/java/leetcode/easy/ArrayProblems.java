@@ -51,6 +51,34 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/all-paths-from-source-to-target/
+   */
+  public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+    List<List<Integer>> ans = new LinkedList<>();
+
+    List<Integer> temp = new LinkedList<>();
+    temp.add(0);
+    allPathsHelper(graph, temp, ans);
+
+    return ans;
+  }
+
+  private void allPathsHelper(int[][] graph, List<Integer> temp,
+      List<List<Integer>> ans) {
+    int index = temp.get(temp.size() - 1);
+    if (graph[index].length == 0) {
+      ans.add(new ArrayList<>(temp));
+      return;
+    }
+
+    for (int n : graph[index]) {
+      temp.add(n);
+      allPathsHelper(graph, temp, ans);
+      temp.remove(temp.size() - 1);
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/find-and-replace-pattern/description/
    */
   public List<String> findAndReplacePattern(String[] words, String pattern) {
