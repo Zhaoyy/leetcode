@@ -51,6 +51,46 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/score-after-flipping-matrix/
+   */
+  public int matrixScore(int[][] A) {
+
+    // toggle row
+    for (int[] a : A) {
+      if (a[0] == 0) {
+        for (int i = 0; i < a.length; i++) {
+          a[i] = a[i] == 0 ? 1 : 0;
+        }
+      }
+    }
+
+    // toggle column
+    for (int i = 0; i < A[0].length; i++) {
+      int count = 0;
+      for (int[] a : A) {
+        if (a[i] == 1) count++;
+      }
+
+      if (count * 2 < A.length) {
+        for (int[] a : A) {
+          a[i] = a[i] == 0 ? 1 : 0;
+        }
+      }
+    }
+
+    int ans = 0;
+    for (int[] a : A) {
+      int temp = 0;
+      for (int i = 0; i < a.length; i++) {
+        temp = temp * 2 + a[i];
+      }
+      ans += temp;
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/all-paths-from-source-to-target/
    */
   public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
