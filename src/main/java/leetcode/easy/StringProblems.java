@@ -35,6 +35,40 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/partition-labels/
+   */
+  public List<Integer> partitionLabels(String S) {
+    List<Integer> list = new ArrayList<>();
+
+    if (S == null || S.length() == 0) {
+      return list;
+    }
+
+    int[] hash = new int[26];
+
+    char[] sc = S.toCharArray();
+
+    for (int i = 0; i < sc.length; ++i) {
+      hash[sc[i] - 'a'] = i;
+    }
+
+    int start = 0;
+    int end = 0;
+
+    for (int i = 0; i < sc.length; ++i) {
+      char c = sc[i];
+      end = Math.max(end, hash[c - 'a']);
+      if (end == i) {
+        list.add(end + 1 - start);
+        start = end + 1;
+        end++;
+      }
+    }
+
+    return list;
+  }
+
+  /**
    * https://leetcode.com/problems/to-lower-case/description/
    */
   public String toLowerCase(String str) {
