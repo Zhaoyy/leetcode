@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -37,6 +38,34 @@ public class TreeNodeProblems {
     //problems.countNodes(root);
     //generateTreesII(4);
     System.out.println(problems.findFrequentTreeSum(root));
+  }
+
+  /**
+   * https://leetcode.com/problems/all-possible-full-binary-trees/
+   */
+  public List<TreeNode> allPossibleFBT(int N) {
+    List<TreeNode> list = new LinkedList<>();
+
+    if (N == 1) {
+      list.add(new TreeNode(0));
+    } else {
+      N--;
+      for (int i = 1; i < N; i += 2) {
+        List<TreeNode> lL = allPossibleFBT(i);
+        List<TreeNode> lR = allPossibleFBT(N - i);
+
+        for (TreeNode nL : lL) {
+          for (TreeNode nR : lR) {
+            TreeNode cur = new TreeNode(0);
+            cur.left = nL;
+            cur.right = nR;
+            list.add(cur);
+          }
+        }
+      }
+    }
+
+    return list;
   }
 
   /**
