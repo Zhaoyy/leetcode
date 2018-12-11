@@ -51,6 +51,88 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/reveal-cards-in-increasing-order/
+   */
+  public int[] deckRevealedIncreasing(int[] deck) {
+    List<Integer> list = new LinkedList<>();
+    Arrays.sort(deck);
+
+    int index = 0;
+
+    for (int i = deck.length - 1; i >= 0; i--) {
+      int val = deck[i];
+      if (index > 1) {
+        int last = list.remove(list.size() - 1);
+        list.add(0, last);
+      }
+
+      list.add(0, val);
+
+      index++;
+    }
+
+    int[] ans = new int[deck.length];
+
+    for (int i = 0; i < list.size(); i++) {
+      ans[i] = list.get(i);
+    }
+
+    return ans;
+  }
+
+  public int[] deckRevealedIncreasingBetter(int[] deck) {
+    if (deck == null || deck.length <= 1) {
+      return deck;
+    }
+
+    Arrays.sort(deck);
+    if (deck.length == 2) {
+      return deck;
+    }
+
+    deckRevealedIncreasing(deck, 0, deck.length - 1);
+
+    return deck;
+  }
+
+  private void deckRevealedIncreasing(int[] deck, int low, int high) {
+    if (high - low <= 1) {
+      return;
+    }
+
+    int mid = low + (high - low) / 2;
+    deckRevealedIncreasing(deck, mid + 1, high);
+
+    if (mid + 1 > high) {
+      return;
+    }
+
+    //奇数个数，需要移一下位
+    if (((high - low) & 1) == 0 && mid + 1 < high) {
+      int temp = deck[high];
+      for (int j = high - 1; j >= mid + 1; j--) {
+        deck[j + 1] = deck[j];
+      }
+      deck[mid + 1] = temp;
+    }
+
+    int[] aux = new int[high - low + 1];
+    int p = low;
+    int q = mid + 1;
+    for (int i = 0; i < aux.length; i = i + 2) {
+      aux[i] = deck[p++];
+      if (q <= high) {
+        aux[i + 1] = deck[q++];
+      }
+    }
+
+    p = low;
+    for (int i = 0; i < aux.length; i++) {
+      deck[p++] = aux[i];
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/verifying-an-alien-dictionary/
    */
   public boolean isAlienSorted(String[] words, String order) {
