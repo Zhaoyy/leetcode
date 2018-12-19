@@ -16,6 +16,18 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/counting-bits/
+   */
+  public int[] countBits(int num) {
+    int[] ans = new int[num + 1];
+    for (int i = 0; i < ans.length; i++) {
+      ans[i] = ans[i >> 1] + (i & 1);
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/next-greater-element-iii/description/
    */
   public int nextGreaterElement(int n) {
