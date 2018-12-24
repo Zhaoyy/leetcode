@@ -51,6 +51,23 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/n-repeated-element-in-size-2n-array/
+   */
+  public int repeatedNTimes(int[] A) {
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int n : A) {
+      map.put(n, map.getOrDefault(n, 0) + 1);
+    }
+
+    int n = A.length / 2;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+      if (entry.getValue() == n) return entry.getKey();
+    }
+
+    return A[0];
+  }
+
+  /**
    * https://leetcode.com/problems/largest-triangle-area/
    */
   public double largestTriangleArea(int[][] points) {
