@@ -32,4 +32,24 @@ public class Node {
       preorderHelper(child, list);
     }
   }
+
+  /**
+   * https://leetcode.com/problems/n-ary-tree-postorder-traversal/
+   */
+  public List<Integer> postorder(Node root) {
+    List<Integer> ans = new LinkedList<>();
+    postorderHelper(root, ans);
+    return ans;
+  }
+
+  private void postorderHelper(Node node, List<Integer> list) {
+    if (node == null) return;
+    if (node.children != null) {
+      for (Node child : node.children) {
+        postorderHelper(child, list);
+      }
+    }
+
+    list.add(node.val);
+  }
 }
