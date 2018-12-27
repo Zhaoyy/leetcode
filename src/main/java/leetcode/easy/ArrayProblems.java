@@ -51,6 +51,13 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/stone-game/
+   */
+  public boolean stoneGame(int[] piles) {
+    return true;
+  }
+
+  /**
    * https://leetcode.com/problems/n-repeated-element-in-size-2n-array/
    */
   public int repeatedNTimes(int[] A) {
