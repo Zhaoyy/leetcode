@@ -51,6 +51,38 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/find-all-duplicates-in-an-array/
+   */
+  public List<Integer> findDuplicates(int[] nums) {
+    List<Integer> list = new LinkedList<>();
+
+    if (nums != null && nums.length > 0) {
+      Arrays.sort(nums);
+      int last = nums[0];
+      for (int i = 1; i < nums.length; i++) {
+        if (last == nums[i]) {
+          list.add(last);
+        }
+        last = nums[i];
+      }
+    }
+
+    return list;
+  }
+
+  public List<Integer> findDumplicatesBetter(int[] nums) {
+    List<Integer> res = new ArrayList<>();
+    for (int i = 0; i < nums.length; ++i) {
+      int index = Math.abs(nums[i]) - 1;
+      if (nums[index] < 0) {
+        res.add(Math.abs(index + 1));
+      }
+      nums[index] = -nums[index];
+    }
+    return res;
+  }
+
+  /**
    * https://leetcode.com/problems/stone-game/
    */
   public boolean stoneGame(int[] piles) {
