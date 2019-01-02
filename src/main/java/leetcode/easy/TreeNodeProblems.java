@@ -41,6 +41,14 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/univalued-binary-tree/
+   */
+  public boolean isUnivalTree(TreeNode root) {
+    return root == null || (root.left == null || root.left.val == root.val) && (root.right == null
+        || root.right.val == root.val) && isUnivalTree(root.left) && isUnivalTree(root.right);
+  }
+
+  /**
    * https://leetcode.com/problems/flip-equivalent-binary-trees/
    */
   public boolean flipEquiv(TreeNode root1, TreeNode root2) {
