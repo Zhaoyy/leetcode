@@ -51,6 +51,40 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/keys-and-rooms/
+   */
+  public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+
+    int room_size = rooms.size();
+    boolean[] visited = new boolean[room_size];
+    int counter = 0; //if >1 then graph is not conncted
+
+    for (int i = 0; i < room_size; i++) {
+
+      if (!visited[i]) {
+        DFSUtil(rooms, i, visited);
+        ++counter;
+
+        if (counter > 1) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  private void DFSUtil(List<List<Integer>> rooms, int room_num, boolean[] visited) {
+    visited[room_num] = true;
+
+    for (int i = 0; i < rooms.get(room_num).size(); i++) {
+      if (!visited[rooms.get(room_num).get(i)]) {
+        DFSUtil(rooms, rooms.get(room_num).get(i), visited);
+      }
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/find-all-duplicates-in-an-array/
    */
   public List<Integer> findDuplicates(int[] nums) {
