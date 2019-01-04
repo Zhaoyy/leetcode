@@ -51,6 +51,28 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/minimum-falling-path-sum/
+   */
+  public int minFallingPathSum(int[][] A) {
+    for (int i = A.length - 2; i >= 0; i--) {
+      // first column
+      A[i][0] += Math.min(A[i + 1][0], A[i + 1][1]);
+      // middle columns
+      for (int j = 1; j <= A.length - 2; j++) {
+        A[i][j] += Math.min(Math.min(A[i + 1][j], A[i + 1][j - 1]), A[i + 1][j + 1]);
+      }
+      // last columns
+      A[i][A.length - 1] += Math.min(A[i + 1][A.length - 1], A[i + 1][A.length - 2]);
+    }
+
+    int min = Integer.MAX_VALUE;
+    for (int i = 0; i < A.length; i++) {
+      min = Math.min(min, A[0][i]);
+    }
+    return min;
+  }
+
+  /**
    * https://leetcode.com/problems/keys-and-rooms/
    */
   public boolean canVisitAllRooms(List<List<Integer>> rooms) {
