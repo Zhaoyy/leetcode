@@ -41,13 +41,33 @@ public class ArrayProblems {
     //System.out.println(problems.ladderLength("hit", "cog",
     //    Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
     //problems.setZeroes(t);
-    System.out.println(
-        problems.findAndReplacePattern(new String[] {"abc", "deq", "mee", "aqq", "dkd", "ccc"},
-            "abb"));
+    //System.out.println(
+    //    problems.findAndReplacePattern(new String[] {"abc", "deq", "mee", "aqq", "dkd", "ccc"},
+    //        "abb"));
     //System.out.println(
     //    problems.leastBricks(
     //        Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
     //            Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
+    problems.powerfulIntegers(2, 3, 10);
+  }
+
+  /**
+   * https://leetcode.com/problems/powerful-integers/
+   */
+  public List<Integer> powerfulIntegers(int x, int y, int bound) {
+    Set<Integer> result = new HashSet<>();
+    for (int a = 1; a < bound; a *= x) {
+      for (int b = 1; a + b <= bound; b *= y) {
+        result.add(a + b);
+        if (y == 1) {
+          break;
+        }
+      }
+      if (x == 1) {
+        break;
+      }
+    }
+    return new ArrayList<>(result);
   }
 
   /**
