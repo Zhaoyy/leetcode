@@ -48,7 +48,42 @@ public class ArrayProblems {
     //    problems.leastBricks(
     //        Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
     //            Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
-    problems.powerfulIntegers(2, 3, 10);
+    problems.pancakeSort(new int[] {3, 2, 4, 1});
+  }
+
+  /**
+   * https://leetcode.com/problems/pancake-sorting/
+   */
+  public List<Integer> pancakeSort(int[] A) {
+    List<Integer> ans = new LinkedList<>();
+    LinkedList<Integer> nums = new LinkedList<>();
+    for (int n : A) nums.add(n);
+    int max = A.length;
+    // use 2 flips to move every max num to the tail.
+    for (int i = max; i > 1; i--) {
+      LinkedList<Integer> next = new LinkedList<>();
+      for (int j = 0; j < i; j++) {
+        if (nums.get(j) == i) {
+          if (j == i - 1) break; // needn't
+
+          if (i > 2) ans.add(j + 1); // only need one flip to swap the last tow items.
+          ans.add(i);
+
+          for (int t = j + 1; t < i; t++) {
+            next.offerFirst(nums.get(t));
+          }
+
+          next.offerLast(max);
+          nums = next;
+
+          break;
+        } else {
+          next.offerLast(nums.get(j));
+        }
+      }
+    }
+
+    return ans;
   }
 
   /**
