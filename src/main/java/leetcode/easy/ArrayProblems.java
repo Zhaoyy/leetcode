@@ -52,6 +52,54 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/regions-cut-by-slashes/
+   */
+  public int regionsBySlashes(String[] grid) {
+    // Upscale the input grid to [n * 3][n * 3] grid and draw "lines" there.
+    // Then, we can paint empty regions using DFS and count them.
+    int size = grid.length;
+    int[][] record = new int[size * 3][size * 3];
+
+    // mark slashes as 1, so blank area is 0.
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < size; j++) {
+        int x = i * 3, y = j * 3;
+        if ('/' == grid[i].charAt(j)) {
+
+          record[x][y + 2] = record[x + 1][y + 1] = record[x + 2][y] = 1;
+        }
+
+        if ('\\' == grid[i].charAt(j)) {
+          record[x][y] = record[x + 1][y + 1] = record[x + 2][y + 2] = 1;
+        }
+      }
+    }
+
+    int ans = 0;
+    for (int i = 0; i < record.length; i++) {
+      for (int j = 0; j < record.length; j++) {
+        if (record[i][j] == 0) {
+          dfsMarkBlank(record, i, j);
+          ans++;
+        }
+      }
+    }
+
+    return ans;
+  }
+
+  private void dfsMarkBlank(int[][] grid, int x, int y) {
+    int size = grid.length;
+    if (x >= 0 && x < size && y >= 0 && y < size && grid[x][y] == 0) {
+      grid[x][y] = 1;
+      dfsMarkBlank(grid, x, y - 1); // left
+      dfsMarkBlank(grid, x - 1, y); // top
+      dfsMarkBlank(grid, x, y + 1); // right
+      dfsMarkBlank(grid, x + 1, y); // bottom
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/pancake-sorting/
    */
   public List<Integer> pancakeSort(int[] A) {
