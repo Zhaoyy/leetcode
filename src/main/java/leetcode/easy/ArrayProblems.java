@@ -52,6 +52,22 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/k-closest-points-to-origin/
+   */
+  public int[][] kClosest(int[][] points, int K) {
+    Arrays.sort(points, (a, b) -> (dis(a) - dis(b)));
+    int[][] result = new int[K][];
+    for (int i = 0; i < K; i++) {
+      result[i] = points[i];
+    }
+    return result;
+  }
+
+  private int dis(int[] a) {
+    return a[0] * a[0] + a[1] * a[1];
+  }
+
+  /**
    * https://leetcode.com/problems/regions-cut-by-slashes/
    */
   public int regionsBySlashes(String[] grid) {
