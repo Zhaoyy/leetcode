@@ -52,6 +52,18 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/largest-perimeter-triangle/
+   */
+  public int largestPerimeter(int[] A) {
+    Arrays.sort(A);
+    for (int i = A.length - 1; i >= 2; i--) {
+      if (A[i] < A[i - 1] + A[i - 2]) return A[i] + A[i - 1] + A[i - 2];
+    }
+
+    return 0;
+  }
+
+  /**
    * https://leetcode.com/problems/k-closest-points-to-origin/
    */
   public int[][] kClosest(int[][] points, int K) {
