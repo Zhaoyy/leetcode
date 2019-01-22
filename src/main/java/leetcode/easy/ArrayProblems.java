@@ -52,6 +52,13 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/squares-of-a-sorted-array/
+   */
+  public int[] sortedSquares(int[] A) {
+    return Arrays.stream(A).map(n -> n * n).sorted().toArray();
+  }
+
+  /**
    * https://leetcode.com/problems/largest-perimeter-triangle/
    */
   public int largestPerimeter(int[] A) {
