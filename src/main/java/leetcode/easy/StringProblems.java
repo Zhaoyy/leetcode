@@ -35,6 +35,37 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/string-without-aaa-or-bbb/
+   */
+  public String strWithout3a3b(int A, int B) {
+    int len = A + B, max = A, min = B;
+    char maxC = 'a', minC = 'b';
+    StringBuilder sb = new StringBuilder(len);
+
+    if (A < B) {
+      max = B;
+      min = A;
+      maxC = 'b';
+      minC = 'a';
+    }
+
+    while (max > 0) {
+      sb.append(maxC);
+      max--;
+    }
+
+    int index = 2;
+    while (min > 0) {
+      if (index >= sb.length()) index = 0;
+      sb.insert(index, minC);
+      min--;
+      index += 3;
+    }
+
+    return sb.toString();
+  }
+
+  /**
    * https://leetcode.com/problems/partition-labels/
    */
   public List<Integer> partitionLabels(String S) {
