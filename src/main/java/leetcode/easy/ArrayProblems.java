@@ -52,6 +52,26 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/sum-of-even-numbers-after-queries/
+   */
+  public int[] sumEvenAfterQueries(int[] A, int[][] queries) {
+    int[] ans = new int[A.length];
+
+    for (int i = 0; i < A.length; i++) {
+      int[] q = queries[i];
+      A[q[1]] += q[0];
+      int sum = 0;
+      for (int n : A) {
+        if (n % 2 == 0) sum += n;
+      }
+
+      ans[i] = sum;
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/squares-of-a-sorted-array/
    */
   public int[] sortedSquares(int[] A) {
