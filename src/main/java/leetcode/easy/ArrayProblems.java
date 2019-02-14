@@ -2,6 +2,7 @@ package leetcode.easy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -49,6 +50,33 @@ public class ArrayProblems {
     //        Arrays.asList(Arrays.asList(1, 2, 2, 1), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 2),
     //            Arrays.asList(2, 4), Arrays.asList(3, 1, 2), Arrays.asList(1, 3, 1, 1))));
     problems.pancakeSort(new int[] {3, 2, 4, 1});
+  }
+
+  /**
+   * https://leetcode.com/problems/add-to-array-form-of-integer/
+   */
+  public List<Integer> addToArrayForm(int[] A, int K) {
+    List<Integer> ans = new LinkedList<>();
+    int carry = 0;
+    for (int i = A.length - 1; i >= 0; i--) {
+      int sum = A[i] + carry;
+      if (K > 0) {
+        sum += K % 10;
+        K /= 10;
+      }
+
+      ans.add(sum % 10);
+      carry = sum / 10;
+    }
+
+    K += carry;
+    while (K > 0) {
+      ans.add(K % 10);
+      K /= 10;
+    }
+
+    Collections.reverse(ans);
+    return ans;
   }
 
   /**
