@@ -41,6 +41,24 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/cousins-in-binary-tree/
+   */
+  public boolean isCousins(TreeNode root, int x, int y) {
+    int a = isCousinsHelper(root, x, 0, 1);
+    int b = isCousinsHelper(root, y, 0, 1);
+
+    return a != b && a / 1000 == b / 1000;
+  }
+
+  private int isCousinsHelper(TreeNode node, int x, int parent, int depth) {
+    if (node.val == x) return depth * 1000 + parent;
+    int ans = -1;
+    if (node.left != null) ans = isCousinsHelper(node.left, x, node.val, depth + 1);
+    if (ans < 0 && node.right != null) ans = isCousinsHelper(node.right, x, node.val, depth + 1);
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/univalued-binary-tree/
    */
   public boolean isUnivalTree(TreeNode root) {
