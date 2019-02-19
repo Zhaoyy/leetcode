@@ -53,6 +53,71 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/rotting-oranges/
+   */
+  public int orangesRotting(int[][] grid) {
+    int result = 0, cur = 0;
+    boolean found = false;
+    for (int[] a : grid) {
+      for (int n : a) {
+        if (n == 2) found = true;
+        cur += n;
+        if (n > 0) result += 2;
+      }
+    }
+
+    if (!found) return -1;
+
+    return orangeRottingHelper(grid, 0, cur, result);
+  }
+
+  private int orangeRottingHelper(int[][] grid, int time, int cur, int result) {
+    System.out.println(String.format("cur: %d, result: %d", cur, result));
+    if (cur == result) return time;
+
+    int newCur = countCurOrange(grid, cur);
+
+    if (newCur == cur) return -1;
+
+    return orangeRottingHelper(grid, time + 1, newCur, result);
+  }
+
+  private int countCurOrange(int[][] grid, int cur) {
+    for (int i = 0; i < grid.length; i++) {
+      int[] a = grid[i];
+      for (int j = 0; j < a.length; j++) {
+        if (a[j] == 2) {
+          // left
+          if (j > 0 && a[j - 1] == 1) {
+            a[j - 1] = 2;
+            cur++;
+          }
+          // top
+          if (i > 0 && grid[i - 1][j] == 1) {
+            grid[i - 1][j] = 2;
+            cur++;
+          }
+
+          // right
+          if (j < a.length - 1 && a[j + 1] == 1) {
+            a[j + 1] = 12;
+            cur++;
+          }
+
+          // bottom
+          if (i < grid.length - 1 && grid[i + 1][j] == 1) {
+            grid[i + 1][j] = 12;
+            cur++;
+          }
+        } else if (a[j] > 2) {
+          a[j] = 2;
+        }
+      }
+    }
+    return cur;
+  }
+
+  /**
    * https://leetcode.com/problems/add-to-array-form-of-integer/
    */
   public List<Integer> addToArrayForm(int[] A, int K) {
