@@ -41,6 +41,33 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/maximum-binary-tree-ii/
+   */
+  public TreeNode insertIntoMaxTree(TreeNode root, int val) {
+    TreeNode p = new TreeNode(0);
+    p.left = root;
+    insertIMTHelper(root, p, val);
+
+    return p.left;
+  }
+
+  private void insertIMTHelper(TreeNode node, TreeNode parent, int val) {
+    if (node == null) {
+      parent.right = new TreeNode(val);
+    } else if (val > node.val) {
+      TreeNode extra = new TreeNode(val);
+      if (parent.val == 0) {
+        parent.left = extra;
+      } else {
+        parent.right = extra;
+      }
+      extra.left = node;
+    } else {
+      insertIMTHelper(node.right, node, val);
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/cousins-in-binary-tree/
    */
   public boolean isCousins(TreeNode root, int x, int y) {

@@ -53,6 +53,22 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/find-the-town-judge/
+   */
+  public int findJudge(int N, int[][] trust) {
+    int[] record = new int[N];
+    for (int[] t : trust) {
+      record[t[1]]++;
+      record[t[0]] += 10000;
+    }
+
+    for (int i = 0; i < N; i++) {
+      if (record[i] < 10000 && record[i] == N - 1) return i;
+    }
+    return -1;
+  }
+
+  /**
    * https://leetcode.com/problems/rotting-oranges/
    */
   public int orangesRotting(int[][] grid) {
