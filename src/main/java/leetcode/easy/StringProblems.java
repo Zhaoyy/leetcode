@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,6 +33,41 @@ public class StringProblems {
     //    problems.findMinDifference(Arrays.asList("01:01", "02:01", "03:00", "03:01")));
     //problems.customSortString("cba", "abcd");
     System.out.println(problems.minAddToMakeValid("()))(("));
+  }
+
+  /**
+   * https://leetcode.com/problems/find-common-characters/
+   */
+  public List<String> commonChars(String[] A) {
+    List<String> ans = new LinkedList<>();
+    List<Map<Character, Integer>> maps = new ArrayList<>(A.length);
+    for (String s : A) {
+      maps.add(commonCharsHelper(s));
+    }
+
+    for (Map.Entry<Character, Integer> entry : maps.get(0).entrySet()) {
+      char c = entry.getKey();
+      int count = entry.getValue();
+      for (int i = 1; i < A.length; i++) {
+        count = Math.min(count, maps.get(i).getOrDefault(c, 0));
+      }
+
+      for (int i = 0; i < count; i++) {
+        ans.add(String.valueOf(c));
+      }
+    }
+
+    return ans;
+  }
+
+  private Map<Character, Integer> commonCharsHelper(String s) {
+    Map<Character, Integer> map = new HashMap<>();
+
+    for (char c : s.toCharArray()) {
+      map.put(c, map.getOrDefault(c, 0) + 1);
+    }
+
+    return map;
   }
 
   /**
