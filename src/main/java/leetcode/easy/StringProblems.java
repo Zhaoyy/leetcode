@@ -36,6 +36,17 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/check-if-word-is-valid-after-substitutions/
+   */
+  public boolean isValidII(String S) {
+    while (S.contains("abc")) {
+      S = S.replaceAll("abc", "");
+    }
+
+    return S.isEmpty();
+  }
+
+  /**
    * https://leetcode.com/problems/find-common-characters/
    */
   public List<String> commonChars(String[] A) {
