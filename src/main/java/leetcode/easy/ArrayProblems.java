@@ -53,6 +53,40 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/maximize-sum-of-array-after-k-negations/
+   */
+  public int largestSumAfterKNegations(int[] A, int K) {
+    Arrays.sort(A);
+    int de = 0, sum = 0;
+    for (int n : A) {
+      if (n <= 0) de++;
+      sum += n;
+    }
+
+    if (de == 0) {
+      sum -= 2 * A[0] * (K % 2);
+    } else if (K <= de || A[de - 1] == 0) {
+      int size = Math.min(de, K);
+      for (int i = 0; i < size; i++) {
+        sum -= 2 * A[i];
+      }
+    } else {
+      for (int i = 0; i < de; i++) {
+        sum -= 2 * A[i];
+      }
+      int size = (K - de) % 2;
+      if (size == 0) return sum;
+      if (A[de] > -A[de - 1]) {
+        sum += A[de - 1];
+      } else {
+        sum -= A[de];
+      }
+    }
+
+    return sum;
+  }
+
+  /**
    * https://leetcode.com/problems/find-the-town-judge/
    */
   public int findJudge(int N, int[][] trust) {
