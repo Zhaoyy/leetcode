@@ -53,6 +53,32 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/
+   */
+  public int numPairsDivisibleBy60(int[] time) {
+    Map<Integer, Integer> map = new HashMap<>();
+
+    int ans = 0;
+    for (int n : time) {
+      int t = n % 60;
+      map.put(t, map.getOrDefault(t, 0) + 1);
+      if (t == 30) ans = map.get(t) / 2;
+    }
+
+    List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+    int end = list.size() - 1;
+    for (int i = 0; i < end; i++) {
+      for (int j = i + 1; j < list.size(); j++) {
+        if ((list.get(i).getKey() + list.get(j).getKey()) % 60 == 0) {
+          ans += list.get(i).getValue() * list.get(j).getValue();
+        }
+      }
+    }
+
+    return ans + map.get(0);
+  }
+
+  /**
    * https://leetcode.com/problems/maximize-sum-of-array-after-k-negations/
    */
   public int largestSumAfterKNegations(int[] A, int K) {

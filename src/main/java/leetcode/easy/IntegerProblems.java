@@ -16,6 +16,20 @@ public class IntegerProblems {
   }
 
   /**
+   * https://leetcode.com/problems/complement-of-base-10-integer/
+   */
+  public int bitwiseComplement(int N) {
+    if (N == 0) return 1;
+    int ans = 0, flag = 1;
+    while (N > 0) {
+      ans += (1 - N & 1) * flag;
+      N >>>= 1;
+      flag <<= 1;
+    }
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/counting-bits/
    */
   public int[] countBits(int num) {
