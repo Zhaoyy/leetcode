@@ -53,6 +53,29 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/partition-array-into-three-parts-with-equal-sum/
+   */
+  public boolean canThreePartsEqualSum(int[] A) {
+    int sum = 0;
+    for (int n : A) {
+      sum += n;
+    }
+
+    if (sum % 3 > 0) return false;
+    sum /= 3;
+    int t = 0;
+
+    for (int n : A) {
+      t += n;
+      if (t == sum) {
+        t = 0;
+      }
+    }
+
+    return t == 0;
+  }
+
+  /**
    * https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/
    */
   public int numPairsDivisibleBy60(int[] time) {
