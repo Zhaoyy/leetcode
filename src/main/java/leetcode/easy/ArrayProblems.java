@@ -53,6 +53,21 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/binary-prefix-divisible-by-5/
+   */
+  public List<Boolean> prefixesDivBy5(int[] A) {
+    List<Boolean> ans = new ArrayList<>(A.length);
+    int t = 0;
+
+    for (int n : A) {
+      t = ((t << 1) + n) % 5;
+      ans.add(t == 0);
+    }
+
+    return ans;
+  }
+
+  /**
    * https://leetcode.com/problems/partition-array-into-three-parts-with-equal-sum/
    */
   public boolean canThreePartsEqualSum(int[] A) {
