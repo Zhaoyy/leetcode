@@ -41,6 +41,35 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/
+   */
+  public TreeNode bstFromPreorder(int[] preorder) {
+    return bstFPHelper(preorder, 0, preorder.length - 1);
+  }
+
+  private TreeNode bstFPHelper(int[] nums, int l, int r) {
+
+    if (l > r) return null;
+
+    TreeNode p = new TreeNode(nums[l]);
+
+    if (l == r) return p;
+    int i = l + 1;
+    while (i <= r && nums[i] < nums[l]) {
+      i++;
+    }
+
+    if (i == r && nums[i] < nums[l]) {
+      p.left = bstFPHelper(nums, l + 1, r);
+    } else {
+      p.left = bstFPHelper(nums, l + 1, i - 1);
+      p.right = bstFPHelper(nums, i, r);
+    }
+
+    return p;
+  }
+
+  /**
    * https://leetcode.com/problems/maximum-binary-tree-ii/
    */
   public TreeNode insertIntoMaxTree(TreeNode root, int val) {
