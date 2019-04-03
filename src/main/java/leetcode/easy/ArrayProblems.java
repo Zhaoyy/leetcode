@@ -53,6 +53,47 @@ public class ArrayProblems {
   }
 
   /**
+   * https://leetcode.com/problems/unique-paths-iii/
+   */
+  int uniquePathCount = 0;
+  int[][] dirct = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+
+  public int uniquePathsIII(int[][] grid) {
+    int count = 0, x = 0, y = 0;
+    boolean found = false;
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[0].length; j++) {
+        if (!found && grid[i][j] == 1) {
+          x = i;
+          y = j;
+          found = true;
+        }
+        if (grid[i][j] == 0) count++;
+      }
+    }
+    uniquePIIIHelper(grid, count, x, y);
+    return uniquePathCount;
+  }
+
+  private void uniquePIIIHelper(int[][] grid, int count, int x, int y) {
+    for (int[] d : dirct) {
+      int a = x + d[0];
+      int b = y + d[1];
+      if (a >= 0 && a < grid.length && b >= 0 && b < grid[0].length) {
+
+        if (count > 0 && grid[a][b] == 0) {
+          grid[a][b] = 3;
+          uniquePIIIHelper(grid, count - 1, a, b);
+          grid[a][b] = 0;
+        } else if (count == 0 && grid[a][b] == 2) {
+          uniquePathCount++;
+          break;
+        }
+      }
+    }
+  }
+
+  /**
    * https://leetcode.com/problems/binary-prefix-divisible-by-5/
    */
   public List<Boolean> prefixesDivBy5(int[] A) {
