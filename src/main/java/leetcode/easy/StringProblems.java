@@ -36,6 +36,27 @@ public class StringProblems {
   }
 
   /**
+   * https://leetcode.com/problems/remove-outermost-parentheses/
+   */
+  public String removeOuterParentheses(String S) {
+    StringBuilder sb = new StringBuilder(S.length());
+
+    int count = 0;
+    for (char c : S.toCharArray()) {
+      if (c == '(') {
+        count++;
+        if (count == 1) continue;
+      } else {
+        count--;
+        if (count == 0) continue;
+      }
+      sb.append(c);
+    }
+
+    return sb.toString();
+  }
+
+  /**
    * https://leetcode.com/problems/check-if-word-is-valid-after-substitutions/
    */
   public boolean isValidII(String S) {
