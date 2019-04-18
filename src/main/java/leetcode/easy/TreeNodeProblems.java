@@ -41,6 +41,28 @@ public class TreeNodeProblems {
   }
 
   /**
+   * https://leetcode.com/problems/sum-of-root-to-leaf-binary-numbers/
+   */
+  private int rtlSum = 0;
+
+  public int sumRootToLeaf(TreeNode root) {
+    sumRTLHelper(root, 0);
+    return rtlSum;
+  }
+
+  private void sumRTLHelper(TreeNode node, int parent) {
+    if (node == null) return;
+    parent = parent << 1 + node.val;
+    if (node.left == null && node.right == null) {
+      rtlSum += parent;
+      return;
+    }
+
+    sumRTLHelper(node.left, parent);
+    sumRTLHelper(node.right, parent);
+  }
+
+  /**
    * https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/
    */
   public TreeNode bstFromPreorder(int[] preorder) {
